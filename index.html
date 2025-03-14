@@ -149,7 +149,7 @@
 
     <script>
   document.getElementById("signupForm").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); // Stop default form submission
 
     // Get form values
     let name = document.getElementById("name").value.trim();
@@ -162,39 +162,39 @@
     let tempSuccessMessage = document.getElementById("tempSuccessMessage");
     let finalSuccessMessage = document.getElementById("finalSuccessMessage");
 
-    // Reset previous messages
-    errorMessage.style.display = "none";
-    successMessage.style.display = "none";
-    tempSuccessMessage.style.display = "none";
-    finalSuccessMessage.style.display = "none";
+    // Hide previous messages
+    hideMessages();
 
-    // Validation checks
+    // Validation
     if (!name) return showError("Full Name is required.");
     if (!email) return showError("Email Address is required.");
     if (!password) return showError("Password is required.");
     if (!role) return showError("Please select a role.");
 
-    // Show processing message
+    // Show "Processing..." message
     tempSuccessMessage.style.display = "block";
 
     // Prepare data
     let formData = { name, email, password, role };
 
     try {
-        let response = await fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_URL/exec", {
+        let response = await fetch("https://script.google.com/macros/library/d/1FVGPQ7kJA3WOrvgggjN9GCze4M-cBhuB2r6zpc4JkGLELbFjLRsWyoJ2/1", {
             method: "POST",
             mode: "cors", // Enables CORS
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData)
+            body: JSON.stringify(formData),
         });
 
-        let data = await response.json(); // Expect JSON response
+        let data = await response.json(); // Parse JSON response
 
-        tempSuccessMessage.style.display = "none"; // Hide processing message
+        tempSuccessMessage.style.display = "none"; // Hide "Processing..." message
 
         if (data.success) {
             finalSuccessMessage.style.display = "block"; // Show final success message
-            setTimeout(() => window.location.href = "login.html", 3000); // Redirect after 3s
+            setTimeout(() => {
+                hideMessages(); // Hide message
+                window.location.href = "login.html"; // Redirect after success
+            }, 3000);
         } else {
             showError(data.message || "Signup failed.");
         }
@@ -209,8 +209,18 @@ function showError(message) {
     let errorMessage = document.getElementById("errorMessage");
     errorMessage.innerText = message;
     errorMessage.style.display = "block";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 3000); // Auto-hide
+
+    // Auto-hide error after 3s
+    setTimeout(() => { errorMessage.style.display = "none"; }, 3000);
 }
-   </script>
+
+// Function to hide all messages
+function hideMessages() {
+    document.getElementById("errorMessage").style.display = "none";
+    document.getElementById("successMessage").style.display = "none";
+    document.getElementById("tempSuccessMessage").style.display = "none";
+    document.getElementById("finalSuccessMessage").style.display = "none";
+}
+</script>
 </body>
 </html>
