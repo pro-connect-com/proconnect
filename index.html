@@ -148,7 +148,7 @@
 <p id="successMessage" style="display:none; color: green; font-weight: bold; margin-top: 10px;"></p>
 
     <script>
- document.getElementById("signupForm").addEventListener("submit", async function (event) {
+document.getElementById("signupForm").addEventListener("submit", async function (event) {
     event.preventDefault(); // Stop default form submission
 
     // Get form values
@@ -174,16 +174,21 @@
     // Show "Processing..." message
     tempSuccessMessage.style.display = "block";
 
+    // ✅ Generate Unique User ID (Based on Timestamp + Random String)
+    let userID = "PC-" + Date.now().toString(36) + Math.random().toString(36).substring(2, 6).toUpperCase();
+    
+    // ✅ Get Current Timestamp
+    let timestamp = new Date().toISOString();
+
     // Prepare data
-    let formData = { name, email, password, role };
+    let formData = { userID, name, email, password, role, timestamp };
 
     try {
         let response = await fetch("https://script.google.com/macros/s/AKfycbwFWX5I6nT5YkwKMtD3bWKJQBS5EIhDNxxXj7K1i8uGa2VKCBGCTD2SA1NgiwSANHcm/exec", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData),
-});
-
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+        });
 
         let data = await response.json(); // Parse JSON response
 
