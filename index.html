@@ -149,7 +149,7 @@
 
     <script>
     document.getElementById("signupForm").addEventListener("submit", function (event) {
-    event.preventDefault();
+    event.preventDefault(); // Prevent default form submission
 
     let name = document.getElementById("name").value.trim();
     let email = document.getElementById("email").value.trim();
@@ -159,18 +159,21 @@
     let errorMessage = document.getElementById("errorMessage");
     let successMessage = document.getElementById("successMessage");
 
+    // Reset messages
     errorMessage.style.display = "none";
     successMessage.style.display = "none";
 
-    if (!name || !email || !password || !role) {
-        showError("All fields are required.");
-        return;
-    }
+    // Validation
+    if (!name) return showError("Full Name is required.");
+    if (!email) return showError("Email Address is required.");
+    if (!password) return showError("Password is required.");
+    if (!role) return showError("Please select a role.");
 
+    // Show loading message
     successMessage.innerText = "Submitting...";
     successMessage.style.display = "block";
 
-    fetch("https://script.google.com/macros/library/d/1FVGPQ7kJA3WOrvgggjN9GCze4M-cBhuB2r6zpc4JkGLELbFjLRsWyoJ2/1", {
+    fetch("https://script.google.com/macros/library/d/1FVGPQ7kJA3WOrvgggjN9GCze4M-cBhuB2r6zpc4JkGLELbFjLRsWyoJ2/1", {  // <-- Use your actual Web App URL
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, role })
@@ -178,11 +181,12 @@
     .then(response => response.json())
     .then(data => {
         console.log("Response from server:", data);
-        if (data.success) {
-            showSuccess(data.message);
-            setTimeout(() => { window.location.href = "login.html"; }, 3000);
+
+        if (data.status === "Success") {
+            showSuccess("Signup successful! Redirecting...");
+            setTimeout(() => window.location.href = "login.html", 3000);
         } else {
-            showError(data.message);
+            showError("Signup failed: " + data.message);
         }
     })
     .catch(error => {
@@ -191,20 +195,18 @@
     });
 });
 
-// Error message function
+// Function to show error message
 function showError(message) {
     let errorMessage = document.getElementById("errorMessage");
     errorMessage.innerText = message;
     errorMessage.style.display = "block";
-    setTimeout(() => { errorMessage.style.display = "none"; }, 3000);
 }
 
-// Success message function
+// Function to show success message
 function showSuccess(message) {
     let successMessage = document.getElementById("successMessage");
     successMessage.innerText = message;
     successMessage.style.display = "block";
-    setTimeout(() => { successMessage.style.display = "none"; }, 3000);
 }
 
     </script>
