@@ -34,3 +34,6 @@ build/
 .clasp.json
 # Temporary JSON Data
 data/*.json
+# Deployment Configs
+.vercel/
+.netlify/
