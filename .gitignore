@@ -30,3 +30,5 @@ build/
 
 # Ignore Google Sheets backup (if exported)
 *.gsheet
+# Google Apps Script
+.clasp.json
