@@ -149,7 +149,7 @@
 
     <script>
     document.getElementById("signupForm").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
     let name = document.getElementById("name").value.trim();
     let email = document.getElementById("email").value.trim();
@@ -159,29 +159,14 @@
     let errorMessage = document.getElementById("errorMessage");
     let successMessage = document.getElementById("successMessage");
 
-    // Reset messages
     errorMessage.style.display = "none";
     successMessage.style.display = "none";
 
-    // Validation
-    if (!name) {
-        showError("Full Name is required.");
-        return;
-    }
-    if (!email) {
-        showError("Email Address is required.");
-        return;
-    }
-    if (!password) {
-        showError("Password is required.");
-        return;
-    }
-    if (!role) {
-        showError("Please select a role.");
+    if (!name || !email || !password || !role) {
+        showError("All fields are required.");
         return;
     }
 
-    // Show loading message
     successMessage.innerText = "Submitting...";
     successMessage.style.display = "block";
 
@@ -190,17 +175,14 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, role })
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
         console.log("Response from server:", data);
-
-        if (data.includes("Success")) {
-            showSuccess("Signup successful! Redirecting...");
-            setTimeout(() => {
-                window.location.href = "login.html"; // Redirect after success
-            }, 3000);
+        if (data.success) {
+            showSuccess(data.message);
+            setTimeout(() => { window.location.href = "login.html"; }, 3000);
         } else {
-            showError("Signup failed. Please try again.");
+            showError(data.message);
         }
     })
     .catch(error => {
@@ -209,26 +191,20 @@
     });
 });
 
-// Function to show error message
+// Error message function
 function showError(message) {
     let errorMessage = document.getElementById("errorMessage");
     errorMessage.innerText = message;
     errorMessage.style.display = "block";
-
-    setTimeout(() => {
-        errorMessage.style.display = "none";
-    }, 3000);
+    setTimeout(() => { errorMessage.style.display = "none"; }, 3000);
 }
 
-// Function to show success message
+// Success message function
 function showSuccess(message) {
     let successMessage = document.getElementById("successMessage");
     successMessage.innerText = message;
     successMessage.style.display = "block";
-
-    setTimeout(() => {
-        successMessage.style.display = "none";
-    }, 3000);
+    setTimeout(() => { successMessage.style.display = "none"; }, 3000);
 }
 
     </script>
