@@ -173,7 +173,7 @@
     successMessage.innerText = "Submitting...";
     successMessage.style.display = "block";
 
-    fetch("https://script.google.com/macros/library/d/1FVGPQ7kJA3WOrvgggjN9GCze4M-cBhuB2r6zpc4JkGLELbFjLRsWyoJ2/1", {  // <-- Use your actual Web App URL
+    fetch("https://script.google.com/macros/s/AKfycbzgx1BFmSxr5jftGYcQkZvD1EN0QHdyQR-f18fphLe7Caa-aUPYOo3DSo9X_8yVTBkP/exec", {  // <-- Use your actual Web App URL
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password, role })
