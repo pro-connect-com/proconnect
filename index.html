@@ -178,11 +178,12 @@
     let formData = { name, email, password, role };
 
     try {
-        let response = await fetch("https://script.google.com/macros/library/d/1FVGPQ7kJA3WOrvgggjN9GCze4M-cBhuB2r6zpc4JkGLELbFjLRsWyoJ2/1", { 
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-        });
+        let response = await fetch("https://script.google.com/macros/s/AKfycbzgx1BFmSxr5jftGYcQkZvD1EN0QHdyQR-f18fphLe7Caa-aUPYOo3DSo9X_8yVTBkP/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+});
+
 
         let data = await response.json(); // Parse JSON response
 
