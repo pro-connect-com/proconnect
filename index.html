@@ -148,10 +148,9 @@
 <p id="successMessage" style="display:none; color: green; font-weight: bold; margin-top: 10px;"></p>
 
     <script>
-     document.getElementById("signupForm").addEventListener("submit", function(event) {
+     document.getElementById("signupForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
-    // Get form values
     let name = document.getElementById("name").value.trim();
     let email = document.getElementById("email").value.trim();
     let password = document.getElementById("password").value.trim();
@@ -182,13 +181,24 @@
         return;
     }
 
-    // Send data to Google Sheets using Google Apps Script Web App
-    fetch("https://script.google.com/macros/s/AKfycbzgx1BFmSxr5jftGYcQkZvD1EN0QHdyQR-f18fphLe7Caa-aUPYOo3DSo9X_8yVTBkP/exec", { 
+    // Prepare data for submission
+    let formData = {
+        name: name,
+        email: email,
+        password: password,
+        role: role
+    };
+
+    // Send data to Google Apps Script
+    fetch("YOUR_GOOGLE_SCRIPT_URL", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, role })
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
     })
-    .then(response => response.json()) // Expect JSON response
+    .then(response => response.json())
     .then(data => {
         if (data.status === "success") {
             showSuccess("Signup successful! Redirecting...");
@@ -196,35 +206,14 @@
                 window.location.href = "login.html"; // Redirect after success
             }, 3000);
         } else {
-            showError(data.message); // Show error if failed
+            showError("Signup failed. Please try again.");
         }
     })
-    .catch(error => showError("Error connecting to the server."));
+    .catch(error => {
+        showError("Error connecting to the server.");
+        console.error("Error:", error);
+    });
 });
-
-// Function to show error message
-function showError(message) {
-    let errorMessage = document.getElementById("errorMessage");
-    errorMessage.innerText = message;
-    errorMessage.style.display = "block";
-
-    // Fade out after 3 seconds
-    setTimeout(() => {
-        errorMessage.style.display = "none";
-    }, 3000);
-}
-
-// Function to show success message
-function showSuccess(message) {
-    let successMessage = document.getElementById("successMessage");
-    successMessage.innerText = message;
-    successMessage.style.display = "block";
-
-    // Fade out after 3 seconds
-    setTimeout(() => {
-        successMessage.style.display = "none";
-    }, 3000);
-}
 
     </script>
 </body>
