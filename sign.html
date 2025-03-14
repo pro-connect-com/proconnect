@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#008000"> <!-- Green Theme for Browser -->
+    <title>ProConnect - Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            background: #f9f9f9;
+        }
+
+        input:focus, select:focus {
+            border-color: #008000; /* Green Focus */
+            outline: none;
+        }
+
+        button {
+            background: #008000; /* Solid Green */
+            color: #fff;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #006400; /* Darker Green */
+        }
+
+        a {
+            color: #008000; /* Green Links */
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Success and Error Messages */
+        .message {
+            display: none;
+            font-weight: bold;
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .success {
+            background: rgba(0, 128, 0, 0.2); /* Faded Green */
+            color: #008000;
+        }
+
+        .error {
+            background: rgba(255, 0, 0, 0.2); /* Faded Red */
+            color: red;
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            input, select {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>ProConnect Signup</h2>
+    <div class="form-container">
+        <form id="signupForm" novalidate> <!-- Disable default validation -->
+            <input type="text" id="name" placeholder="Full Name">
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="password" id="password" placeholder="Password">
+            <select id="role">
+                <option value="" disabled selected>Select Role</option>
+                <option value="Seeker">Job Seeker</option>
+                <option value="Employer">Employer</option>
+            </select>
+            <button type="submit">Sign Up</button>
+        </form>
+
+        <!-- Messages -->
+        <p id="tempSuccessMessage" class="message success">Processing your signup...</p>
+        <p id="finalSuccessMessage" class="message success">Signup successful! Redirecting...</p>
+        <p id="errorMessage" class="message error"></p>
+    </div>
+
+    <a href="login.html">Login</a>
+    <a href="reset-password.html">Forgot Password?</a>
+<p id="errorMessage" style="display:none; color: red; font-weight: bold; margin-top: 10px;"></p>
+<p id="successMessage" style="display:none; color: green; font-weight: bold; margin-top: 10px;"></p>
+
+    <script>
+     document.getElementById("signupForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Get form values
+    let name = document.getElementById("name").value.trim();
+    let email = document.getElementById("email").value.trim();
+    let password = document.getElementById("password").value.trim();
+    let role = document.getElementById("role").value;
+
+    let errorMessage = document.getElementById("errorMessage");
+    let successMessage = document.getElementById("successMessage");
+
+    // Reset previous messages
+    errorMessage.style.display = "none";
+    successMessage.style.display = "none";
+
+    // Validation checks
+    if (!name) {
+        showError("Full Name is required.");
+        return;
+    }
+    if (!email) {
+        showError("Email Address is required.");
+        return;
+    }
+    if (!password) {
+        showError("Password is required.");
+        return;
+    }
+    if (!role) {
+        showError("Please select a role.");
+        return;
+    }
+
+    // Send data to Google Sheets using Google Apps Script Web App
+    fetch("https://script.google.com/macros/s/AKfycbzgx1BFmSxr5jftGYcQkZvD1EN0QHdyQR-f18fphLe7Caa-aUPYOo3DSo9X_8yVTBkP/exec", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role })
+    })
+    .then(response => response.json()) // Expect JSON response
+    .then(data => {
+        if (data.status === "success") {
+            showSuccess("Signup successful! Redirecting...");
+            setTimeout(() => {
+                window.location.href = "login.html"; // Redirect after success
+            }, 3000);
+        } else {
+            showError(data.message); // Show error if failed
+        }
+    })
+    .catch(error => showError("Error connecting to the server."));
+});
+
+// Function to show error message
+function showError(message) {
+    let errorMessage = document.getElementById("errorMessage");
+    errorMessage.innerText = message;
+    errorMessage.style.display = "block";
+
+    // Fade out after 3 seconds
+    setTimeout(() => {
+        errorMessage.style.display = "none";
+    }, 3000);
+}
+
+// Function to show success message
+function showSuccess(message) {
+    let successMessage = document.getElementById("successMessage");
+    successMessage.innerText = message;
+    successMessage.style.display = "block";
+
+    // Fade out after 3 seconds
+    setTimeout(() => {
+        successMessage.style.display = "none";
+    }, 3000);
+}
+
+    </script>
+</body>
+</html>
