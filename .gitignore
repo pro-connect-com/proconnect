@@ -37,3 +37,7 @@ data/*.json
 # Deployment Configs
 .vercel/
 .netlify/
+# React/Vue/Next.js build files
+.next/
+out/
+public/
