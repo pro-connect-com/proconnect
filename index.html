@@ -148,7 +148,7 @@
 <p id="successMessage" style="display:none; color: green; font-weight: bold; margin-top: 10px;"></p>
 
     <script>
-  document.getElementById("signupForm").addEventListener("submit", async function (event) {
+ document.getElementById("signupForm").addEventListener("submit", async function (event) {
     event.preventDefault(); // Stop default form submission
 
     // Get form values
@@ -157,12 +157,12 @@
     let password = document.getElementById("password").value.trim();
     let role = document.getElementById("role").value;
 
+    // Get message elements
     let errorMessage = document.getElementById("errorMessage");
-    let successMessage = document.getElementById("successMessage");
     let tempSuccessMessage = document.getElementById("tempSuccessMessage");
     let finalSuccessMessage = document.getElementById("finalSuccessMessage");
 
-    // Hide previous messages
+    // Hide all previous messages
     hideMessages();
 
     // Validation
@@ -178,21 +178,21 @@
     let formData = { name, email, password, role };
 
     try {
-        let response = await fetch("https://script.google.com/macros/s/AKfycbwFnqjH0Qxe422n9dt_dWK3Zk9qloJTtyK2i1lH3p0/dev", {
+        let response = await fetch("https://script.google.com/macros/s/AKfycbwFnqjH0Qxe422n9dt_dWK3Zk9qloJTtyK2i1lH3p0/dev", { 
             method: "POST",
-            mode: "cors", // Enables CORS
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData),
         });
 
         let data = await response.json(); // Parse JSON response
 
-        tempSuccessMessage.style.display = "none"; // Hide "Processing..." message
+        // Hide "Processing..." message
+        tempSuccessMessage.style.display = "none"; 
 
         if (data.success) {
-            finalSuccessMessage.style.display = "block"; // Show final success message
+            showSuccess("Signup successful! Redirecting...");
             setTimeout(() => {
-                hideMessages(); // Hide message
+                hideMessages();
                 window.location.href = "login.html"; // Redirect after success
             }, 3000);
         } else {
@@ -214,13 +214,23 @@ function showError(message) {
     setTimeout(() => { errorMessage.style.display = "none"; }, 3000);
 }
 
+// Function to show success message
+function showSuccess(message) {
+    let finalSuccessMessage = document.getElementById("finalSuccessMessage");
+    finalSuccessMessage.innerText = message;
+    finalSuccessMessage.style.display = "block";
+
+    // Auto-hide success message after 3s
+    setTimeout(() => { finalSuccessMessage.style.display = "none"; }, 3000);
+}
+
 // Function to hide all messages
 function hideMessages() {
     document.getElementById("errorMessage").style.display = "none";
-    document.getElementById("successMessage").style.display = "none";
     document.getElementById("tempSuccessMessage").style.display = "none";
     document.getElementById("finalSuccessMessage").style.display = "none";
 }
+
 </script>
 </body>
 </html>
