@@ -160,19 +160,19 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     let tempSuccessMessage = document.getElementById("tempSuccessMessage");
     let finalSuccessMessage = document.getElementById("finalSuccessMessage");
 
-    // Hide previous messages
+    // ✅ Hide previous messages
     hideMessages();
 
-    // Validation
+    // ✅ Validation
     if (!name) return showError("Full Name is required.");
     if (!email) return showError("Email Address is required.");
     if (!password) return showError("Password is required.");
     if (!role) return showError("Please select a role.");
 
-    // Show "Processing..." message
+    // ✅ Show "Processing..." message
     tempSuccessMessage.style.display = "block";
 
-    // Prepare data
+    // ✅ Prepare data
     let formData = { name, email, password, role };
 
     try {
@@ -183,16 +183,16 @@ document.getElementById("signupForm").addEventListener("submit", async function 
             body: JSON.stringify(formData),
         });
 
-        let data = await response.json(); // Parse JSON response
+        let data = await response.json(); // ✅ Parse JSON response
 
-        // Hide "Processing..." message
+        // ✅ Hide "Processing..." message
         tempSuccessMessage.style.display = "none"; 
 
         if (data.success) {
             showSuccess(`Signup successful! User ID: ${data.userId}, Timestamp: ${data.timestamp}`);
             setTimeout(() => {
                 hideMessages();
-                window.location.href = "login.html"; // Redirect after success
+                window.location.href = "login.html"; // ✅ Redirect after success
             }, 3000);
         } else {
             showError(data.message || "Signup failed.");
@@ -202,6 +202,34 @@ document.getElementById("signupForm").addEventListener("submit", async function 
         showError("Error connecting to the server.");
     }
 });
+
+// ✅ Function to show error message
+function showError(message) {
+    let errorMessage = document.getElementById("errorMessage");
+    errorMessage.innerText = message;
+    errorMessage.style.display = "block";
+
+    // Auto-hide error after 3s
+    setTimeout(() => { errorMessage.style.display = "none"; }, 3000);
+}
+
+// ✅ Function to show success message
+function showSuccess(message) {
+    let finalSuccessMessage = document.getElementById("finalSuccessMessage");
+    finalSuccessMessage.innerText = message;
+    finalSuccessMessage.style.display = "block";
+
+    // Auto-hide success message after 3s
+    setTimeout(() => { finalSuccessMessage.style.display = "none"; }, 3000);
+}
+
+// ✅ Function to hide all messages
+function hideMessages() {
+    document.getElementById("errorMessage").style.display = "none";
+    document.getElementById("tempSuccessMessage").style.display = "none";
+    document.getElementById("finalSuccessMessage").style.display = "none";
+}
+
 </script>
 </body>
 </html>
