@@ -32,3 +32,5 @@ build/
 *.gsheet
 # Google Apps Script
 .clasp.json
+# Temporary JSON Data
+data/*.json
