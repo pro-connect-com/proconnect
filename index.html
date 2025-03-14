@@ -148,9 +148,10 @@
 <p id="successMessage" style="display:none; color: green; font-weight: bold; margin-top: 10px;"></p>
 
     <script>
-    document.getElementById("signupForm").addEventListener("submit", function (event) {
+  document.getElementById("signupForm").addEventListener("submit", async function (event) {
     event.preventDefault(); // Prevent default form submission
 
+    // Get form values
     let name = document.getElementById("name").value.trim();
     let email = document.getElementById("email").value.trim();
     let password = document.getElementById("password").value.trim();
@@ -158,41 +159,49 @@
 
     let errorMessage = document.getElementById("errorMessage");
     let successMessage = document.getElementById("successMessage");
+    let tempSuccessMessage = document.getElementById("tempSuccessMessage");
+    let finalSuccessMessage = document.getElementById("finalSuccessMessage");
 
-    // Reset messages
+    // Reset previous messages
     errorMessage.style.display = "none";
     successMessage.style.display = "none";
+    tempSuccessMessage.style.display = "none";
+    finalSuccessMessage.style.display = "none";
 
-    // Validation
+    // Validation checks
     if (!name) return showError("Full Name is required.");
     if (!email) return showError("Email Address is required.");
     if (!password) return showError("Password is required.");
     if (!role) return showError("Please select a role.");
 
-    // Show loading message
-    successMessage.innerText = "Submitting...";
-    successMessage.style.display = "block";
+    // Show processing message
+    tempSuccessMessage.style.display = "block";
 
-    fetch("https://script.google.com/macros/s/AKfycbzgx1BFmSxr5jftGYcQkZvD1EN0QHdyQR-f18fphLe7Caa-aUPYOo3DSo9X_8yVTBkP/exec", {  // <-- Use your actual Web App URL
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, role })
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log("Response from server:", data);
+    // Prepare data
+    let formData = { name, email, password, role };
 
-        if (data.status === "Success") {
-            showSuccess("Signup successful! Redirecting...");
-            setTimeout(() => window.location.href = "login.html", 3000);
+    try {
+        let response = await fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_URL/exec", {
+            method: "POST",
+            mode: "cors", // Enables CORS
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+
+        let data = await response.json(); // Expect JSON response
+
+        tempSuccessMessage.style.display = "none"; // Hide processing message
+
+        if (data.success) {
+            finalSuccessMessage.style.display = "block"; // Show final success message
+            setTimeout(() => window.location.href = "login.html", 3000); // Redirect after 3s
         } else {
-            showError("Signup failed: " + data.message);
+            showError(data.message || "Signup failed.");
         }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        showError("Error connecting to server.");
-    });
+    } catch (error) {
+        tempSuccessMessage.style.display = "none";
+        showError("Error connecting to the server.");
+    }
 });
 
 // Function to show error message
@@ -200,15 +209,8 @@ function showError(message) {
     let errorMessage = document.getElementById("errorMessage");
     errorMessage.innerText = message;
     errorMessage.style.display = "block";
+    setTimeout(() => { errorMessage.style.display = "none"; }, 3000); // Auto-hide
 }
-
-// Function to show success message
-function showSuccess(message) {
-    let successMessage = document.getElementById("successMessage");
-    successMessage.innerText = message;
-    successMessage.style.display = "block";
-}
-
-    </script>
+   </script>
 </body>
 </html>
