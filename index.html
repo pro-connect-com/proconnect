@@ -148,7 +148,7 @@
 <p id="successMessage" style="display:none; color: green; font-weight: bold; margin-top: 10px;"></p>
 
     <script>
-     document.getElementById("signupForm").addEventListener("submit", function (event) {
+    document.getElementById("signupForm").addEventListener("submit", function (event) {
     event.preventDefault(); // Prevent default form submission
 
     let name = document.getElementById("name").value.trim();
@@ -159,11 +159,11 @@
     let errorMessage = document.getElementById("errorMessage");
     let successMessage = document.getElementById("successMessage");
 
-    // Reset previous messages
+    // Reset messages
     errorMessage.style.display = "none";
     successMessage.style.display = "none";
 
-    // Validation checks
+    // Validation
     if (!name) {
         showError("Full Name is required.");
         return;
@@ -181,26 +181,20 @@
         return;
     }
 
-    // Prepare data for submission
-    let formData = {
-        name: name,
-        email: email,
-        password: password,
-        role: role
-    };
+    // Show loading message
+    successMessage.innerText = "Submitting...";
+    successMessage.style.display = "block";
 
-    // Send data to Google Apps Script
-    fetch("YOUR_GOOGLE_SCRIPT_URL", {
+    fetch("YOUR_DEPLOYMENT_URL", {
         method: "POST",
-        mode: "cors",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role })
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(data => {
-        if (data.status === "success") {
+        console.log("Response from server:", data);
+
+        if (data.includes("Success")) {
             showSuccess("Signup successful! Redirecting...");
             setTimeout(() => {
                 window.location.href = "login.html"; // Redirect after success
@@ -210,10 +204,32 @@
         }
     })
     .catch(error => {
-        showError("Error connecting to the server.");
         console.error("Error:", error);
+        showError("Error connecting to server.");
     });
 });
+
+// Function to show error message
+function showError(message) {
+    let errorMessage = document.getElementById("errorMessage");
+    errorMessage.innerText = message;
+    errorMessage.style.display = "block";
+
+    setTimeout(() => {
+        errorMessage.style.display = "none";
+    }, 3000);
+}
+
+// Function to show success message
+function showSuccess(message) {
+    let successMessage = document.getElementById("successMessage");
+    successMessage.innerText = message;
+    successMessage.style.display = "block";
+
+    setTimeout(() => {
+        successMessage.style.display = "none";
+    }, 3000);
+}
 
     </script>
 </body>
