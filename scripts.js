@@ -72,7 +72,7 @@ document.getElementById("signupForm").addEventListener("submit", function(event)
                 window.location.href = "login.html"; // Redirect after success
             }, 3000);
         } else {
-            showError("Error: " + data.message); // Handle error if result isn't success
+            showError("Error: " + (data.message || "An unknown error occurred.")); // Handle error if result isn't success
         }
     })
     .catch(error => {
