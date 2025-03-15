@@ -54,7 +54,7 @@ document.getElementById("signupForm").addEventListener("submit", function(event)
     };
 
     // Google Apps Script URL for the backend (replace with your actual URL)
-    const scriptUrl = "https://script.google.com/macros/s/AKfycbwAss_q-nrGFCeWDL95R8ApzgjBmT2O1Sq3XyvtK5W5p-Bz16sMRTOAhx7Z01JEMxbZ/exec";
+    const scriptUrl = "https://script.google.com/macros/library/d/1FVGPQ7kJA3WOrvgggjN9GCze4M-cBhuB2r6zpc4JkGLELbFjLRsWyoJ2/3";
 
     // Send data to Google Sheets via Apps Script
     fetch(scriptUrl, {
