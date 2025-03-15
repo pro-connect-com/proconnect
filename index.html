@@ -4,240 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#008000"> <!-- Green Theme for Browser -->
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta name="robots" content="noindex, nofollow"> <!-- Prevent indexing during dev -->
+    <meta name="description" content="Sign up for ProConnect to start your professional journey.">
+    <meta name="author" content="ProConnect Team">
+    <meta name="keywords" content="signup, job seeker, employer, ProConnect, professional network, careers">
+    <meta property="og:title" content="ProConnect Signup">
+    <meta property="og:description" content="Join ProConnect to connect with professionals.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.proconnect.com/signup">
+    <meta property="og:image" content="https://www.proconnect.com/assets/logo.png">
+    <meta property="og:image:secure_url" content="https://www.proconnect.com/assets/logo.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <title>ProConnect - Signup</title>
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'League Spartan', sans-serif;
-        }
-
-        body {
-            background: #ffffff;
-            color: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
-
-        h2 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 15px;
-        }
-
-        .form-container {
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            background: #fff;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 16px;
-            background: #f9f9f9;
-        }
-
-        input:focus, select:focus {
-            border-color: #008000; /* Green Focus */
-            outline: none;
-        }
-
-        button {
-            background: #008000; /* Solid Green */
-            color: #fff;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 6px;
-            margin-top: 15px;
-            transition: background 0.3s;
-        }
-
-        button:hover {
-            background: #006400; /* Darker Green */
-        }
-
-        a {
-            color: #008000; /* Green Links */
-            text-decoration: none;
-            font-size: 14px;
-            display: block;
-            margin-top: 10px;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Success and Error Messages */
-        .message {
-            display: none;
-            font-weight: bold;
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .success {
-            background: rgba(0, 128, 0, 0.2); /* Faded Green */
-            color: #008000;
-        }
-
-        .error {
-            background: rgba(255, 0, 0, 0.2); /* Faded Red */
-            color: red;
-        }
-
-        @media (max-width: 480px) {
-            .form-container {
-                padding: 20px;
-            }
-
-            input, select {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            button {
-                font-size: 14px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"> <!-- External CSS Link -->
 </head>
 <body>
-    <h2>ProConnect Signup</h2>
     <div class="form-container">
-        <form id="signupForm" novalidate> <!-- Disable default validation -->
-            <input type="text" id="name" placeholder="Full Name">
-            <input type="email" id="email" placeholder="Email Address">
-            <input type="password" id="password" placeholder="Password">
-            <select id="role">
+        <h2>ProConnect Signup</h2>
+        <form id="signupForm" novalidate>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="email" id="email" placeholder="Email or Phone Number" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <select id="role" required>
                 <option value="" disabled selected>Select Role</option>
                 <option value="Seeker">Job Seeker</option>
                 <option value="Employer">Employer</option>
             </select>
+            <select id="county" required>
+                <option value="" disabled selected>Select County</option>
+                <!-- County options will be populated via JS -->
+            </select>
             <button type="submit">Sign Up</button>
         </form>
-
-        <!-- Messages -->
-        <p id="tempSuccessMessage" class="message success">Processing your signup...</p>
-        <p id="finalSuccessMessage" class="message success">Signup successful! Redirecting...</p>
+        
+        <!-- Success and Error Messages -->
         <p id="errorMessage" class="message error"></p>
+        <p id="successMessage" class="message success"></p>
+        
+        <a href="login.html">Already have an account? Login</a>
+        <a href="reset-password.html">Forgot Password?</a>
     </div>
-
-    <a href="login.html">Login</a>
-    <a href="reset-password.html">Forgot Password?</a>
-<p id="errorMessage" style="display:none; color: red; font-weight: bold; margin-top: 10px;"></p>
-<p id="successMessage" style="display:none; color: green; font-weight: bold; margin-top: 10px;"></p>
-
-    <script>
-// ✅ Function to hide all messages (Define this first!)
-function hideMessages() {
-    let errorMessage = document.getElementById("errorMessage");
-    let tempSuccessMessage = document.getElementById("tempSuccessMessage");
-    let finalSuccessMessage = document.getElementById("finalSuccessMessage");
-
-    if (errorMessage) errorMessage.style.display = "none";
-    if (tempSuccessMessage) tempSuccessMessage.style.display = "none";
-    if (finalSuccessMessage) finalSuccessMessage.style.display = "none";
-}
-
-// ✅ Main form event listener
-document.getElementById("signupForm").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Stop default form submission
-
-    let name = document.getElementById("name").value.trim();
-    let email = document.getElementById("email").value.trim();
-    let password = document.getElementById("password").value.trim();
-    let role = document.getElementById("role").value;
-
-    let errorMessage = document.getElementById("errorMessage");
-    let tempSuccessMessage = document.getElementById("tempSuccessMessage");
-    let finalSuccessMessage = document.getElementById("finalSuccessMessage");
-
-    // ✅ Hide previous messages (Now it exists)
-    hideMessages();
-
-    // ✅ Validation
-    if (!name) return showError("Full Name is required.");
-    if (!email) return showError("Email Address is required.");
-    if (!password) return showError("Password is required.");
-    if (!role) return showError("Please select a role.");
-
-    // ✅ Show "Processing..." message
-    tempSuccessMessage.style.display = "block";
-
-    // ✅ Prepare data
-    let formData = { name, email, password, role };
-
-    try {
-        let response = await fetch("https://script.google.com/macros/s/AKfycbwFWX5I6nT5YkwKMtD3bWKJQBS5EIhDNxxXj7K1i8uGa2VKCBGCTD2SA1NgiwSANHcm/exec", {
-            method: "POST",
-            mode: "cors", // ✅ Ensure CORS is enabled
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-        });
-
-        let data = await response.json(); // ✅ Parse JSON response
-
-        // ✅ Hide "Processing..." message
-        tempSuccessMessage.style.display = "none"; 
-
-        if (data.success) {
-            showSuccess(`Signup successful! User ID: ${data.userId}, Timestamp: ${data.timestamp}`);
-            setTimeout(() => {
-                hideMessages();
-                window.location.href = "login.html"; // ✅ Redirect after success
-            }, 3000);
-        } else {
-            showError(data.message || "Signup failed.");
-        }
-    } catch (error) {
-        tempSuccessMessage.style.display = "none";
-        showError("Error connecting to the server.");
-    }
-});
-
-// ✅ Function to show error message
-function showError(message) {
-    let errorMessage = document.getElementById("errorMessage");
-    if (errorMessage) {
-        errorMessage.innerText = message;
-        errorMessage.style.display = "block";
-
-        // Auto-hide error after 3s
-        setTimeout(() => { errorMessage.style.display = "none"; }, 3000);
-    }
-}
-
-// ✅ Function to show success message
-function showSuccess(message) {
-    let finalSuccessMessage = document.getElementById("finalSuccessMessage");
-    if (finalSuccessMessage) {
-        finalSuccessMessage.innerText = message;
-        finalSuccessMessage.style.display = "block";
-
-        // Auto-hide success message after 3s
-        setTimeout(() => { finalSuccessMessage.style.display = "none"; }, 3000);
-    }
-}
-</script>
+    <script src="scripts.js"></script> <!-- External JS Link -->
 </body>
 </html>
