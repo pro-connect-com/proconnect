@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ProConnect - Get Matched with the Best Jobs Based on Your Skills">
+  <meta name="keywords" content="jobs, skills, hiring, career, employment">
+  <meta name="author" content="ProConnect Team">
+  
+  <!-- Favicon & Icons -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Spartan Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- CSS -->
+<!-- Ionicons CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons.min.css">
+
+  <link rel="stylesheet" href="style.css">
+  <title>ProConnect | Find Jobs Smartly</title>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="ProConnect Logo" class="logo-img"> <!-- Logo PNG Optional -->
+    <span>ProConnect</span>
+  </div>
+  
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">How It Works</a></li>
+      <li><a href="#">Jobs</a></li>
+      <li><a href="#">Contact Us</a></li>
+    </ul>
+  </nav>
+  
+  <div class="auth-buttons">
+    <a href="login.html" class="btn">Login</a>
+    <a href="signup.html" class="btn primary">Join</a>
+  </div>
+
+  <!-- Mobile Menu Icon -->
+  <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+
+
+
+<section class="hero">
+  <div class="hero-image">
+    <img src="connect.png" alt="ProConnect Job Matching">
+  </div>
+  <div class="hero-content">
+    <h1>Find the Right Job, Faster!</h1>
+    <p>Join thousands of professionals connecting with the right opportunities.</p>
+    <a href="signup.html" class="btn primary">Join Now</a>
+  </div>
+</section>
+
+
+
+
+<section class="how-it-works">
+  <h2>How ProConnect Works</h2>
+  <div class="steps">
+    <div class="step">
+      <span class="step-number">1</span>
+      <h3>Create an Account</h3>
+      <p>Sign up and set up your profile with your skills and experience.</p>
+    </div>
+    <div class="step">
+      <span class="step-number">2</span>
+      <h3>Get Job Matches</h3>
+      <p>We automatically suggest jobs based on your skills.</p>
+    </div>
+    <div class="step">
+      <span class="step-number">3</span>
+      <h3>Apply & Get Hired</h3>
+      <p>Apply for jobs, connect with employers, and grow your career.</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+<section class="job-categories">
+    <h2>Explore Job Categories</h2>
+    
+    <div class="categories-grid">
+        <!-- Default Visible Categories -->
+        <div class="category">
+            <h2>Herding</h2>
+            <p>Jobs related to livestock care and management.</p>
+        </div>
+        <div class="category">
+            <h2>Mechanics</h2>
+            <p>Automotive and machinery repair jobs.</p>
+        </div>
+
+        <!-- Hidden Categories (Initially Hidden) -->
+        <div class="category hidden">
+            <h2>Construction (Mjengo)</h2>
+            <p>Building, masonry, and architecture jobs.</p>
+        </div>
+        <div class="category hidden">
+            <h2>Plumbing</h2>
+            <p>Water system and pipeline installation jobs.</p>
+        </div>
+        <div class="category hidden">
+            <h2>Electricians</h2>
+            <p>Jobs in power and electrical wiring.</p>
+        </div>
+        <div class="category hidden">
+            <h2>Farming</h2>
+            <p>Agriculture, planting, and livestock-related work.</p>
+        </div>
+        <div class="category hidden">
+            <h2>Security</h2>
+            <p>Jobs in private security, bouncers, and watchmen.</p>
+        </div>
+        <div class="category hidden">
+            <h2>Cleaning & Housekeeping</h2>
+            <p>Home and office cleaning jobs.</p>
+        </div>
+        <div class="category hidden">
+            <h2>Casual Labor</h2>
+            <p>Daily wage jobs in warehouses, transport, and more.</p>
+        </div>
+    </div>
+
+    <button id="toggleCategories">Explore More</button>
+</section>
+
+
+<!-- Testimonials Section -->
+<div class="container" id="testimonials-container">
+    <h2 style="text-align: center; color: #1a73e8;">What Our Users Say</h2>
+    <div class="testimonials">
+        <!-- Dynamic Testimonials will be inserted here -->
+<button id="toggleCategories" onclick="window.open('testimo.html', '_self')">They Say...</button>
+
+    </div>
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+<button id="backToTop" onclick="scrollToTop()">
+  <ion-icon name="arrow-up-circle-outline"></ion-icon> <!-- Ionicon for "Arrow Up" -->
+</button>
+
+
+
+<!-- JS -->
+<script>
+    // Fetch and load testimonials from testimo.html dynamically
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("testimo.html")
+            .then(response => response.text())
+            .then(data => {
+                // Insert the fetched content into the testimonials section
+                document.getElementById("testimonials-container").innerHTML = data;
+            })
+            .catch(error => console.error("Error loading testimonials:", error));
+    });
+const backToTopButton = document.getElementById('backToTop');
+
+window.onscroll = function() {
+  if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+    backToTopButton.style.display = 'block';
+  } else {
+    backToTopButton.style.display = 'none';
+  }
+};
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+</script>
+
+
+<script src="responsive.js"></script>
+<script src="anim.js"></script>
+<script src="auth.js"></script>
+<script src="ex.js"></script>
+<script src="test.js"></script>
+
+</body>
+</html>

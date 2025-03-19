@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#008000">
+    <meta name="description" content="Enter your reset token and create a new password.">
+    <meta name="keywords" content="ProConnect, Password Reset, Secure Access">
+    <meta name="author" content="ProConnect Team">
+
+    <!-- Open Graph (For social media sharing) -->
+    <meta property="og:title" content="ProConnect - Set New Password">
+    <meta property="og:description" content="Enter your reset token and create a new password for ProConnect.">
+    <meta property="og:image" content="assets/logo.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://proconnect.example.com/input-new-credentials">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ProConnect - Set New Password">
+    <meta name="twitter:description" content="Securely reset your password by entering the token sent to your email.">
+    <meta name="twitter:image" content="assets/logo.png">
+    
+    <title>ProConnect - Set New Password</title>
+    <link rel="icon" href="proconnect logo-Photoroom.png" type="image/x-icon">
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600&display=swap">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'League Spartan', sans-serif; }
+        body {
+            background-color: #fff; color: #000;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; padding: 20px;
+            transition: background 0.5s, color 0.5s;
+        }
+        .form-container {
+            width: 100%; max-width: 400px; background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            text-align: center; transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .form-container:hover { transform: scale(1.02); box-shadow: 0 6px 25px rgba(0, 0, 0, 0.7); }
+        h2 { font-size: 28px; font-weight: 600; margin-bottom: 15px; }
+        input {
+            width: 100%; padding: 12px; margin: 10px 0;
+            border: 1px solid #ddd; border-radius: 6px; font-size: 16px;
+            background: #f9f9f9; transition: all 0.3s;
+        }
+        input:focus { border-color: #008000; outline: none; }
+        button {
+            background: #008000; color: #fff; border: none;
+            padding: 12px; width: 100%; font-size: 16px; cursor: pointer;
+            border-radius: 50px; margin-top: 15px;
+            transition: background 0.3s, transform 0.2s;
+        }
+        button:hover { background: #006400; transform: scale(1.005); }
+        .message {
+            display: none; font-weight: 200px; margin-top: 15px;
+            padding: 10px; border-radius: 50px; text-align: center;
+        }
+        .success { background: rgba(0, 128, 0, 0.2); color: #008000; }
+        .error { background: rgba(255, 0, 0, 0.2); color: red; }
+        .links { margin-top: 15px; font-size: 14px; }
+        .links a {
+            color: #008000; text-decoration: none; transition: color 0.3s ease-in-out;
+        }
+        .links a:hover { color: #006400; text-decoration: underline; }
+        @media (max-width: 768px) { .form-container { max-width: 85%; } }
+        @media (max-width: 480px) {
+            .form-container { max-width: 90%; padding: 20px; }
+            h2 { font-size: 24px; } input, button { font-size: 14px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Set New Password</h2>
+        <form id="newPasswordForm" novalidate>
+            <input type="text" id="token" placeholder="Enter reset token">
+            <input type="password" id="newPassword" placeholder="Enter new password">
+            <button type="submit">Update Password</button>
+            <p class="message success" id="successMessage"></p>
+            <p class="message error" id="errorMessage"></p>
+        </form>
+        <div class="links">
+            <p>Back to <a href="login.html">Login</a></p>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const form = document.getElementById("newPasswordForm");
+        const errorMessage = document.getElementById("errorMessage");
+        const successMessage = document.getElementById("successMessage");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            let token = document.getElementById("token").value.trim();
+            let newPassword = document.getElementById("newPassword").value.trim();
+
+            if (token.length < 6) {
+                showMessage(errorMessage, "Invalid token!", "error");
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showMessage(errorMessage, "Password must be at least 6 characters!", "error");
+                return;
+            }
+
+            showMessage(successMessage, "Password updated successfully!", "success");
+
+            // Simulate updating password
+            setTimeout(() => {
+                window.location.href = "login.html"; 
+            }, 3000);
+        });
+
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.style.display = "block";
+            setTimeout(() => { element.style.display = "none"; }, 3000);
+        }
+    });
+    </script>
+
+</body>
+<script src="auth.js" defer></script>
+</html>

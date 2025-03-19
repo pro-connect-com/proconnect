@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ProConnect - A social platform connecting job seekers with clients.">
+    <meta name="keywords" content="ProConnect, jobs, hiring, job seekers, clients">
+    <meta name="author" content="ProConnect Team">
+    <title>ProConnect Testimonials</title>
+    
+    <!-- Google Fonts (League Spartan) -->
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="icon" type="image/png" href="logo.png">
+
+    <style>
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'League Spartan', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #202124;
+            text-align: center;
+        }
+
+        /* Testimonials Section */
+        .testimonials-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .testimonial-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .testimonial {
+            min-width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .testimonial img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .testimonial p {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .testimonial h3 {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #1a73e8;
+        }
+
+        /* Navigation Dots */
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .controls span {
+            width: 12px;
+            height: 12px;
+            margin: 5px;
+            background: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .controls span.active {
+            background: #1a73e8;
+        }
+#backButton {
+  position: fixed; /* Fixed positioning to stay in place even when scrolling */
+  left: 0; /* Aligns the button to the right edge of the screen */
+  top: 50%; /* Positions the button vertically in the center of the screen */
+  transform: translateY(-50%); /* Adjusts the position to center it vertically */
+  background-color: #4285F4; /* Button background color */
+  color: white; /* Text color */
+  padding: 10px 20px; /* Padding inside the button */
+  border: 2px solid #4285F4; /* Border matches background color */
+  border-radius:  0 50px 50px; /* No border-radius on right, 50px on left */
+  font-size: 16px; /* Adjust font size as necessary */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+  font-family: 'League Spartan', sans-serif;
+}
+
+#backButton:hover {
+  background-color: #357ae8; /* Slightly darker shade of the button color on hover */
+  transform: scale(1.05); /* Slight scale effect on hover */
+}
+
+
+        /* Arrows */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            
+            padding: 10px;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .prev:hover, .next:hover {
+            background: rgba(0,0,0,0.3);
+        }
+
+        .prev { left: 10px; }
+        .next { right: 10px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="testimonials-container">
+        <h2 style="color: #1a73e8;">What Our Users Say</h2>
+        <div class="testimonial-wrapper">
+            <div class="testimonial">
+                <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User 1">
+                <p>"ProConnect helped me land my dream job in IT! Highly recommend!"</p>
+                <h3>- John Doe</h3>
+            </div>
+            <div class="testimonial">
+                <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="User 2">
+                <p>"I got connected to a farming gig within days! Love it!"</p>
+                <h3>- Mary Jane</h3>
+            </div>
+            <div class="testimonial">
+                <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="User 3">
+                <p>"Amazing platform! Found a great construction job easily!"</p>
+                <h3>- Alex Smith</h3>
+            </div>
+        </div>
+
+        <span class="prev">&#10094;</span>
+        <span class="next">&#10095;</span>
+
+        <div class="controls"></div>
+    </div>
+<button id="backButton">Back</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let index = 0;
+            const slides = document.querySelector(".testimonial-wrapper");
+            const testimonials = document.querySelectorAll(".testimonial");
+            const dotsContainer = document.querySelector(".controls");
+            const prevBtn = document.querySelector(".prev");
+            const nextBtn = document.querySelector(".next");
+
+            // Create navigation dots
+            testimonials.forEach((_, i) => {
+                const dot = document.createElement("span");
+                dot.dataset.index = i;
+                if (i === 0) dot.classList.add("active");
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = document.querySelectorAll(".controls span");
+
+            function updateSlide() {
+                slides.style.transform = `translateX(-${index * 100}%)`;
+                dots.forEach(dot => dot.classList.remove("active"));
+                dots[index].classList.add("active");
+            }
+
+            function autoScroll() {
+                index = (index + 1) % testimonials.length;
+                updateSlide();
+            }
+
+            let interval = setInterval(autoScroll, 4000);
+
+            dots.forEach(dot => {
+                dot.addEventListener("click", function () {
+                    clearInterval(interval);
+                    index = parseInt(this.dataset.index);
+                    updateSlide();
+                    interval = setInterval(autoScroll, 4000);
+                });
+            });
+
+            prevBtn.addEventListener("click", function () {
+                clearInterval(interval);
+                index = index === 0 ? testimonials.length - 1 : index - 1;
+                updateSlide();
+                interval = setInterval(autoScroll, 4000);
+            });
+
+            nextBtn.addEventListener("click", function () {
+                clearInterval(interval);
+                index = (index + 1) % testimonials.length;
+                updateSlide();
+                interval = setInterval(autoScroll, 4000);
+            });
+
+        });
+    </script>
+<script>document.getElementById('backButton').onclick = function() {
+  window.history.back(); // Goes to the previous page in the browser history
+};
+</script>
+<script src="responsive.js"></script>
+<script src="anim.js"></script>
+<script src="auth.js"></script>
+<script src="ex.js"></script>
+<script src="test.js"></script>
+</body>
+</html>

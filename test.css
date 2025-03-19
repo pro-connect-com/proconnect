@@ -1,0 +1,115 @@
+/* some test styles*/
+/* General Fixes */
+section {
+    margin-bottom: 30px; /* Adds better spacing between sections */
+}
+
+/* Job Listings */
+.jobs-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); /* Better sizing */
+    gap: 20px;
+    padding: 10px;
+}
+
+.job-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.job-box:hover {
+    transform: scale(1.04);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Apply Button */
+.apply-btn {
+    background: green;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.apply-btn:hover {
+    background: darkgreen;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* View More Updates Button */
+.view-more-btn {
+    background: red;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-more-btn:hover {
+    background: darkred;
+}
+
+/* Updates Section */
+.updates-section {
+    padding: 15px;
+}
+
+.update-box {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.update-box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .job-box {
+        padding: 15px;
+    }
+
+    .apply-btn {
+        padding: 7px 12px;
+        font-size: 13px;
+    }
+
+    .view-more-btn {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .updates-section, .jobs-container {
+        padding: 5px;
+    }
+
+    .job-box {
+        padding: 12px;
+    }
+
+    .apply-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .view-more-btn {
+        padding: 4px 9px;
+        font-size: 11px;
+    }
+}
+

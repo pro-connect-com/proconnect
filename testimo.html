@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ProConnect - A social platform connecting job seekers with clients.">
+    <meta name="keywords" content="ProConnect, jobs, hiring, job seekers, clients">
+    <meta name="author" content="ProConnect Team">
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="ProConnect - Connecting Job Seekers with Clients">
+    <meta property="og:description" content="ProConnect is a social platform that connects job seekers with clients.">
+    <meta property="og:image" content="logo.png"> <!-- Assumes logo.png is in the same folder -->
+    <meta property="og:url" content="https://www.proconnect.com">
+    <meta property="og:type" content="website">
+    <!-- Robots Meta Tag -->
+    <meta name="robots" content="index, follow">
+    <!-- Favicon -->
+    <link rel="icon" href="logo.png" type="image/png">
+    <!-- League Spartan Font -->
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>ProConnect Testimonials</title>
+    <style>
+        /* Apply League Spartan Font */
+        body {
+            font-family: 'League Spartan', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #202124;
+        }
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #4285F4;
+}
+
+.logo-img {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
+
+        /* Container Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .testimonial-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .testimonial-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card h3 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #1a73e8;
+        }
+#toggleCategories {
+  position: fixed; /* Fixed positioning ensures the button stays in place even when scrolling */
+  left: 0; /* Aligns the button to the left edge of the screen */
+  top: 50%; /* Positions the button vertically in the center of the screen */
+  transform: translateY(-50%); /* Adjusts the position to exactly center vertically */
+  background-color: #4285F4; /* Button background color */
+  color: white; /* Text color */
+  padding: 10px 20px; /* Padding inside the button */
+  border: 2px solid #4285F4; /* Border matches background color */
+  border-radius: 0 50px 50px 0; /* No border-radius on left, 50px on right */
+  font-size: 16px; /* Adjust font size as necessary */
+  font-family: 'League Spartan', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+}
+
+#toggleCategories:hover {
+  background-color: #e6e6ff; /* Slightly darker shade of the button color on hover */
+  transform: scale(1.05); /* Slight scale effect on hover */
+  font-weight: 900;
+  color: #00004d;
+  border: 2px solid #e6e6ff;
+}
+
+#back {
+  position: fixed; /* Fixed positioning to stay in place even when scrolling */
+  right: 0; /* Aligns the button to the right edge of the screen */
+  top: 50%; /* Positions the button vertically in the center of the screen */
+  transform: translateY(-50%); /* Adjusts the position to center it vertically */
+  background-color: #4285F4; /* Button background color */
+  color: white; /* Text color */
+  padding: 10px 20px; /* Padding inside the button */
+  border: 2px solid #4285F4; /* Border matches background color */
+  border-radius: 50px 0 0 50px; /* No border-radius on right, 50px on left */
+  font-size: 16px; /* Adjust font size as necessary */
+ font-family: 'League Spartan', sans-serif;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
+}
+
+#back:hover {
+  background-color: #357ae8; /* Slightly darker shade of the button color on hover */
+  transform: scale(1.05); /* Slight scale effect on hover */
+}
+
+
+        .testimonial-card p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .testimonial-card .rating {
+            color: #ffc107;
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .testimonial-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <div class="logo">
+    <img src="logo.png" alt="ProConnect Logo" class="logo-img"> <!-- Logo PNG Optional -->
+    <span>ProConnect</span>
+  </div>
+           
+
+    <!-- Testimonials Section -->
+    <div class="container">
+        <h2 style="text-align: center; color: #1a73e8;">What Our Users Say</h2>
+        <div class="testimonials">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <img src="antoh.jpg" alt="User 1">
+                <h3>John Doe</h3>
+                <p>"ProConnect has helped me find the perfect job. The platform is easy to use and very efficient."</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <img src="host.jpg" alt="User 2">
+                <h3>Jane Smith</h3>
+                <p>"I love how ProConnect connects me with clients. It's a game-changer for freelancers like me."</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <img src="logo.png" alt="User 3">
+                <h3>Mike Johnson</h3>
+                <p>"The best platform for job seekers. I highly recommend ProConnect to anyone looking for work."</p>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <button id="toggleCategories" class="btn primary" onclick="window.open('for.html', '_self')">more</button>
+   <button id="back">Back</button>
+
+
+    <script>
+        // Toggle Menu Function
+        function toggleMenu() {
+            const navLinks = document.getElementById("nav-mobile");
+            const menuIcon = document.getElementById("menuIcon");
+            navLinks.classList.toggle("active");
+            if (navLinks.classList.contains("active")) {
+                menuIcon.textContent = "close";
+            } else {
+                menuIcon.textContent = "menu";
+            }
+        }
+
+        // Dark Mode Toggle
+        document.addEventListener("DOMContentLoaded", function() {
+            const darkModeToggle = document.getElementById("darkModeToggle");
+
+            // Check for dark mode preference
+            if (localStorage.getItem("darkMode") === "enabled") {
+                document.body.classList.add("dark-mode");
+                darkModeToggle.checked = true;
+            }
+
+            // Toggle dark mode
+            darkModeToggle.addEventListener("change", function() {
+                if (this.checked) {
+                    document.body.classList.add("dark-mode");
+                    localStorage.setItem("darkMode", "enabled");
+                } else {
+                    document.body.classList.remove("dark-mode");
+                    localStorage.setItem("darkMode", "disabled");
+                }
+            });
+        });
+</script>
+<script>
+
+document.getElementById('backButton').onclick = function() {
+  window.history.back(); // Goes to the previous page in the browser history
+};
+
+    </script>
+
+
+<script src="responsive.js"></script>
+<script src="anim.js"></script>
+<script src="auth.js"></script>
+<script src="ex.js"></script>
+<script src="test.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ProConnect - Connecting Professionals">
+    <meta name="keywords" content="jobs, hiring, networking, professionals, career">
+    <meta name="author" content="ProConnect">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="ProConnect">
+    <meta property="og:description" content="The best platform for professionals to connect and grow.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="https://proconnect.com">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <title>ProConnect</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- Google Fonts - Spartan -->
+    <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="dash.css">
+    <link rel="stylesheet" href="test.css">
+
+    <!-- Font Awesome -->
+   <!-- FontAwesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- FontAwesome JS (ONLY if CSS alone doesn't work) -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+</head>
+<body>
+
+    <!-- HEADER SECTION -->
+    <header class="main-header">
+        <div class="logo">
+            <img src="logo.png" alt="ProConnect Logo" draggable="false">
+        </div>
+
+        <!-- Social Media Icons -->
+        <div class="social-icons">
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a> <!-- X (Twitter) -->
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-tiktok"></i></a> <!-- TikTok -->
+        </div>
+    </header>
+
+    <!-- Separator Line -->
+    <div class="separator"></div>
+
+<!-- NAVIGATION SECTION -->
+<nav class="main-nav">
+    <!-- HAMBURGER MENU (MOBILE) - RIGHT -->
+    <div class="hamburger">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+
+    <!-- NAVIGATION MENU (RIGHT) -->
+    <ul class="nav-links">
+        <li><a href="#"><i class="fa-solid fa-house"></i></a></li>
+        <li><a href="#"><i class="fa-solid fa-user"></i></a></li>
+        <li><a href="#"><i class="fa-solid fa-bell"></i></a></li>
+        <li><a href="#"><i class="fa-solid fa-gear"></i></a></li>
+    </ul>
+
+    <!-- MOBILE MENU (TEXT ONLY) -->
+    <ul class="mobile-menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Notifications</a></li>
+        <li><a href="#">Settings</a></li>
+    </ul>
+</nav>
+
+
+<!-- Profile Overview Section -->
+<section class="profile-overview">
+    <div class="profile-container">
+        <!-- Profile Image -->
+        <div class="profile-image">
+            <img src="dummy-profile.jpg.png" alt="User Profile">
+        </div>
+        
+        <!-- User Info -->
+        <div class="user-info">
+            <h2>Hey, Tony! Welcome back!</h2>
+        </div>
+
+        <!-- Edit Profile Button -->
+        <div class="edit-profile">
+            <button>Edit Profile</button>
+        </div>
+    </div>
+</section>
+
+
+<!-- STATS SECTION -->
+<section class="stats-section">
+    <div class="stat-card">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <h2>24</h2>
+        <p>Applications</p>
+    </div>
+    <div class="stat-card">
+        <ion-icon name="people-outline"></ion-icon>
+        <h2>15</h2>
+        <p>Connections</p>
+    </div>
+    <div class="stat-card">
+        <ion-icon name="star-outline"></ion-icon>
+        <h2>4.8</h2>
+        <p>Rating</p>
+    </div>
+</section>
+
+
+
+<section class="job-listings">
+    <h2>Latest Job Openings</h2>
+    <br>
+<br>
+    <!-- Filter Options -->
+    <div class="filter-options">
+        <input type="text" id="searchJob" placeholder="Search jobs...">
+        <select id="filterLocation">
+            <option value="">All Locations</option>
+            <option value="Remote">Remote</option>
+            <option value="Nairobi">Nairobi</option>
+            <option value="Mombasa">Mombasa</option>
+        </select>
+    </div>
+
+    <!-- Jobs Container -->
+    <div class="jobs-container">
+        <div class="job-box" data-location="Remote">
+            <h3>Frontend Developer</h3>
+            <p><strong>Company:</strong> Tech Solutions Ltd</p>
+            <p><strong>Location:</strong> Remote</p>
+            <button class="apply-btn">Apply</button>
+        </div>
+
+        <div class="job-box" data-location="Nairobi">
+            <h3>Backend Engineer</h3>
+            <p><strong>Company:</strong> DevWorks Inc</p>
+            <p><strong>Location:</strong> Nairobi</p>
+            <button class="apply-btn">Apply</button>
+        </div>
+
+        <div class="job-box" data-location="Mombasa">
+            <h3>UI/UX Designer</h3>
+            <p><strong>Company:</strong> Creative Labs</p>
+            <p><strong>Location:</strong> Mombasa</p>
+            <button class="apply-btn">Apply</button>
+        </div>
+    </div>
+</section>
+
+
+<section class="updates">
+    <h2>Latest Updates</h2>
+    <div class="updates-container">
+        <div class="update-card system-update">
+            <ion-icon name="cog-outline"></ion-icon>
+            <p>System maintenance scheduled for March 20, 2025.</p>
+            <span class="timestamp" data-time="2025-03-16T12:00:00Z">2 days ago</span>
+        </div>
+        
+        <div id="job-updates">
+            <!-- Job updates will be loaded dynamically here -->
+        </div>
+        
+        <button id="view-more">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+        </button>
+    </div>
+</section>
+
+
+<div class="logout-container">
+    <i class="fas fa-sign-out-alt logout-icon"></i>
+</div>
+
+    <script src="auth.js"></script>
+    <script src="dash.js"></script>
+</body>
+</html>
