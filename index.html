@@ -1,198 +1,933 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ProConnect - Get Matched with the Best Jobs Based on Your Skills">
-  <meta name="keywords" content="jobs, skills, hiring, career, employment">
-  <meta name="author" content="ProConnect Team">
+  <title>ProConnect | Kenya's Trusted Professional Network</title>
+  <meta name="description" content="Kenya's premier tech professional network connecting verified developers, designers and employers with transparent job opportunities and career growth.">
+  <meta name="keywords" content="Kenya tech jobs, developer jobs Nairobi, African tech community, verified professionals Kenya">
+  <meta name="robots" content="index, follow">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ProConnect">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
-  <!-- Favicon & Icons -->
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="icon" type="image/png" href="logo.png">
-
-  <!-- Spartan Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Spartan:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- CSS -->
-<!-- Ionicons CDN -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons.min.css">
-
-  <link rel="stylesheet" href="style.css">
-  <title>ProConnect | Find Jobs Smartly</title>
-</head>
-<body>
-
-<header>
-  <div class="logo">
-    <img src="logo.png" alt="ProConnect Logo" class="logo-img"> <!-- Logo PNG Optional -->
-    <span>ProConnect</span>
-  </div>
+  <!-- Favicon and Apple Touch Icon -->
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
   
-  <nav>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">How It Works</a></li>
-      <li><a href="#">Jobs</a></li>
-      <li><a href="#">Contact Us</a></li>
-    </ul>
-  </nav>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700;900&display=swap" rel="stylesheet">
   
-  <div class="auth-buttons">
-    <a href="login.html" class="btn">Login</a>
-    <a href="signup.html" class="btn primary">Join</a>
-  </div>
-
-  <!-- Mobile Menu Icon -->
-  <div class="menu-icon" onclick="toggleMenu()">☰</div>
-</header>
-
-
-
-
-<section class="hero">
-  <div class="hero-image">
-    <img src="connect.png" alt="ProConnect Job Matching">
-  </div>
-  <div class="hero-content">
-    <h1>Find the Right Job, Faster!</h1>
-    <p>Join thousands of professionals connecting with the right opportunities.</p>
-    <a href="signup.html" class="btn primary">Join Now</a>
-  </div>
-</section>
-
-
-
-
-<section class="how-it-works">
-  <h2>How ProConnect Works</h2>
-  <div class="steps">
-    <div class="step">
-      <span class="step-number">1</span>
-      <h3>Create an Account</h3>
-      <p>Sign up and set up your profile with your skills and experience.</p>
-    </div>
-    <div class="step">
-      <span class="step-number">2</span>
-      <h3>Get Job Matches</h3>
-      <p>We automatically suggest jobs based on your skills.</p>
-    </div>
-    <div class="step">
-      <span class="step-number">3</span>
-      <h3>Apply & Get Hired</h3>
-      <p>Apply for jobs, connect with employers, and grow your career.</p>
-    </div>
-  </div>
-</section>
-
-
-
-
-<section class="job-categories">
-    <h2>Explore Job Categories</h2>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="test.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['League Spartan', 'sans-serif'],
+          },
+          fontWeight: {
+            bold: 700,
+            extrabold: 900,
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <style>
+    /* Prevent text dragging and right click */
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      font-family: 'League Spartan', sans-serif;
+    }
     
-    <div class="categories-grid">
-        <!-- Default Visible Categories -->
-        <div class="category">
-            <h2>Herding</h2>
-            <p>Jobs related to livestock care and management.</p>
-        </div>
-        <div class="category">
-            <h2>Mechanics</h2>
-            <p>Automotive and machinery repair jobs.</p>
-        </div>
-
-        <!-- Hidden Categories (Initially Hidden) -->
-        <div class="category hidden">
-            <h2>Construction (Mjengo)</h2>
-            <p>Building, masonry, and architecture jobs.</p>
-        </div>
-        <div class="category hidden">
-            <h2>Plumbing</h2>
-            <p>Water system and pipeline installation jobs.</p>
-        </div>
-        <div class="category hidden">
-            <h2>Electricians</h2>
-            <p>Jobs in power and electrical wiring.</p>
-        </div>
-        <div class="category hidden">
-            <h2>Farming</h2>
-            <p>Agriculture, planting, and livestock-related work.</p>
-        </div>
-        <div class="category hidden">
-            <h2>Security</h2>
-            <p>Jobs in private security, bouncers, and watchmen.</p>
-        </div>
-        <div class="category hidden">
-            <h2>Cleaning & Housekeeping</h2>
-            <p>Home and office cleaning jobs.</p>
-        </div>
-        <div class="category hidden">
-            <h2>Casual Labor</h2>
-            <p>Daily wage jobs in warehouses, transport, and more.</p>
-        </div>
-    </div>
-
-    <button id="toggleCategories">Explore More</button>
-</section>
-
-
- <h2 style="text-align: center; color: #1a73e8;">What Our Users Say</h2>
-<button id="toggleCategories" onclick="window.open('testimo.html', '_self')">They Say...</button>
+    /* Animations */
+    .fade-in {
+      animation: fadeIn 0.8s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
     
-
-
-
-
-
-
-
-
-
-
-<button id="backToTop" onclick="scrollToTop()">
-  <ion-icon name="arrow-up-circle-outline"></ion-icon> <!-- Ionicon for "Arrow Up" -->
-</button>
-
-
-
-<!-- JS -->
-<script>
-    // Fetch and load testimonials from testimo.html dynamically
-    document.addEventListener("DOMContentLoaded", function() {
-        fetch("testimo.html")
-            .then(response => response.text())
-            .then(data => {
-                // Insert the fetched content into the testimonials section
-                document.getElementById("testimonials-container").innerHTML = data;
-            })
-            .catch(error => console.error("Error loading testimonials:", error));
-    });
-const backToTopButton = document.getElementById('backToTop');
-
-window.onscroll = function() {
-  if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-    backToTopButton.style.display = 'block';
-  } else {
-    backToTopButton.style.display = 'none';
+    .btn-hover {
+      transition: all 0.3s ease;
+    }
+    .btn-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Nav hover effect */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #16a34a;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.7);
+      backdrop-filter: blur(5px);
+    }
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 500px;
+      animation: modalFadeIn 0.3s;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Team member social links */
+    .team-member {
+      transition: all 0.3s ease;
+    }
+    .team-member:hover {
+      transform: translateY(-5px);
+    }
+    .social-links {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .team-member:hover .social-links {
+      max-height: 50px;
+    }
+    
+    /* Scroll animations */
+    .fade-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-on-scroll.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+/* Add this to your style section */
+@media (max-width: 640px) {
+  .modal-content {
+    width: 90%;
+    margin: 20% auto;
+    padding: 1.5rem;
   }
+}
+  </style>
+</head>
+
+<body class="bg-gray-50" oncontextmenu="return false;">
+  <!-- Sticky Navbar (Hidden initially) -->
+  <nav id="mainNav" class="bg-white shadow-sm py-3 sticky top-0 z-50 transform -translate-y-full transition-transform duration-300">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="logo.png" alt="ProConnect Logo" class="h-8 mr-3" loading="lazy">
+        <span class="text-xl font-extrabold text-gray-800">ProConnect</span>
+      </div>
+      <div class="hidden md:flex space-x-8">
+        <a href="#features" class="nav-link text-gray-700 font-medium">Features</a>
+        <a href="#employers" class="nav-link text-gray-700 font-medium">Employers</a>
+        <a href="#testimonials" class="nav-link text-gray-700 font-medium">Testimonials</a>
+        <a href="#team" class="nav-link text-gray-700 font-medium">Team</a>
+      </div>
+      <button onclick="openModal('waitlist')" class="bg-green-600 text-white px-6 py-2 rounded-md text-sm font-bold btn-hover">
+        Join Waitlist
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="container mx-auto px-4 py-32 md:py-40 text-center fade-in">
+    <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+      Kenya's <span class="text-green-600">Number One</span><br> Network for <span>Employers</span> And Job Seekers
+    </h1>
+    <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+      Connect with verified professionals, discover transparent job listings, and accelerate your career.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <button onclick="openModal('waitlist')" class="bg-green-600 text-white px-8 py-4 rounded-md text-lg font-bold btn-hover">
+        Join Waitlist - Free
+      </button>
+      <a href="#features" class="bg-white text-gray-800 px-8 py-4 rounded-md text-lg font-bold btn-hover border border-gray-300">
+        Learn More
+      </a>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="py-16 bg-green-50 fade-on-scroll">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="p-6">
+          <div class="text-4xl font-extrabold text-green-600 mb-2 countup" data-target="5000">0</div>
+          <div class="text-gray-600 font-medium">+Professionals</div>
+        </div>
+        <div class="p-6">
+          <div class="text-4xl font-extrabold text-green-600 mb-2 countup" data-target="2700">0</div>
+          <div class="text-gray-600 font-medium">+Verified Jobs</div>
+        </div>
+        <div class="p-6">
+          <div class="text-4xl font-extrabold text-green-600 mb-2 countup" data-target="2400">0</div>
+          <div class="text-gray-600 font-medium">+% Salary Transparency</div>
+        </div>
+        <div class="p-6">
+          <div class="text-4xl font-extrabold text-green-600 mb-2 countup" data-target="3400">0</div>
+          <div class="text-gray-600 font-medium">+Companies Hiring</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 fade-on-scroll">Why ProConnect Stands Out</h2>
+      <p class="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto fade-on-scroll">
+        Built for Kenya's tech community with features you won't find anywhere else
+      </p>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-all fade-on-scroll">
+          <img 
+            src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+            loading="lazy" 
+            alt="Networking" 
+            class="w-full h-48 object-cover rounded-lg mb-6 mx-auto"
+          >
+          <h3 class="text-xl font-bold mb-3">Verified Connections</h3>
+          <p class="text-gray-600 mb-4">No fake profiles. All members are M-Pesa verified for authenticity.</p>
+          <button class="text-green-600 font-bold flex items-center">
+            Learn more
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-all fade-on-scroll" style="transition-delay: 0.1s">
+          <img 
+            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit-crop&w=300&q=80" 
+            loading="lazy" 
+            alt="Job Board" 
+            class="w-full h-48 object-cover rounded-lg mb-6 mx-auto"
+          >
+          <h3 class="text-xl font-bold mb-3">Salary Transparency</h3>
+          <p class="text-gray-600 mb-4">Every job lists actual salary ranges - no more "competitive" guessing games.</p>
+          <button class="text-green-600 font-bold flex items-center">
+            Learn more
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-all fade-on-scroll" style="transition-delay: 0.2s">
+          <img 
+            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+            loading="lazy" 
+            alt="Tech Community" 
+            class="w-full h-48 object-cover rounded-lg mb-6 mx-auto"
+          >
+          <h3 class="text-xl font-bold mb-3">Skill Validation</h3>
+          <p class="text-gray-600 mb-4">Take skill tests to prove your expertise and stand out to employers.</p>
+          <button class="text-green-600 font-bold flex items-center">
+            Learn more
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="text-center mt-16 fade-on-scroll">
+        <button onclick="openModal('waitlist')" class="bg-green-600 text-white px-10 py-4 rounded-md text-lg font-bold btn-hover">
+          Get Started Now
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Employers Section -->
+  <section id="employers" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10 fade-on-scroll">
+          <h2 class="text-3xl font-extrabold mb-6">Why Employers Choose ProConnect</h2>
+          <ul class="space-y-4 text-gray-700">
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Access to pre-vetted, skill-verified tech talent</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Reduced hiring time with our smart matching system</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Transparent pricing with no hidden fees</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Dedicated account manager for premium partners</span>
+            </li>
+          </ul>
+          <button onclick="openModal('waitlist')" class="mt-8 bg-green-600 text-white px-8 py-3 rounded-md text-lg font-bold btn-hover">
+            Hire Top Talent
+          </button>
+        </div>
+        <div class="md:w-1/2 fade-on-scroll" style="transition-delay: 0.2s">
+          <img 
+            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+            loading="lazy" 
+            alt="Employers using ProConnect" 
+            class="w-full rounded-xl shadow-lg"
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Job Seekers Section -->
+  <section class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-1/2 mb-10 md:mb-0 fade-on-scroll">
+          <img 
+            src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+            loading="lazy" 
+            alt="Job seekers using ProConnect" 
+            class="w-full rounded-xl shadow-lg"
+          >
+        </div>
+        <div class="md:w-1/2 md:pl-10 fade-on-scroll" style="transition-delay: 0.2s">
+          <h2 class="text-3xl font-extrabold mb-6">Why Tech Professionals Love ProConnect</h2>
+          <ul class="space-y-4 text-gray-700">
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>See actual salary ranges before applying</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Get matched with jobs that fit your skills</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Build your professional network in Kenya's tech scene</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Showcase verified skills to stand out to employers</span>
+            </li>
+          </ul>
+          <button onclick="openModal('waitlist')" class="mt-8 bg-green-600 text-white px-8 py-3 rounded-md text-lg font-bold btn-hover">
+            Find Your Dream Job
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="py-20 bg-green-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 fade-on-scroll">What Our Community Says</h2>
+      <p class="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto fade-on-scroll">
+        Hear from tech professionals and employers who use ProConnect
+      </p>
+      
+      <div class="relative max-w-4xl mx-auto fade-on-scroll">
+        <div id="testimonialSlider" class="overflow-hidden">
+          <div class="flex transition-transform duration-500 ease-in-out">
+            <!-- Testimonial 1 -->
+            <div class="w-full flex-shrink-0 px-4">
+              <div class="bg-white p-8 rounded-xl shadow-md">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/women/44.jpg" loading="lazy" alt="Sarah K." class="w-16 h-16 rounded-full object-cover">
+                  <div class="ml-4">
+                    <h4 class="font-bold">Sarah K.</h4>
+                    <p class="text-gray-600">Senior Developer at TechSavvy</p>
+                  </div>
+                </div>
+                <p class="text-gray-700 italic">
+                  "ProConnect helped me land a job with a 40% salary increase. The salary transparency meant no awkward negotiations - I knew exactly what to expect!"
+                </p>
+              </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="w-full flex-shrink-0 px-4">
+              <div class="bg-white p-8 rounded-xl shadow-md">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/men/32.jpg" loading="lazy" alt="James M." class="w-16 h-16 rounded-full object-cover">
+                  <div class="ml-4">
+                    <h4 class="font-bold">James M.</h4>
+                    <p class="text-gray-600">CTO at Innovate Ltd</p>
+                  </div>
+                </div>
+                <p class="text-gray-700 italic">
+                  "We've hired 5 developers through ProConnect in the last 3 months. The skill verification tests save us countless interview hours."
+                </p>
+              </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="w-full flex-shrink-0 px-4">
+              <div class="bg-white p-8 rounded-xl shadow-md">
+                <div class="flex items-center mb-6">
+                  <img src="https://randomuser.me/api/portraits/women/68.jpg" loading="lazy" alt="Amina W." class="w-16 h-16 rounded-full object-cover">
+                  <div class="ml-4">
+                    <h4 class="font-bold">Amina W.</h4>
+                    <p class="text-gray-600">UI/UX Designer</p>
+                  </div>
+                </div>
+                <p class="text-gray-700 italic">
+                  "Finally a platform where I can showcase my actual skills, not just my resume. The portfolio features helped me land 3 freelance clients!"
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex justify-center mt-8 space-x-2">
+          <button onclick="prevTestimonial()" class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+          <button onclick="nextTestimonial()" class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="py-20 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold text-center mb-4 fade-on-scroll">Meet The ProConnect Team</h2>
+      <p class="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto fade-on-scroll">
+        The passionate people building Kenya's premier tech network
+      </p>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <!-- Team Member 1 -->
+        <div class="team-member text-center fade-on-scroll">
+          <img 
+            src="https://randomuser.me/api/portraits/men/75.jpg" 
+            loading="lazy" 
+            alt="David M." 
+            class="w-32 h-32 rounded-full object-cover mx-auto mb-4 shadow-md"
+          >
+          <h3 class="text-xl font-bold">David M.</h3>
+          <p class="text-green-600 font-medium mb-2">CEO & Founder</p>
+          <div class="social-links">
+            <div class="flex justify-center space-x-3 mt-3">
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Team Member 2 -->
+        <div class="team-member text-center fade-on-scroll" style="transition-delay: 0.1s">
+          <img 
+            src="https://randomuser.me/api/portraits/women/63.jpg" 
+            loading="lazy" 
+            alt="Grace W." 
+            class="w-32 h-32 rounded-full object-cover mx-auto mb-4 shadow-md"
+          >
+          <h3 class="text-xl font-bold">Grace W.</h3>
+          <p class="text-green-600 font-medium mb-2">CTO</p>
+          <div class="social-links">
+            <div class="flex justify-center space-x-3 mt-3">
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Team Member 3 -->
+        <div class="team-member text-center fade-on-scroll" style="transition-delay: 0.2s">
+          <img 
+            src="https://randomuser.me/api/portraits/men/41.jpg" 
+            loading="lazy" 
+            alt="Brian O." 
+            class="w-32 h-32 rounded-full object-cover mx-auto mb-4 shadow-md"
+          >
+          <h3 class="text-xl font-bold">Brian O.</h3>
+          <p class="text-green-600 font-medium mb-2">Head of Product</p>
+          <div class="social-links">
+            <div class="flex justify-center space-x-3 mt-3">
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Team Member 4 -->
+        <div class="team-member text-center fade-on-scroll" style="transition-delay: 0.3s">
+          <img 
+            src="https://randomuser.me/api/portraits/women/44.jpg" 
+            loading="lazy" 
+            alt="Linda K." 
+            class="w-32 h-32 rounded-full object-cover mx-auto mb-4 shadow-md"
+          >
+          <h3 class="text-xl font-bold">Linda K.</h3>
+          <p class="text-green-600 font-medium mb-2">Head of Community</p>
+          <div class="social-links">
+            <div class="flex justify-center space-x-3 mt-3">
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
+                </svg>
+              </a>
+              <a href="#" class="text-gray-500 hover:text-green-600">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA Section -->
+  <section class="py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-extrabold mb-6 fade-on-scroll">Ready to Transform Your Tech Career?</h2>
+      <p class="text-xl mb-10 max-w-2xl mx-auto fade-on-scroll">
+        Join Kenya's most trusted professional network for developers, designers, and tech talent.
+      </p>
+      <button onclick="openModal('waitlist')" class="bg-white text-green-700 px-10 py-4 rounded-md text-lg font-extrabold btn-hover fade-on-scroll">
+        Get Early Access
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center mb-6">
+            <img src="logo.png" alt="ProConnect Logo" class="h-10 mr-3" loading="lazy">
+            <span class="text-2xl font-extrabold">ProConnect</span>
+          </div>
+          <p class="text-gray-400 mb-4">Kenya's premier tech professional network.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+              </svg>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">For Professionals</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Find Jobs</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Skill Tests</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Community</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">For Employers</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">Post Jobs</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Find Talent</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Success Stories</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">Company</h4>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-white">About</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>© 2023 ProConnect. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Waitlist Modal -->
+  <div id="waitlistModal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-extrabold">Join Our Waitlist</h3>
+        <span onclick="closeModal('waitlist')" class="text-3xl cursor-pointer hover:text-gray-600">&times;</span>
+      </div>
+      <form id="waitlistForm" class="space-y-4">
+        <div>
+          <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+          <input 
+            type="email" 
+            id="email" 
+            required 
+            class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+        </div>
+        <div>
+          <label for="userType" class="block text-gray-700 mb-2">I am a</label>
+          <select 
+            id="userType" 
+            class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+            <option value="developer">Developer</option>
+            <option value="designer">Designer</option>
+            <option value="employer">Employer</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <button 
+          type="submit" 
+          class="w-full bg-green-600 text-white py-3 rounded-md font-bold btn-hover"
+        >
+          Join Waitlist
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content text-center">
+      <div class="mb-6">
+        <svg class="w-16 h-16 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-extrabold mb-4">You're On The List!</h3>
+      <p class="text-gray-600 mb-6">We'll notify you when ProConnect launches. Get ready to connect!</p>
+      <button 
+        onclick="closeModal('success')" 
+        class="bg-green-600 text-white px-8 py-3 rounded-md font-bold btn-hover"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Error Modal -->
+  <div id="errorModal" class="modal">
+    <div class="modal-content text-center">
+      <div class="mb-6">
+        <svg class="w-16 h-16 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-extrabold mb-4">Oops! Something Went Wrong</h3>
+      <p class="text-gray-600 mb-6" id="errorMessage">Maybe You Slipped!.</p>
+      <button 
+        onclick="closeModal('error')" 
+        class="bg-green-600 text-white px-8 py-3 rounded-md font-bold btn-hover"
+      >
+        Try Again
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Navbar show/hide on scroll
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 5) {
+        $('#mainNav').removeClass('-translate-y-full');
+      } else {
+        $('#mainNav').addClass('-translate-y-full');
+      }
+    });
+
+    // Modal functions
+    function openModal(modalType) {
+      document.getElementById(modalType + 'Modal').style.display = 'block';
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModal(modalType) {
+      document.getElementById(modalType + 'Modal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      if (event.target.className === 'modal') {
+        document.querySelectorAll('.modal').forEach(modal => {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto';
+        });
+      }
+    }
+    
+    // Form submission
+    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Simulate form submission
+      setTimeout(function() {
+        closeModal('waitlist');
+        openModal('success');
+      }, 1000);
+      this.reset();
+    });
+    
+    // Testimonial slider
+    let currentTestimonial = 0;
+    const testimonials = document.querySelectorAll('#testimonialSlider .flex > div');
+
+// immediately show testimonials
+   showTestimonial(0);
+ 
+    function showTestimonial(index) {
+      const slider = document.querySelector('#testimonialSlider .flex');
+      slider.style.transform = `translateX(-${index * 100}%)`;
+      currentTestimonial = index;
+    }
+    
+    function nextTestimonial() {
+      currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }
+    
+    function prevTestimonial() {
+      currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+      showTestimonial(currentTestimonial);
+    }
+    
+    // Auto-rotate testimonials
+    setInterval(nextTestimonial, 5000);
+    
+  // Replace the animateCountUp function with this:
+function animateCountUp() {
+  const counters = document.querySelectorAll('.countup');
+  const speed = 10000; // Increased from 200 to slow down
+  
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target');
+    const count = +counter.innerText;
+    const increment = target / speed;
+    
+    if (count < target) {
+      counter.innerText = Math.ceil(count + increment);
+      setTimeout(animateCountUp, 10); // Increased delay
+    } else {
+      counter.innerText = target;
+    }
+  });
+}
+    
+    // Scroll animations
+    function checkScroll() {
+      const elements = document.querySelectorAll('.fade-on-scroll');
+      
+      elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementBottom = element.getBoundingClientRect().bottom;
+        const isVisible = (elementTop < window.innerHeight) && (elementBottom > 0);
+        
+        if (isVisible) {
+          element.classList.add('visible');
+        } else {
+          element.classList.remove('visible');
+        }
+      });
+    }
+    
+    // Initialize
+    window.addEventListener('load', function() {
+      // Start count-up animation
+      animateCountUp();
+      
+      // Set up scroll event listener
+      window.addEventListener('scroll', checkScroll);
+      checkScroll(); // Check on load
+    });
+    
+    // Disable right click
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      openModal('error');
+      document.getElementById('errorMessage').textContent = 'Right-click is disabled on this page.';
+    });
+  </script>
+<script>
+
+// Import Firebase SDK
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
+// Firebase Configuration (Original)
+const firebaseConfig = {
+  apiKey: "AIzaSyCTeGtqnKL2Mk6IrPFcDk0Gqzo_Y7Nikn8",
+  authDomain: "proconnect-254.firebaseapp.com",
+  projectId: "proconnect-254",
+  storageBucket: "proconnect-254.firebasestorage.app", // Original storageBucket
+  messagingSenderId: "406855935685",
+  appId: "1:406855935685:web:8ed31baf7641b49c1232ac",
+  measurementId: "G-VEM3JM1CKG"
 };
 
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app); // Initialize Firestore
+
+// Function to add user to waitlist
+async function addToWaitlist(email, userType) {
+  try {
+    const docRef = await addDoc(collection(db, "waitlist"), {
+      email: email,
+      userType: userType,
+      timestamp: new Date(),
+    });
+    console.log("User added to waitlist with ID: ", docRef.id);
+    
+    // Show success modal
+    document.getElementById("successModal").style.display = "block";
+  } catch (error) {
+    console.error("Error adding user: ", error);
+    
+    // Show error modal
+    document.getElementById("errorModal").style.display = "block";
+  }
 }
 
+// Event listener for form submission
+document.getElementById("waitlistForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  
+  // Get form values
+  const email = document.getElementById("email").value;
+  const userType = document.getElementById("userType").value;
+  
+  // Send data to Firestore
+  await addToWaitlist(email, userType);
+});
+
 </script>
-
-
-<script src="responsive.js"></script>
-<script src="anim.js"></script>
-<script src="auth.js"></script>
-<script src="ex.js"></script>
-<script src="test.js"></script>
-
 </body>
 </html>
