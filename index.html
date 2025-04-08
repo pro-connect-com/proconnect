@@ -17,11 +17,28 @@
   
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700;900&display=swap" rel="stylesheet">
-  
+
+<!-- Preconnect to External Resources (before fetching) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+
+<!-- DNS Prefetch (helps on repeat visits) -->
+<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="dns-prefetch" href="//fonts.gstatic.com">
+<link rel="dns-prefetch" href="//www.googletagmanager.com"> 
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-M2L57VHM');</script>
+  <!-- End Google Tag Manager -->
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>import { SpeedInsights } from "@vercel/speed-insights/next"</script>
-  <script src="test.js"></script>
+  <script src="firebase.js"></script>
+   <script>import { SpeedInsights } from "@vercel/speed-insights/next"</script>
   <script>
     tailwind.config = {
       theme: {
@@ -32,6 +49,11 @@
           fontWeight: {
             bold: 700,
             extrabold: 900,
+          },
+          colors: {
+            'brand-green': '#16a34a',
+            'brand-dark': '#0f172a',
+            'brand-orange': '#FF6F00',
           }
         }
       }
@@ -42,7 +64,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
   <style>
-    /* Prevent text dragging and right click */
+    /* Base Styles */
     body {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -138,19 +160,157 @@
       opacity: 1;
       transform: translateY(0);
     }
-/* Add this to your style section */
-@media (max-width: 640px) {
-  .modal-content {
-    width: 90%;
-    margin: 20% auto;
-    padding: 1.5rem;
+    
+    /* Form styles */
+    .input-error {
+      border-color: #ef4444 !important;
+    }
+    .error-message {
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+      display: none;
+    }
+    .success-message {
+      color: #10b981;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+    
+    @media (max-width: 640px) {
+      .modal-content {
+        width: 90%;
+        margin: 20% auto;
+        padding: 1.5rem;
+      }
+    
+  /* Above-the-fold critical CSS */
+  .hero-section, #mainNav, .modal-content {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  /* Font face with font-display */
+  @font-face {
+    font-family: 'League Spartan';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/league-spartan.woff2') format('woff2');
+    font-display: swap;
+  }
+
+/* Add to your existing styles */
+.modal {
+  transition: opacity 0.3s ease;
+}
+
+.modal-content {
+  transition: all 0.3s ease;
+  transform: translateY(-20px);
+}
+
+.modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal.show .modal-content {
+  transform: translateY(0);
+}
+
+/* Close button styling */
+.modal-close-btn {
+  transition: transform 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  transform: rotate(90deg);
+}
+/* Add to your existing CSS */
+.rotate-180 {
+  transform: rotate(180deg);
+}
+
+.faq-content {
+  transition: all 0.3s ease;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.faq-content.show {
+  max-height: 500px;
+}
+@keyframes underline {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 }
-  </style>
+
+.underline-animate::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #00b894; /* your brand-green */
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: underline 0.3s ease-out forwards;
+}
+   }
+
+</style>
+
+<!-- Head Tag - GTM & GA4 -->
+<head>
+  <!-- Existing head content -->
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- GA4 Configuration -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX', {
+      'anonymize_ip': true,
+      'cookie_flags': 'SameSite=None;Secure'
+    });
+  </script>
+
+  <!-- Track Auth Events -->
+  <script>
+    function trackAuthEvent(action, method) {
+      gtag('event', 'auth_' + action, {
+        'method': method,
+        'event_callback': function() {
+          console.log(action + ' tracked');
+        }
+      });
+    }
+  </script>
 </head>
 
+</head>
 <body class="bg-gray-50" oncontextmenu="return false;">
-  <!-- Sticky Navbar (Hidden initially) -->
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M2L57VHM"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <!-- Sticky Navbar -->
   <nav id="mainNav" class="bg-white shadow-sm py-3 sticky top-0 z-50 transform -translate-y-full transition-transform duration-300">
     <div class="container mx-auto px-4 flex justify-between items-center">
       <div class="flex items-center">
@@ -159,12 +319,16 @@
       </div>
       <div class="hidden md:flex space-x-8">
         <a href="#features" class="nav-link text-gray-700 font-medium">Features</a>
-        <a href="#employers" class="nav-link text-gray-700 font-medium">Employers</a>
+        <a href="insights.html" class="nav-link text-gray-700 font-medium">Insights</a>
         <a href="#testimonials" class="nav-link text-gray-700 font-medium">Testimonials</a>
-        <a href="#team" class="nav-link text-gray-700 font-medium">Team</a>
+        <a href="about.html" class="nav-link text-gray-700 font-medium">About</a>
+        <a href="team.html" class="nav-link text-gray-700 font-medium">Team</a>
       </div>
-      <button onclick="openModal('waitlist')" class="bg-green-600 text-white px-6 py-2 rounded-md text-sm font-bold btn-hover">
-        Join Waitlist
+      <button 
+        onclick="authModals.open('signup')" 
+        class="bg-brand-green text-white px-6 py-2 rounded-md text-sm font-bold hover:bg-green-700 transition"
+      >
+        Connect
       </button>
     </div>
   </nav>
@@ -172,18 +336,18 @@
   <!-- Hero Section -->
   <section class="container mx-auto px-4 py-32 md:py-40 text-center fade-in">
     <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
-      Kenya's <span class="text-green-600">Number One</span><br> Network for <span>Employers</span> And Job Seekers
+     Discover Kenya's <span class="text-brand-green">Number One</span><br> Job Matching <span>Platform</span>
     </h1>
     <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-      Connect with verified professionals, discover transparent job listings, and accelerate your career.
+      Connect with talented professionals, discover transparent job listings, and accelerate your career.
     </p>
     <div class="flex flex-col sm:flex-row justify-center gap-4">
-      <button onclick="openModal('waitlist')" class="bg-green-600 text-white px-8 py-4 rounded-md text-lg font-bold btn-hover">
-        Join Waitlist - Free
+      <button onclick="authModals.open('signup')" class="bg-brand-green text-white px-8 py-4 rounded-md text-lg font-bold btn-hover">
+        Get Started
       </button>
-      <a href="#features" class="bg-white text-gray-800 px-8 py-4 rounded-md text-lg font-bold btn-hover border border-gray-300">
-        Learn More
-      </a>
+      <button onclick="authModals.open('login')" class="bg-white text-gray-800 px-8 py-4 rounded-md text-lg font-bold btn-hover border border-gray-300">
+        Log In
+      </button>
     </div>
   </section>
 
@@ -192,20 +356,20 @@
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
         <div class="p-6">
-          <div class="text-4xl font-extrabold text-green-600 mb-2 countup" data-target="5000">0</div>
-          <div class="text-gray-600 font-medium">+Professionals</div>
+          <div class="text-4xl font-extrabold text-brand-green mb-2 countup" data-target="5000">0</div>
+          <div class="text-gray-600 font-medium"> Professionals</div>
         </div>
         <div class="p-6">
-          <div class="text-4xl font-extrabold text-green-600 mb-2 countup" data-target="2700">0</div>
-          <div class="text-gray-600 font-medium">+Verified Jobs</div>
+          <div class="text-4xl font-extrabold text-brand-green mb-2 countup" data-target="5700">0</div>
+          <div class="text-gray-600 font-medium"> Verified Jobs</div>
         </div>
         <div class="p-6">
-          <div class="text-4xl font-extrabold text-green-600 mb-2 countup" data-target="2400">0</div>
-          <div class="text-gray-600 font-medium">+% Salary Transparency</div>
+          <div class="text-4xl font-extrabold text-brand-green mb-2 countup" data-target="70">0</div>
+          <div class="text-gray-600 font-medium">% Job Seekers</div>
         </div>
         <div class="p-6">
-          <div class="text-4xl font-extrabold text-green-600 mb-2 countup" data-target="3400">0</div>
-          <div class="text-gray-600 font-medium">+Companies Hiring</div>
+          <div class="text-4xl font-extrabold text-brand-green mb-2 countup" data-target="6400">0</div>
+          <div class="text-gray-600 font-medium"> Employers</div>
         </div>
       </div>
     </div>
@@ -214,69 +378,81 @@
   <!-- Features Section -->
   <section id="features" class="py-20 bg-white">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-extrabold text-center mb-4 fade-on-scroll">Why ProConnect Stands Out</h2>
+      <h2 class="text-3xl font-extrabold text-center mb-4 fade-on-scroll">Why ProConnect As Your Choice</h2>
       <p class="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto fade-on-scroll">
-        Built for Kenya's tech community with features you won't find anywhere else
+        Built for Regional community with features you won't find anywhere else
       </p>
       
       <div class="grid md:grid-cols-3 gap-8">
         <!-- Feature 1 -->
         <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-all fade-on-scroll">
           <img 
-            src="https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
-            loading="lazy" 
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUvgJKymT6rLUuqDh4lZI6QbE05IYh9wadgA&s"
+          onerror="this.onerror=null; this.src='verified.jpg';"
+          loading="lazy"
+          
+         
             alt="Networking" 
             class="w-full h-48 object-cover rounded-lg mb-6 mx-auto"
           >
           <h3 class="text-xl font-bold mb-3">Verified Connections</h3>
-          <p class="text-gray-600 mb-4">No fake profiles. All members are M-Pesa verified for authenticity.</p>
-          <button class="text-green-600 font-bold flex items-center">
-            Learn more
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </button>
+          <p class="text-gray-600 mb-4">No fake profiles. All members pass a security check with payments and a verification channel for their accounts.</p>
+          <button 
+  onclick="openFeatureModal('verified-connections')" 
+  class="text-brand-green font-bold flex items-center"
+>
+  Learn more
+  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+</button>
         </div>
         
         <!-- Feature 2 -->
         <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-all fade-on-scroll" style="transition-delay: 0.1s">
           <img 
-            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit-crop&w=300&q=80" 
+            src="data:image/jpeg;base64,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" onerror="this.onerror=null; this.src='salary.jpg';" 
             loading="lazy" 
             alt="Job Board" 
             class="w-full h-48 object-cover rounded-lg mb-6 mx-auto"
           >
           <h3 class="text-xl font-bold mb-3">Salary Transparency</h3>
           <p class="text-gray-600 mb-4">Every job lists actual salary ranges - no more "competitive" guessing games.</p>
-          <button class="text-green-600 font-bold flex items-center">
-            Learn more
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </button>
+         <button 
+  onclick="openFeatureModal('salary-transparency')" 
+  class="text-brand-green font-bold flex items-center"
+>
+  Learn more
+  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+</button>
         </div>
         
         <!-- Feature 3 -->
         <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-all fade-on-scroll" style="transition-delay: 0.2s">
           <img 
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+            src="https://scontent.fnbo18-1.fna.fbcdn.net/v/t39.30808-6/489986647_122252612996007199_1633635002958048682_n.jpg?stp=dst-jpg_p526x296_tt6&_nc_cat=109&ccb=1-7&_nc_sid=127cfc&_nc_ohc=6PORXDngrKYQ7kNvwGNeKK1&_nc_oc=AdlYymi_NYH5Z2GlOWAwTl2QFX8fwXMocJFmBs4DUxyTjkx4J-wePQHjfGeFeuXK0z0&_nc_zt=23&_nc_ht=scontent.fnbo18-1.fna&_nc_gid=naj1HKin8mrCz0-WBfq9Hg&oh=00_AfFJG5j0ku-7R-pKMymzbpHLyHk4jEuw2_XSDEwkANfTiw&oe=67F96BD7" onerror="this.onerror=null;this.src='skill.png'"
             loading="lazy" 
             alt="Tech Community" 
             class="w-full h-48 object-cover rounded-lg mb-6 mx-auto"
           >
           <h3 class="text-xl font-bold mb-3">Skill Validation</h3>
           <p class="text-gray-600 mb-4">Take skill tests to prove your expertise and stand out to employers.</p>
-          <button class="text-green-600 font-bold flex items-center">
-            Learn more
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </button>
+         <button 
+  onclick="openFeatureModal('skill-validation')" 
+  class="text-brand-green font-bold flex items-center"
+>
+  Learn more
+  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+</button>
         </div>
       </div>
       
       <div class="text-center mt-16 fade-on-scroll">
-        <button onclick="openModal('waitlist')" class="bg-green-600 text-white px-10 py-4 rounded-md text-lg font-bold btn-hover">
+        <button onclick="authModals.open('signup')" class="bg-brand-green text-white px-10 py-4 rounded-md text-lg font-bold btn-hover">
           Get Started Now
         </button>
       </div>
@@ -291,37 +467,37 @@
           <h2 class="text-3xl font-extrabold mb-6">Why Employers Choose ProConnect</h2>
           <ul class="space-y-4 text-gray-700">
             <li class="flex items-start">
-              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 text-brand-green mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <span>Access to pre-vetted, skill-verified tech talent</span>
             </li>
             <li class="flex items-start">
-              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 text-brand-green mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <span>Reduced hiring time with our smart matching system</span>
             </li>
             <li class="flex items-start">
-              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 text-brand-green mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <span>Transparent pricing with no hidden fees</span>
             </li>
             <li class="flex items-start">
-              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 text-brand-green mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <span>Dedicated account manager for premium partners</span>
             </li>
           </ul>
-          <button onclick="openModal('waitlist')" class="mt-8 bg-green-600 text-white px-8 py-3 rounded-md text-lg font-bold btn-hover">
+          <button onclick="authModals.open('signup')" class="mt-8 bg-brand-green text-white px-8 py-3 rounded-md text-lg font-bold btn-hover">
             Hire Top Talent
           </button>
         </div>
         <div class="md:w-1/2 fade-on-scroll" style="transition-delay: 0.2s">
           <img 
-            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" onerror="this.onerror=null;this.src='employer.png'"
             loading="lazy" 
             alt="Employers using ProConnect" 
             class="w-full rounded-xl shadow-lg"
@@ -337,42 +513,42 @@
       <div class="flex flex-col md:flex-row items-center">
         <div class="md:w-1/2 mb-10 md:mb-0 fade-on-scroll">
           <img 
-            src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+            src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" onerror="this.onerror=null;this.src='seeker.png'"
             loading="lazy" 
             alt="Job seekers using ProConnect" 
             class="w-full rounded-xl shadow-lg"
           >
         </div>
         <div class="md:w-1/2 md:pl-10 fade-on-scroll" style="transition-delay: 0.2s">
-          <h2 class="text-3xl font-extrabold mb-6">Why Tech Professionals Love ProConnect</h2>
+          <h2 class="text-3xl font-extrabold mb-6">Why Choose ProConnect</h2>
           <ul class="space-y-4 text-gray-700">
             <li class="flex items-start">
-              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 text-brand-green mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <span>See actual salary ranges before applying</span>
             </li>
             <li class="flex items-start">
-              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 text-brand-green mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <span>Get matched with jobs that fit your skills</span>
             </li>
             <li class="flex items-start">
-              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 text-brand-green mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              <span>Build your professional network in Kenya's tech scene</span>
+              <span>Build your professional network in Kenya's community scene</span>
             </li>
             <li class="flex items-start">
-              <svg class="w-6 h-6 text-green-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6 text-brand-green mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
               <span>Showcase verified skills to stand out to employers</span>
             </li>
           </ul>
-          <button onclick="openModal('waitlist')" class="mt-8 bg-green-600 text-white px-8 py-3 rounded-md text-lg font-bold btn-hover">
-            Find Your Dream Job
+          <button onclick="authModals.open('signup')" class="mt-8 bg-brand-green text-white px-8 py-3 rounded-md text-lg font-bold btn-hover">
+            Get Hired Now
           </button>
         </div>
       </div>
@@ -382,9 +558,9 @@
   <!-- Testimonials Section -->
   <section id="testimonials" class="py-20 bg-green-50">
     <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-extrabold text-center mb-4 fade-on-scroll">What Our Community Says</h2>
+      <h2 class="text-3xl font-extrabold text-center mb-4 fade-on-scroll">Community Comments</h2>
       <p class="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto fade-on-scroll">
-        Hear from tech professionals and employers who use ProConnect
+        See what our users are saying about their experience with ProConnect
       </p>
       
       <div class="relative max-w-4xl mx-auto fade-on-scroll">
@@ -442,12 +618,12 @@
         
         <div class="flex justify-center mt-8 space-x-2">
           <button onclick="prevTestimonial()" class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
-            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
           </button>
           <button onclick="nextTestimonial()" class="w-10 h-10 rounded-full bg-white shadow flex items-center justify-center">
-            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
             </svg>
           </button>
@@ -461,33 +637,33 @@
     <div class="container mx-auto px-4">
       <h2 class="text-3xl font-extrabold text-center mb-4 fade-on-scroll">Meet The ProConnect Team</h2>
       <p class="text-xl text-gray-600 text-center mb-16 max-w-3xl mx-auto fade-on-scroll">
-        The passionate people building Kenya's premier tech network
+        The passionate people building Kenya's No.1 Networking platform
       </p>
       
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
         <!-- Team Member 1 -->
         <div class="team-member text-center fade-on-scroll">
           <img 
-            src="https://randomuser.me/api/portraits/men/75.jpg" 
+            src="antoh.jpg" 
             loading="lazy" 
-            alt="David M." 
+            alt="Antony M." 
             class="w-32 h-32 rounded-full object-cover mx-auto mb-4 shadow-md"
           >
-          <h3 class="text-xl font-bold">David M.</h3>
-          <p class="text-green-600 font-medium mb-2">CEO & Founder</p>
-          <div class="social-links">
+          <h3 class="text-xl font-bold">Antony M.</h3>
+          <p class="text-brand-green font-medium mb-2">CEO & Founder<BR> CEO at <a href="https://www.facebook.com/profile.php?id=100090762943420" class="text-brand-orange font-medium mb-3 hover:text-brand-green transition-colors duration-300 relative [&:hover]:after:content-[''] [&:hover]:after:absolute [&:hover]:after:left-0 [&:hover]:after:bottom-0 [&:hover]:after:w-full [&:hover]:after:h-[2px] [&:hover]:after:bg-brand-green [&:hover]:after:animate-underline">Crawl LLC</a></p>
+            <div class="social-links">
             <div class="flex justify-center space-x-3 mt-3">
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="https://www.facebook.com/profile.php?id=61550215995406" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
                 </svg>
               </a>
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="https://www.linkedin.com/in/antony-maingi-2636632a2/" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
                 </svg>
               </a>
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="https://github.com/pro-connect-com/proconnect" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
                 </svg>
@@ -505,20 +681,20 @@
             class="w-32 h-32 rounded-full object-cover mx-auto mb-4 shadow-md"
           >
           <h3 class="text-xl font-bold">Grace W.</h3>
-          <p class="text-green-600 font-medium mb-2">CTO</p>
+          <p class="text-brand-green font-medium mb-2">CTO</p>
           <div class="social-links">
             <div class="flex justify-center space-x-3 mt-3">
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
                 </svg>
               </a>
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
                 </svg>
               </a>
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
                 </svg>
@@ -536,20 +712,20 @@
             class="w-32 h-32 rounded-full object-cover mx-auto mb-4 shadow-md"
           >
           <h3 class="text-xl font-bold">Brian O.</h3>
-          <p class="text-green-600 font-medium mb-2">Head of Product</p>
+          <p class="text-brand-green font-medium mb-2">Head of Product</p>
           <div class="social-links">
             <div class="flex justify-center space-x-3 mt-3">
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
                 </svg>
               </a>
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
                 </svg>
               </a>
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
                 </svg>
@@ -567,20 +743,20 @@
             class="w-32 h-32 rounded-full object-cover mx-auto mb-4 shadow-md"
           >
           <h3 class="text-xl font-bold">Linda K.</h3>
-          <p class="text-green-600 font-medium mb-2">Head of Community</p>
+          <p class="text-brand-green font-medium mb-2">Head of Community</p>
           <div class="social-links">
             <div class="flex justify-center space-x-3 mt-3">
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"></path>
                 </svg>
               </a>
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"></path>
                 </svg>
               </a>
-              <a href="#" class="text-gray-500 hover:text-green-600">
+              <a href="#" class="text-gray-500 hover:text-brand-green">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
                 </svg>
@@ -592,19 +768,284 @@
     </div>
   </section>
 
+
+
+<!-- FAQ Section -->
+<section id="faq" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-extrabold text-center mb-4">Frequently Asked Questions</h2>
+    <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      Get answers to common questions about ProConnect Kenya
+    </p>
+    
+    <div class="max-w-4xl mx-auto space-y-4">
+      <!-- FAQ Item 1 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <button 
+          onclick="toggleFAQ(1)"
+          class="flex justify-between items-center w-full text-left"
+        >
+          <h3 class="text-lg font-bold">what is ProConnect</h3>
+          <svg id="faqIcon1" class="w-5 h-5 text-brand-green transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div id="faqContent1" class="mt-3 text-gray-600 hidden">
+          <p>PROCONNECT:</p>
+          <ol class="list-decimal pl-5 mt-2 space-y-1">
+            <li>A networking site...</li>
+            <li>That works with an algorthm for matching jobs according to your profile</li>
+            <li>Professional credential check (certificates, portfolio, etc.)</li>
+          </ol>
+        </div>
+      </div>
+      
+      <!-- FAQ Item 2 -->
+      <div class="bg-white p-6 rounded-xl shadow-sm">
+        <button 
+          onclick="toggleFAQ(2)"
+          class="flex justify-between items-center w-full text-left"
+        >
+          <h3 class="text-lg font-bold">Is ProConnect only for tech professionals in Nairobi?</h3>
+          <svg id="faqIcon2" class="w-5 h-5 text-brand-green transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+        <div id="faqContent2" class="mt-3 text-gray-600 hidden">
+          <p>No! We serve all Kenyan tech professionals across:</p>
+          <ul class="list-disc pl-5 mt-2 space-y-1">
+            <li>Nairobi</li>
+            <li>Mombasa</li>
+            <li>Kisumu</li>
+            <li>Nakuru</li>
+            <li>And all other counties</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Add more FAQ items following the same pattern -->
+    </div>
+  </div>
+</section>
+
+<script>
+// FAQ Toggle Function
+function toggleFAQ(id) {
+  const content = document.getElementById(`faqContent${id}`);
+  const icon = document.getElementById(`faqIcon${id}`);
+  
+  content.classList.toggle('hidden');
+  icon.classList.toggle('rotate-180');
+}
+</script>
+
+
+
+
+<!-- Career Tips Section -->
+<section id="career-tips" class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-extrabold text-center mb-4">Career Tips & Insights</h2>
+    <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      Expert advice for Kenyan tech professionals
+    </p>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- Tip 1 -->
+      <div class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+             alt="Nairobi tech interview" 
+             class="w-full h-48 object-cover"
+             loading="lazy">
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-3">Acing Tech Interviews in Kenya</h3>
+          <p class="text-gray-600 mb-4">Learn what top Nairobi tech companies look for during interviews</p>
+          <a href="insights.html" class="text-brand-green font-bold flex items-center">
+            Read Article
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Tip 2 -->
+      <div class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+             alt="Salary negotiation" 
+             class="w-full h-48 object-cover"
+             loading="lazy">
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-3">Salary Negotiation Guide for Kenya</h3>
+          <p class="text-gray-600 mb-4">How to negotiate your worth in the Kenyan tech market</p>
+          <a href="insights.html" class="text-brand-green font-bold flex items-center">
+            Read Article
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Tip 3 -->
+      <div class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all">
+        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+             alt="Remote work Kenya" 
+             class="w-full h-48 object-cover"
+             loading="lazy">
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-3">Remote Work for Kenyan Developers</h3>
+          <p class="text-gray-600 mb-4">How to land international remote jobs from Kenya</p>
+          <a href="insights.html" class="text-brand-green font-bold flex items-center">
+            Read Article
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- About Us Section -->
+<section id="about" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+        <h2 class="text-3xl font-extrabold mb-6">About ProConnect Kenya</h2>
+        <p class="text-gray-700 mb-4">
+          Founded in Nairobi in 2022, ProConnect Kenya is dedicated to transforming the tech employment landscape 
+          across Kenya by connecting verified professionals with transparent opportunities.
+        </p>
+        <p class="text-gray-700 mb-4">
+          We believe every Kenyan tech professional deserves fair access to quality jobs with clear compensation 
+          expectations.
+        </p>
+        <div class="bg-brand-green text-white p-4 rounded-lg">
+          <p class="font-bold">Our Mission:</p>
+          <p>To eliminate information asymmetry in Kenya's tech job market through verification and transparency.</p>
+        </div><br>
+<a href="about.html" class="bg-brand-dark text-white px-10 py-3 rounded-md text-lg font-extrabold btn-hover">
+          About Us
+        </a>
+      </div>
+      <div class="md:w-1/2">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" 
+             alt="ProConnect Kenya team" 
+             class="w-full rounded-xl shadow-lg"
+             loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
   <!-- Final CTA Section -->
-  <section class="py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
+  <section class="py-20 bg-gradient-to-r from-brand-green to-green-700 text-white">
     <div class="container mx-auto px-4 text-center">
       <h2 class="text-3xl font-extrabold mb-6 fade-on-scroll">Ready to Transform Your Tech Career?</h2>
       <p class="text-xl mb-10 max-w-2xl mx-auto fade-on-scroll">
         Join Kenya's most trusted professional network for developers, designers, and tech talent.
       </p>
-      <button onclick="openModal('waitlist')" class="bg-white text-green-700 px-10 py-4 rounded-md text-lg font-extrabold btn-hover fade-on-scroll">
-        Get Early Access
-      </button>
+      <div class="flex flex-col sm:flex-row justify-center gap-4 fade-on-scroll">
+        <button onclick="authModals.open('signup')" class="bg-white text-brand-green px-10 py-4 rounded-md text-lg font-extrabold btn-hover">
+          Sign Up Now
+        </button>
+        <button onclick="authModals.open('login')" class="bg-brand-dark text-white px-10 py-4 rounded-md text-lg font-extrabold btn-hover">
+          Log In
+        </button>
+      </div>
     </div>
   </section>
 
+
+
+<!-- Contact Us Section -->
+<section id="contact" class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <h2 class="text-3xl font-extrabold text-center mb-4">Contact Us</h2>
+    <p class="text-xl text-gray-600 text-center mb-12 max-w-3xl mx-auto">
+      Get in touch with the ProConnect Kenya team
+    </p>
+    
+    <div class="grid md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+      <div>
+        <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+        
+        <div class="space-y-4">
+          <div class="flex items-start">
+            <svg class="w-6 h-6 text-brand-green mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+            </svg>
+            <div>
+              <p class="font-medium">Phone/WhatsApp</p>
+              <a href="https://wa.me/254113384323" class="text-gray-600 hover:text-brand-green">0113 384 323</a>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <svg class="w-6 h-6 text-brand-green mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            <div>
+              <p class="font-medium">Email</p>
+              <a href="mailto:djtopa62@gmail.com" class="text-gray-600 hover:text-brand-green">djtopa62@gmail.com</a>
+            </div>
+          </div>
+          
+          <div class="flex items-start">
+            <svg class="w-6 h-6 text-brand-green mr-3 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <div>
+              <p class="font-medium">Nairobi Office</p>
+              <p class="text-gray-600">Westlands, Nairobi, Kenya</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="text-xl font-bold mb-4">Send Us a Message</h3>
+        <form class="space-y-4">
+          <div>
+            <label for="name" class="block text-gray-700 mb-2">Your Name</label>
+            <input type="text" id="name" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-brand-green focus:border-transparent">
+          </div>
+          <div>
+            <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+            <input type="email" id="email" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-brand-green focus:border-transparent">
+          </div>
+          <div>
+            <label for="message" class="block text-gray-700 mb-2">Message</label>
+            <textarea id="message" rows="4" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-brand-green focus:border-transparent"></textarea>
+          </div>
+          <button type="submit" class="bg-brand-green text-white px-6 py-2 rounded-md font-bold hover:bg-green-700 transition">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <script>
+    $(document).ready(function () {
+      $("img").on("dragstart", function (e) {
+        e.preventDefault();
+      });
+    });
+  </script>
   <!-- Footer -->
   <footer class="bg-gray-900 text-white pt-16 pb-8">
     <div class="container mx-auto px-4">
@@ -645,27 +1086,27 @@
             <li><a href="#" class="text-gray-400 hover:text-white">Find Jobs</a></li>
             <li><a href="#" class="text-gray-400 hover:text-white">Skill Tests</a></li>
             <li><a href="#" class="text-gray-400 hover:text-white">Community</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
+            <li><a href="pricing.html" class="text-gray-400 hover:text-white">Pricing</a></li>
           </ul>
         </div>
         
         <div>
           <h4 class="text-lg font-bold mb-4">For Employers</h4>
           <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-white">Post Jobs</a></li>
+            <li><a href="#signupmodal" class="text-gray-400 hover:text-white">Post Jobs</a></li>
             <li><a href="#" class="text-gray-400 hover:text-white">Find Talent</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white">Pricing</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white">Success Stories</a></li>
+            <li><a href="pricing.html" class="text-gray-400 hover:text-white">Pricing</a></li>
+            <li><a href="#testimonial" class="text-gray-400 hover:text-white">Success Stories</a></li>
           </ul>
         </div>
         
         <div>
           <h4 class="text-lg font-bold mb-4">Company</h4>
           <ul class="space-y-2">
-            <li><a href="#" class="text-gray-400 hover:text-white">About</a></li>
+            <li><a href="about.html" class="text-gray-400 hover:text-white">About</a></li>
             <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-white">Contact</a></li>
+            <li><a href="blog.html" class="text-gray-400 hover:text-white">Blog</a></li>
           </ul>
         </div>
       </div>
@@ -676,22 +1117,46 @@
     </div>
   </footer>
 
-  <!-- Waitlist Modal -->
-  <div id="waitlistModal" class="modal">
+  <!-- Auth Modals -->
+  <!-- Signup Modal -->
+  <div id="signupModal" class="modal">
     <div class="modal-content">
       <div class="flex justify-between items-center mb-6">
-        <h3 class="text-2xl font-extrabold">Join Our Waitlist</h3>
-        <span onclick="closeModal('waitlist')" class="text-3xl cursor-pointer hover:text-gray-600">&times;</span>
+        <h3 class="text-2xl font-extrabold">Create Account</h3>
+        <span onclick="authModals.close('signup')" class="text-3xl cursor-pointer hover:text-gray-600">&times;</span>
       </div>
-      <form id="waitlistForm" class="space-y-4">
+      <form id="signupForm" class="space-y-4">
         <div>
-          <label for="email" class="block text-gray-700 mb-2">Email Address</label>
+          <label for="signupUsername" class="block text-gray-700 mb-2">Username</label>
+          <input 
+            type="text" 
+            id="signupUsername" 
+            required
+            minlength="3"
+            class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+          <div id="usernameError" class="error-message">Username must be at least 3 characters</div>
+        </div>
+        <div>
+          <label for="signupEmail" class="block text-gray-700 mb-2">Email Address</label>
           <input 
             type="email" 
-            id="email" 
+            id="signupEmail" 
             required 
             class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
           >
+          <div id="emailError" class="error-message">Please enter a valid email</div>
+        </div>
+        <div>
+          <label for="signupPassword" class="block text-gray-700 mb-2">Password (min 8 characters)</label>
+          <input 
+            type="password" 
+            id="signupPassword" 
+            required
+            minlength="8" 
+            class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+          <div id="passwordError" class="error-message">Password must be at least 8 characters</div>
         </div>
         <div>
           <label for="userType" class="block text-gray-700 mb-2">I am a</label>
@@ -702,35 +1167,105 @@
             <option value="developer">Developer</option>
             <option value="designer">Designer</option>
             <option value="employer">Employer</option>
-            <option value="other">Other</option>
           </select>
         </div>
+        <div id="signupSuccess" class="success-message hidden"></div>
         <button 
           type="submit" 
-          class="w-full bg-green-600 text-white py-3 rounded-md font-bold btn-hover"
+          class="w-full bg-brand-green text-white py-3 rounded-md font-bold btn-hover"
         >
-          Join Waitlist
+          Sign Up
         </button>
+        <p class="text-center text-gray-600 mt-4">
+          Already have an account? 
+          <a href="#" onclick="handleAuthLink('signup', 'login')" class="text-brand-green font-medium">Log In</a>
+        </p>
       </form>
     </div>
   </div>
 
-  <!-- Success Modal -->
-  <div id="successModal" class="modal">
-    <div class="modal-content text-center">
-      <div class="mb-6">
-        <svg class="w-16 h-16 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-        </svg>
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-extrabold">Welcome Back</h3>
+        <span onclick="authModals.close('login')" class="text-3xl cursor-pointer hover:text-gray-600">&times;</span>
       </div>
-      <h3 class="text-2xl font-extrabold mb-4">You're On The List!</h3>
-      <p class="text-gray-600 mb-6">We'll notify you when ProConnect launches. Get ready to connect!</p>
-      <button 
-        onclick="closeModal('success')" 
-        class="bg-green-600 text-white px-8 py-3 rounded-md font-bold btn-hover"
-      >
-        Close
-      </button>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label for="loginEmail" class="block text-gray-700 mb-2">Email Address</label>
+          <input 
+            type="email" 
+            id="loginEmail" 
+            required 
+            class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+          <div id="loginEmailError" class="error-message"></div>
+        </div>
+        <div>
+          <label for="loginPassword" class="block text-gray-700 mb-2">Password</label>
+          <input 
+            type="password" 
+            id="loginPassword" 
+            required 
+            class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+          <div id="loginPasswordError" class="error-message"></div>
+        </div>
+        <div id="loginError" class="error-message text-center"></div>
+        <div id="loginSuccess" class="success-message text-center hidden"></div>
+        <div class="flex justify-between items-center">
+          <div class="flex items-center">
+            <input type="checkbox" id="rememberMe" class="mr-2">
+            <label for="rememberMe" class="text-gray-700">Remember me</label>
+          </div>
+          <a href="#" onclick="handleAuthLink('login', 'reset')" class="text-brand-green text-sm font-medium">Forgot password?</a>
+        </div>
+        <button 
+          type="submit" 
+          class="w-full bg-brand-green text-white py-3 rounded-md font-bold btn-hover"
+        >
+          Log In
+        </button>
+        <p class="text-center text-gray-600 mt-4">
+          Don't have an account? 
+          <a href="#" onclick="handleAuthLink('login', 'signup')" class="text-brand-green font-medium">Sign Up</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Password Reset Modal -->
+  <div id="resetModal" class="modal">
+    <div class="modal-content">
+      <div class="flex justify-between items-center mb-6">
+        <h3 class="text-2xl font-extrabold">Reset Password</h3>
+        <span onclick="authModals.close('reset')" class="text-3xl cursor-pointer hover:text-gray-600">&times;</span>
+      </div>
+      <form id="resetForm" class="space-y-4">
+        <p class="text-gray-600 mb-4">Enter your email and we'll send you a link to reset your password.</p>
+        <div>
+          <label for="resetEmail" class="block text-gray-700 mb-2">Email Address</label>
+          <input 
+            type="email" 
+            id="resetEmail" 
+            required 
+            class="w-full px-4 py-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+          >
+          <div id="resetError" class="error-message"></div>
+          <div id="resetSuccess" class="success-message hidden"></div>
+        </div>
+        <button 
+          type="submit" 
+          class="w-full bg-brand-green text-white py-3 rounded-md font-bold btn-hover"
+        >
+          Send Reset Link
+        </button>
+        <p class="text-center text-gray-600 mt-4">
+          Remember your password? 
+          <a href="#" onclick="handleAuthLink('reset', 'login')" class="text-brand-green font-medium">Log In</a>
+        </p>
+      </form>
     </div>
   </div>
 
@@ -738,20 +1273,212 @@
   <div id="errorModal" class="modal">
     <div class="modal-content text-center">
       <div class="mb-6">
-        <svg class="w-16 h-16 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        <svg class="w-16 h-16 text-yellow-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
         </svg>
       </div>
-      <h3 class="text-2xl font-extrabold mb-4">Oops! Something Went Wrong</h3>
-      <p class="text-gray-600 mb-6" id="errorMessage">Maybe You Slipped!.</p>
+      <h3 class="text-2xl font-extrabold mb-4">Restricted Action</h3>
+      <p class="text-gray-600 mb-6" id="errorMessage">
+        Right-click is disabled to protect content. 
+        <br>Sign in for full access to features.
+      </p>
+      <div class="flex justify-center space-x-4">
+        <button 
+          onclick="authModals.close('error')" 
+          class="bg-gray-300 text-gray-800 px-6 py-2 rounded-md font-medium"
+        >
+          I Understand
+        </button>
+        <button 
+          onclick="authModals.close('error'); authModals.open('login')" 
+          class="bg-brand-green text-white px-6 py-2 rounded-md font-medium"
+        >
+          Sign In
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content text-center">
+      <div class="mb-6">
+        <svg class="w-16 h-16 text-brand-green mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-extrabold mb-4" id="successTitle">Success!</h3>
+      <p class="text-gray-600 mb-6" id="successMessage">Your account has been created successfully.</p>
       <button 
-        onclick="closeModal('error')" 
-        class="bg-green-600 text-white px-8 py-3 rounded-md font-bold btn-hover"
+        onclick="authModals.close('success')" 
+        class="bg-brand-green text-white px-8 py-3 rounded-md font-bold btn-hover"
       >
-        Try Again
+        Continue
       </button>
     </div>
   </div>
+
+
+<!-- Update your existing feature block buttons to: 
+<button 
+  onclick="openFeatureModal('skill-validation')" 
+  class="text-brand-green font-bold flex items-center"
+>
+  Learn more
+  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+</button>-->
+
+<!-- Feature Detail Modal -->
+<div id="featureModal" class="modal">
+  <div class="modal-content">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-extrabold" id="featureModalTitle">Feature Details</h3>
+      <button onclick="closeCurrentModal()" class="text-gray-500 hover:text-gray-700">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+    <div id="featureModalContent" class="prose max-w-none">
+      <!-- Content loads here -->
+    </div>
+    <div class="mt-6 text-center">
+      <button 
+        onclick="closeCurrentModal()" 
+        class="bg-brand-green text-white px-6 py-2 rounded-md font-bold hover:bg-green-700 transition"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Feature Content Data
+const featureContent = {
+  'verified-connections': {
+    title: 'Verified Connections',
+    content: `
+      <h4 class="font-bold text-lg mb-3">How Verification Works</h4>
+      <p class="mb-4">All ProConnect Kenya members complete our 3-step verification:</p>
+      <ol class="list-decimal pl-5 mb-4 space-y-2">
+        <li><strong>Phone Verification:</strong> M-Pesa registered number</li>
+        <li><strong>ID Check:</strong> Government-issued identification</li>
+        <li><strong>Professional Review:</strong> Portfolio or credential verification</li>
+      </ol>
+      <div class="bg-green-50 p-4 rounded-lg">
+        <p class="font-medium">This process reduces fake profiles by 92% in the Kenyan tech community.</p>
+      </div>
+    `
+  },
+  'salary-transparency': {
+    title: 'Salary Transparency',
+    content: `
+      <div class="mb-6">
+        <h4 class="font-bold text-lg mb-3">Real Kenyan Market Data</h4>
+        <p>Every job post includes verified salary ranges for:</p>
+        <ul class="list-disc pl-5 mt-2 space-y-1">
+          <li>Nairobi, Mombasa, and Kisumu regions</li>
+          <li>Junior/Mid/Senior level positions</li>
+          <li>Benefits and bonus structures</li>
+        </ul>
+      </div>
+      <div class="border-t pt-4">
+        <h4 class="font-bold text-lg mb-2">2023 Kenyan Tech Salary Benchmarks</h4>
+        <p>Access our latest salary reports directly in your dashboard.</p>
+      </div>
+    `
+  },
+  'skill-validation': {
+    title: 'Skill Validation',
+    content: `
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div>
+          <h4 class="font-bold text-lg mb-2">For Developers</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Live coding challenges</li>
+            <li>Kenyan tech stack focused</li>
+            <li>Peer code reviews</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold text-lg mb-2">For Designers</h4>
+          <ul class="list-disc pl-5 space-y-1">
+            <li>Portfolio assessment</li>
+            <li>Design challenges</li>
+            <li>Client feedback integration</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bg-green-50 p-4 rounded-lg">
+        <p>Verified skills appear on your profile with <strong>trust badges</strong> recognized by Kenyan employers.</p>
+      </div>
+    `
+  }
+};
+
+// Modal Control Functions
+let currentModal = null;
+
+function openFeatureModal(featureId) {
+  const feature = featureContent[featureId];
+  if (!feature) return;
+  
+  currentModal = 'feature';
+  document.getElementById('featureModalTitle').textContent = feature.title;
+  document.getElementById('featureModalContent').innerHTML = feature.content;
+  document.getElementById('featureModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  
+  // Track the view if analytics is available
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'view_feature', {
+      'feature_name': featureId
+    });
+  }
+}
+
+function closeCurrentModal() {
+  if (!currentModal) return;
+  
+  document.getElementById(`${currentModal}Modal`).style.display = 'none';
+  document.body.style.overflow = 'auto';
+  currentModal = null;
+}
+
+// Close when clicking outside modal content
+document.addEventListener('click', function(event) {
+  if (currentModal && event.target.classList.contains('modal')) {
+    closeCurrentModal();
+  }
+});
+
+// Close with Escape key
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape' && currentModal) {
+    closeCurrentModal();
+  }
+});
+// Enhanced FAQ toggle with animation
+function toggleFAQ(id) {
+  const content = document.getElementById(`faqContent${id}`);
+  const icon = document.getElementById(`faqIcon${id}`);
+  
+  // Toggle visibility with animation
+  content.classList.toggle('hidden');
+  icon.classList.toggle('rotate-180');
+  
+  // Smooth height transition
+  if (content.classList.contains('hidden')) {
+    content.style.maxHeight = '0';
+  } else {
+    content.style.maxHeight = `${content.scrollHeight}px`;
+  }
+}
+</script>
+
 
   <script>
     // Navbar show/hide on scroll
@@ -763,45 +1490,223 @@
       }
     });
 
-    // Modal functions
-    function openModal(modalType) {
-      document.getElementById(modalType + 'Modal').style.display = 'block';
-      document.body.style.overflow = 'hidden';
-    }
-    
-    function closeModal(modalType) {
-      document.getElementById(modalType + 'Modal').style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-    
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-      if (event.target.className === 'modal') {
+    // Auth Modals System
+    const authModals = {
+      current: null,
+      
+      open: function(modalType) {
+        this.closeAll();
+        document.getElementById(modalType + 'Modal').style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        this.current = modalType;
+        
+        // Clear previous errors when opening
+        if (modalType === 'signup' || modalType === 'login' || modalType === 'reset') {
+          this.clearErrors(modalType);
+        }
+      },
+      
+      close: function(modalType) {
+        document.getElementById(modalType + 'Modal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        this.current = null;
+      },
+      
+      closeAll: function() {
         document.querySelectorAll('.modal').forEach(modal => {
           modal.style.display = 'none';
-          document.body.style.overflow = 'auto';
         });
+        document.body.style.overflow = 'auto';
+        this.current = null;
+      },
+      
+      clearErrors: function(formType) {
+        document.querySelectorAll(`#${formType}Form .error-message`).forEach(el => {
+          el.style.display = 'none';
+        });
+        document.querySelectorAll(`#${formType}Form input`).forEach(input => {
+          input.classList.remove('input-error');
+        });
+        
+        if (formType === 'login') {
+          document.getElementById('loginError').textContent = '';
+        }
+      },
+      
+      showError: function(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const errorElement = document.getElementById(`${fieldId}Error`);
+        
+        if (field && errorElement) {
+          field.classList.add('input-error');
+          errorElement.textContent = message;
+          errorElement.style.display = 'block';
+        }
+      },
+      
+      showSuccess: function(formType, message) {
+        const successElement = document.querySelector(`#${formType}Form .success-message`);
+        if (successElement) {
+          successElement.textContent = message;
+          successElement.classList.remove('hidden');
+          setTimeout(() => successElement.classList.add('hidden'), 5000);
+        }
       }
+    };
+
+    // Handle auth links between modals
+    function handleAuthLink(fromModal, toModal) {
+      authModals.close(fromModal);
+      authModals.open(toModal);
     }
-    
-    // Form submission
-    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+
+    // Form Validation
+    function validateSignup() {
+      let isValid = true;
+      const username = document.getElementById('signupUsername').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+
+      // Clear previous errors
+      authModals.clearErrors('signup');
+
+      // Validate username
+      if (username.length < 3) {
+        authModals.showError('signupUsername', 'Username must be at least 3 characters');
+        isValid = false;
+      }
+
+      // Validate email
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        authModals.showError('signupEmail', 'Please enter a valid email');
+        isValid = false;
+      }
+
+      // Validate password
+      if (password.length < 8) {
+        authModals.showError('signupPassword', 'Password must be at least 8 characters');
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    // Form Submission Handlers
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      // Simulate form submission
-      setTimeout(function() {
-        closeModal('waitlist');
-        openModal('success');
-      }, 1000);
-      this.reset();
+      
+      if (validateSignup()) {
+        // Show loading state
+        const submitBtn = this.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Creating Account...';
+        
+        // Simulate API call
+        setTimeout(() => {
+          authModals.showSuccess('signup', 'Account created successfully! Redirecting...');
+          
+          // In real implementation, you would:
+          // 1. Create user in Firebase/auth system
+          // 2. On success:
+          setTimeout(() => {
+            authModals.close('signup');
+            document.getElementById('successTitle').textContent = 'Welcome!';
+            document.getElementById('successMessage').textContent = 'Your account has been created successfully.';
+            authModals.open('success');
+            
+            // Reset form
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Sign Up';
+            this.reset();
+          }, 1500);
+        }, 1500);
+      }
     });
-    
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const submitBtn = this.querySelector('button[type="submit"]');
+      
+      // Clear previous errors
+      authModals.clearErrors('login');
+      document.getElementById('loginError').textContent = '';
+      
+      // Basic validation
+      if (!email || !password) {
+        document.getElementById('loginError').textContent = 'Please fill in all fields';
+        return;
+      }
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Logging In...';
+      document.getElementById('loginSuccess').textContent = 'Authenticating...';
+      document.getElementById('loginSuccess').classList.remove('hidden');
+      
+      // Simulate API call
+      setTimeout(() => {
+        // In real implementation:
+        // firebase.auth().signInWithEmailAndPassword(email, password)
+        //   .then(() => { ... })
+        //   .catch(error => { ... });
+        
+        // For demo purposes - assume login is successful
+        authModals.close('login');
+        document.getElementById('successTitle').textContent = 'Login Successful!';
+        document.getElementById('successMessage').textContent = 'You are now being redirected to your dashboard.';
+        authModals.open('success');
+        
+        // Reset form
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Log In';
+      }, 1500);
+    });
+
+    document.getElementById('resetForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('resetEmail').value;
+      const submitBtn = this.querySelector('button[type="submit"]');
+      
+      // Clear previous messages
+      document.getElementById('resetError').textContent = '';
+      document.getElementById('resetSuccess').classList.add('hidden');
+      
+      // Basic validation
+      if (!email) {
+        document.getElementById('resetError').textContent = 'Please enter your email';
+        return;
+      }
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Sending...';
+      
+      // Simulate API call
+      setTimeout(() => {
+        document.getElementById('resetSuccess').textContent = 'Password reset link sent to your email!';
+        document.getElementById('resetSuccess').classList.remove('hidden');
+        
+        // Auto-redirect to login after 3 seconds
+        setTimeout(() => {
+          authModals.close('reset');
+          authModals.open('login');
+        }, 3000);
+        
+        // Reset form
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Send Reset Link';
+      }, 1500);
+    });
+
     // Testimonial slider
     let currentTestimonial = 0;
     const testimonials = document.querySelectorAll('#testimonialSlider .flex > div');
-
-// immediately show testimonials
-   showTestimonial(0);
- 
+    showTestimonial(0);
+    
     function showTestimonial(index) {
       const slider = document.querySelector('#testimonialSlider .flex');
       slider.style.transform = `translateX(-${index * 100}%)`;
@@ -820,25 +1725,25 @@
     
     // Auto-rotate testimonials
     setInterval(nextTestimonial, 5000);
-    
-  // Replace the animateCountUp function with this:
-function animateCountUp() {
-  const counters = document.querySelectorAll('.countup');
-  const speed = 10000; // Increased from 200 to slow down
-  
-  counters.forEach(counter => {
-    const target = +counter.getAttribute('data-target');
-    const count = +counter.innerText;
-    const increment = target / speed;
-    
-    if (count < target) {
-      counter.innerText = Math.ceil(count + increment);
-      setTimeout(animateCountUp, 10); // Increased delay
-    } else {
-      counter.innerText = target;
+
+    // Count-up animation
+    function animateCountUp() {
+      const counters = document.querySelectorAll('.countup');
+      const speed = 100;
+      
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const increment = target / speed;
+        
+        if (count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(animateCountUp, 10);
+        } else {
+          counter.innerText = target;
+        }
+      });
     }
-  });
-}
     
     // Scroll animations
     function checkScroll() {
@@ -865,70 +1770,93 @@ function animateCountUp() {
       // Set up scroll event listener
       window.addEventListener('scroll', checkScroll);
       checkScroll(); // Check on load
+      
+      // Check for auth redirects in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('auth')) {
+        authModals.open(urlParams.get('auth'));
+      }
     });
     
     // Disable right click
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
-      openModal('error');
-      document.getElementById('errorMessage').textContent = 'Right-click is disabled on this page.';
+      if (!userIsAuthenticated()) {
+        authModals.open('error');
+        document.getElementById('errorMessage').innerHTML = `
+          Right-click is disabled for guest users.<br>
+          <span class="text-sm">Sign up to access all features.</span>
+        `;
+      }
     });
+
+    // Example auth check (replace with your actual implementation)
+    function userIsAuthenticated() {
+      // This would check Firebase auth state or your auth system
+      return false; // Default to false for demonstration
+    }
+
   </script>
 <script>
-
-// Import Firebase SDK
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-
-// Firebase Configuration (Original)
-const firebaseConfig = {
-  apiKey: "AIzaSyCTeGtqnKL2Mk6IrPFcDk0Gqzo_Y7Nikn8",
-  authDomain: "proconnect-254.firebaseapp.com",
-  projectId: "proconnect-254",
-  storageBucket: "proconnect-254.firebasestorage.app", // Original storageBucket
-  messagingSenderId: "406855935685",
-  appId: "1:406855935685:web:8ed31baf7641b49c1232ac",
-  measurementId: "G-VEM3JM1CKG"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app); // Initialize Firestore
-
-// Function to add user to waitlist
-async function addToWaitlist(email, userType) {
-  try {
-    const docRef = await addDoc(collection(db, "waitlist"), {
-      email: email,
-      userType: userType,
-      timestamp: new Date(),
-    });
-    console.log("User added to waitlist with ID: ", docRef.id);
-    
-    // Show success modal
-    document.getElementById("successModal").style.display = "block";
-  } catch (error) {
-    console.error("Error adding user: ", error);
-    
-    // Show error modal
-    document.getElementById("errorModal").style.display = "block";
-  }
-}
-
-// Event listener for form submission
-document.getElementById("waitlistForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
-  
-  // Get form values
-  const email = document.getElementById("email").value;
-  const userType = document.getElementById("userType").value;
-  
-  // Send data to Firestore
-  await addToWaitlist(email, userType);
+// Add to your existing auth form handlers
+document.getElementById('signupForm').addEventListener('submit', function() {
+  trackAuthEvent('signup', 'email');
+  // Existing submission logic
 });
 
+document.getElementById('loginForm').addEventListener('submit', function() {
+  trackAuthEvent('login', 'email'); 
+  // Existing submission logic
+});
+
+// Password reset tracking
+document.getElementById('resetForm').addEventListener('submit', function() {
+  gtag('event', 'password_reset_request');
+});
 </script>
+
+<script>
+  // Send perf metrics to GA
+  if ('PerformanceObserver' in window) {
+    const perfObserver = new PerformanceObserver((list) => {
+      const entries = list.getEntries();
+      for (const entry of entries) {
+        gtag('event', 'perf_timing', {
+          'metric_name': entry.name,
+          'metric_value': Math.round(entry.startTime + entry.duration),
+          'event_category': 'Performance Metrics'
+        });
+      }
+    });
+    perfObserver.observe({entryTypes: ['measure', 'paint']});
+  }
+
+  // Track LCP (Largest Contentful Paint)
+  const lcpObserver = new PerformanceObserver((entryList) => {
+    const entries = entryList.getEntries();
+    const lastEntry = entries[entries.length - 1];
+    gtag('event', 'LCP', {
+      'value': Math.round(lastEntry.renderTime || lastEntry.loadTime),
+      'units': 'ms'
+    });
+  });
+  lcpObserver.observe({type: 'largest-contentful-paint', buffered: true});
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js');
+  });
+}
+</script>
+
+<script>
+// Prevent F12/DevTools
+document.onkeydown = function(e) {
+  if (e.key === "F12" || (e.ctrlKey && e.shiftKey && e.key === "I")) {
+    showerrorModal();
+    return false;
+  }
+};
+</script>
+
 </body>
 </html>
