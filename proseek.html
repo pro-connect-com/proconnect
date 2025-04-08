@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | ProConnect Kenya</title>
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'brand-green': '#16a34a',
+            'brand-dark': '#0f172a',
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Disable text/image selection and dragging */
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    img, .no-drag {
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+      pointer-events: none;
+    }
+    /* Scrollbar styling */
+    .sidebar-scroll {
+      scrollbar-width: thin;
+      scrollbar-color: #16a34a #f1f1f1;
+    }
+    .sidebar-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .sidebar-scroll::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .sidebar-scroll::-webkit-scrollbar-thumb {
+      background-color: #16a34a;
+      border-radius: 20px;
+    }
+    /* Notification dot */
+    .notification-dot {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 12px;
+      height: 12px;
+      background-color: #ef4444;
+      border-radius: 50%;
+    }
+    /* Modal backdrop */
+    .modal-backdrop {
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+  </style>
+</head>
+<body class="bg-gray-100" oncontextmenu="return false">
+  <!-- Top Navigation -->
+  <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <img src="/images/logo.png" alt="ProConnect" class="h-8 mr-3 no-drag" loading="lazy">
+          <span class="text-xl font-bold text-gray-800">ProConnect</span>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="hidden md:flex mx-4 flex-1 max-w-xl">
+          <div class="relative w-full">
+            <input 
+              type="text" 
+              placeholder="Search jobs, people, posts..." 
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-green focus:border-transparent"
+            >
+            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+          </div>
+        </div>
+        
+        <!-- Right Menu -->
+        <div class="flex items-center space-x-4">
+          <!-- Notification -->
+          <div class="relative">
+            <button class="p-2 text-gray-600 hover:text-brand-green relative">
+              <i class="fas fa-bell text-xl"></i>
+              <span class="notification-dot"></span>
+            </button>
+          </div>
+          
+          <!-- Messages -->
+          <div class="relative">
+            <button class="p-2 text-gray-600 hover:text-brand-green relative">
+              <i class="fas fa-envelope text-xl"></i>
+              <span class="notification-dot"></span>
+            </button>
+          </div>
+          
+          <!-- User Menu -->
+          <div class="relative">
+            <button class="flex items-center space-x-2 focus:outline-none">
+              <img src="/images/user-placeholder.jpg" alt="User" class="w-8 h-8 rounded-full border-2 border-brand-green no-drag" loading="lazy">
+              <span class="hidden md:inline text-sm font-medium">John M.</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto px-4 py-6 flex flex-col md:flex-row">
+    <!-- Left Sidebar -->
+    <aside class="w-full md:w-64 flex-shrink-0 mb-6 md:mb-0 md:mr-6">
+      <div class="bg-white rounded-lg shadow-sm p-4 sticky top-24 h-[calc(100vh-120px)] overflow-y-auto sidebar-scroll">
+        <!-- User Profile -->
+        <div class="text-center mb-6">
+          <img src="/images/user-placeholder.jpg" alt="User" class="w-20 h-20 rounded-full mx-auto border-4 border-white shadow-md mb-3 no-drag" loading="lazy">
+          <h3 class="font-bold text-lg">John Mwangi</h3>
+          <p class="text-gray-600 text-sm">Nairobi, Kenya</p>
+          <p class="text-gray-500 text-xs mt-1">Software Developer</p>
+        </div>
+        
+        <!-- Profile Completeness -->
+        <div class="mb-6">
+          <div class="flex justify-between text-sm mb-1">
+            <span class="font-medium">Profile Strength</span>
+            <span>65%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2">
+            <div class="bg-brand-green h-2 rounded-full" style="width: 65%"></div>
+          </div>
+          <a href="/profile/edit" class="text-xs text-brand-green mt-1 hover:underline">Complete profile</a>
+        </div>
+        
+        <!-- Sidebar Menu -->
+        <nav class="space-y-1">
+          <a href="/dashboard" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-home mr-3 text-brand-green"></i>
+            <span>Home</span>
+          </a>
+          <a href="/network" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-user-friends mr-3 text-brand-green"></i>
+            <span>My Network</span>
+          </a>
+          <a href="/jobs" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-briefcase mr-3 text-brand-green"></i>
+            <span>Jobs</span>
+          </a>
+          <a href="/messages" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-envelope mr-3 text-brand-green"></i>
+            <span>Messages</span>
+          </a>
+          <a href="/notifications" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-bell mr-3 text-brand-green"></i>
+            <span>Notifications</span>
+          </a>
+          <hr class="my-2">
+          <a href="/profile" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-user-circle mr-3 text-brand-green"></i>
+            <span>Profile</span>
+          </a>
+          <a href="/my-cv" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-file-alt mr-3 text-brand-green"></i>
+            <span>My CV</span>
+          </a>
+          <a href="/settings" class="flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+            <i class="fas fa-cog mr-3 text-brand-green"></i>
+            <span>Settings</span>
+          </a>
+        </nav>
+        
+        <!-- Premium CTA -->
+        <div class="mt-6 p-3 bg-gradient-to-r from-brand-dark to-gray-800 text-white rounded-lg text-center">
+          <p class="text-xs mb-1">Upgrade to</p>
+          <p class="font-bold mb-2">ProConnect Premium</p>
+          <a href="/premium" class="inline-block bg-white text-brand-green text-xs font-bold px-3 py-1 rounded-full hover:bg-gray-100">Try Free</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <!-- Create Post -->
+      <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <div class="flex items-start space-x-3">
+          <img src="/images/user-placeholder.jpg" alt="User" class="w-10 h-10 rounded-full no-drag" loading="lazy">
+          <a href="/create-post" class="flex-1 text-left bg-gray-100 hover:bg-gray-200 rounded-full px-4 py-2 text-gray-500 text-sm transition">
+            Start a post
+          </a>
+        </div>
+        <div class="flex justify-between mt-3">
+          <a href="/create-post?type=photo" class="flex items-center text-gray-500 hover:bg-gray-100 px-3 py-1 rounded">
+            <i class="fas fa-image text-brand-green mr-1"></i>
+            <span class="text-xs">Photo</span>
+          </a>
+          <a href="/create-post?type=video" class="flex items-center text-gray-500 hover:bg-gray-100 px-3 py-1 rounded">
+            <i class="fas fa-video text-brand-green mr-1"></i>
+            <span class="text-xs">Video</span>
+          </a>
+          <a href="/create-post?type=event" class="flex items-center text-gray-500 hover:bg-gray-100 px-3 py-1 rounded">
+            <i class="fas fa-calendar-alt text-brand-green mr-1"></i>
+            <span class="text-xs">Event</span>
+          </a>
+          <a href="/create-post?type=article" class="flex items-center text-gray-500 hover:bg-gray-100 px-3 py-1 rounded">
+            <i class="fas fa-newspaper text-brand-green mr-1"></i>
+            <span class="text-xs">Article</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Job Recommendations -->
+      <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="font-bold text-lg">Jobs you might like</h2>
+          <a href="/jobs" class="text-sm text-brand-green hover:underline">See all</a>
+        </div>
+        
+        <div class="space-y-4">
+          <!-- Job 1 -->
+          <div class="border border-gray-200 rounded-lg p-4 hover:border-brand-green transition">
+            <div class="flex justify-between">
+              <div>
+                <a href="/jobs/senior-software-engineer-safaricom" class="font-bold hover:underline">Senior Software Engineer</a>
+                <p class="text-sm text-gray-600">Safaricom PLC • Nairobi</p>
+              </div>
+              <img src="/images/safaricom-logo.jpg" alt="Safaricom" class="w-10 h-10 rounded no-drag" loading="lazy">
+            </div>
+            <p class="text-sm my-2">We're looking for an experienced engineer to join our team building M-Pesa solutions...</p>
+            <div class="flex justify-between items-center text-xs text-gray-500">
+              <span>2 days ago • 23 applicants</span>
+              <a href="/save-job/123" class="text-brand-green hover:underline">Save</a>
+            </div>
+          </div>
+          
+          <!-- Job 2 -->
+          <div class="border border-gray-200 rounded-lg p-4 hover:border-brand-green transition">
+            <div class="flex justify-between">
+              <div>
+                <a href="/jobs/marketing-manager-kcb" class="font-bold hover:underline">Marketing Manager</a>
+                <p class="text-sm text-gray-600">KCB Bank • Nairobi</p>
+              </div>
+              <img src="/images/kcb-logo.jpg" alt="KCB Bank" class="w-10 h-10 rounded no-drag" loading="lazy">
+            </div>
+            <p class="text-sm my-2">Lead our digital marketing team to create campaigns for the Kenyan market...</p>
+            <div class="flex justify-between items-center text-xs text-gray-500">
+              <span>1 week ago • 45 applicants</span>
+              <a href="/save-job/124" class="text-brand-green hover:underline">Save</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Network Updates -->
+      <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="font-bold text-lg">Network Updates</h2>
+          <a href="/network/updates" class="text-sm text-brand-green hover:underline">See all</a>
+        </div>
+        
+        <div class="space-y-4">
+          <!-- Update 1 -->
+          <div class="flex space-x-3">
+            <img src="/images/user-female.jpg" alt="User" class="w-10 h-10 rounded-full no-drag" loading="lazy">
+            <div class="flex-1">
+              <p class="text-sm">
+                <a href="/profile/sarah-k" class="font-bold hover:underline">Sarah K.</a> started a new job as <span class="font-bold">Product Designer</span> at <a href="/company/twiga-foods" class="font-bold hover:underline">Twiga Foods</a>
+              </p>
+              <p class="text-xs text-gray-500 mt-1">2 hours ago</p>
+            </div>
+          </div>
+          
+          <!-- Update 2 -->
+          <div class="flex space-x-3">
+            <img src="/images/user-male.jpg" alt="User" class="w-10 h-10 rounded-full no-drag" loading="lazy">
+            <div class="flex-1">
+              <p class="text-sm">
+                <a href="/profile/james-o" class="font-bold hover:underline">James O.</a> posted: "Looking for a React developer with 3+ years experience for a fintech startup"
+              </p>
+              <p class="text-xs text-gray-500 mt-1">5 hours ago</p>
+              <div class="mt-2 flex space-x-2">
+                <a href="/like-post/456" class="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-full">
+                  <i class="fas fa-thumbs-up mr-1"></i> Like
+                </a>
+                <a href="/comment-post/456" class="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-full">
+                  <i class="fas fa-comment mr-1"></i> Comment
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="w-full md:w-80 flex-shrink-0 md:ml-6">
+      <!-- News & Updates -->
+      <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <h2 class="font-bold text-lg mb-3">Kenyan Career News</h2>
+        <div class="space-y-4">
+          <div class="border-b border-gray-100 pb-3">
+            <a href="/news/mpesa-developer-platform" class="font-medium text-sm hover:underline">M-Pesa launches new developer platform</a>
+            <p class="text-xs text-gray-500 mt-1">2h ago • 124 readers</p>
+          </div>
+          <div class="border-b border-gray-100 pb-3">
+            <a href="/news/labor-laws-update" class="font-medium text-sm hover:underline">New labor laws affecting casual workers</a>
+            <p class="text-xs text-gray-500 mt-1">5h ago • 89 readers</p>
+          </div>
+          <div class="pb-2">
+            <a href="/news/top-paying-tech-jobs" class="font-medium text-sm hover:underline">Top paying tech jobs in Nairobi 2024</a>
+            <p class="text-xs text-gray-500 mt-1">1d ago • 342 readers</p>
+          </div>
+        </div>
+        <a href="/news" class="text-sm text-brand-green mt-3 hover:underline">Show more</a>
+      </div>
+      
+      <!-- Upcoming Events -->
+      <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="font-bold text-lg">Upcoming Events</h2>
+          <a href="/events" class="text-sm text-brand-green hover:underline">See all</a>
+        </div>
+        <div class="space-y-3">
+          <div class="flex space-x-3">
+            <div class="bg-brand-green text-white text-center p-2 rounded-lg w-12 flex-shrink-0">
+              <p class="text-xs">MAY</p>
+              <p class="font-bold">15</p>
+            </div>
+            <div>
+              <a href="/events/nairobi-tech-meetup" class="font-medium text-sm hover:underline">Nairobi Tech Meetup</a>
+              <p class="text-xs text-gray-500">Online • 6:00 PM EAT</p>
+            </div>
+          </div>
+          <div class="flex space-x-3">
+            <div class="bg-brand-green text-white text-center p-2 rounded-lg w-12 flex-shrink-0">
+              <p class="text-xs">MAY</p>
+              <p class="font-bold">22</p>
+            </div>
+            <div>
+              <a href="/events/cv-writing-workshop" class="font-medium text-sm hover:underline">CV Writing Workshop</a>
+              <p class="text-xs text-gray-500">Nairobi • 10:00 AM EAT</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Suggested Connections -->
+      <div class="bg-white rounded-lg shadow-sm p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="font-bold text-lg">People you may know</h2>
+          <a href="/network/suggestions" class="text-sm text-brand-green hover:underline">See all</a>
+        </div>
+        <div class="space-y-4">
+          <div class="flex items-center space-x-3">
+            <img src="/images/user-female-2.jpg" alt="User" class="w-10 h-10 rounded-full no-drag" loading="lazy">
+            <div class="flex-1">
+              <a href="/profile/grace-w" class="font-medium text-sm hover:underline">Grace W.</a>
+              <p class="text-xs text-gray-500">HR Manager at Safaricom</p>
+            </div>
+            <a href="/connect/grace-w" class="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-full">
+              Connect
+            </a>
+          </div>
+          <div class="flex items-center space-x-3">
+            <img src="/images/user-male-2.jpg" alt="User" class="w-10 h-10 rounded-full no-drag" loading="lazy">
+            <div class="flex-1">
+              <a href="/profile/david-m" class="font-medium text-sm hover:underline">David M.</a>
+              <p class="text-xs text-gray-500">Software Engineer at Andela</p>
+            </div>
+            <a href="/connect/david-m" class="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-full">
+              Connect
+            </a>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Mobile Bottom Navigation -->
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t border-gray-200">
+    <div class="flex justify-around">
+      <a href="/dashboard" class="p-3 text-gray-600 flex flex-col items-center">
+        <i class="fas fa-home text-xl"></i>
+        <span class="text-xs mt-1">Home</span>
+      </a>
+      <a href="/network" class="p-3 text-gray-600 flex flex-col items-center">
+        <i class="fas fa-user-friends text-xl"></i>
+        <span class="text-xs mt-1">Network</span>
+      </a>
+      <a href="/jobs" class="p-3 text-gray-600 flex flex-col items-center">
+        <i class="fas fa-briefcase text-xl"></i>
+        <span class="text-xs mt-1">Jobs</span>
+      </a>
+      <a href="/messages" class="p-3 text-gray-600 flex flex-col items-center">
+        <i class="fas fa-envelope text-xl"></i>
+        <span class="text-xs mt-1">Messages</span>
+      </a>
+      <a href="/profile" class="p-3 text-gray-600 flex flex-col items-center">
+        <i class="fas fa-user-circle text-xl"></i>
+        <span class="text-xs mt-1">Me</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Content Protection Script -->
+  <script>
+    // Disable right-click context menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      showProtectionModal();
+    });
+
+    // Disable developer tools shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+      if (e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && ['I', 'J'].includes(e.key)) {
+        e.preventDefault();
+        showProtectionModal();
+      }
+    });
+
+    // Show protection modal
+    function showProtectionModal() {
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 z-50 flex items-center justify-center modal-backdrop';
+      modal.innerHTML = `
+        <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+          <div class="text-center">
+            <i class="fas fa-lock text-brand-green text-4xl mb-3"></i>
+            <h3 class="text-xl font-bold mb-2">Content Protected</h3>
+            <p class="text-gray-600 mb-4">This content is protected by ProConnect Kenya. Please use official sharing options.</p>
+            <button onclick="this.parentElement.parentElement.parentElement.remove()" class="bg-brand-green text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700">
+              I Understand
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    // Load all functionality after page loads
+    window.addEventListener('load', function() {
+      // Initialize tooltips
+      const tooltips = document.querySelectorAll('[data-tooltip]');
+      tooltips.forEach(tooltip => {
+        tooltip.addEventListener('mouseenter', showTooltip);
+        tooltip.addEventListener('mouseleave', hideTooltip);
+      });
+
+      // Sample function to handle post likes
+      document.querySelectorAll('.like-button').forEach(button => {
+        button.addEventListener('click', function(e) {
+          e.preventDefault();
+          const postId = this.getAttribute('data-post-id');
+          // AJAX call to like post
+          console.log('Liked post:', postId);
+          this.innerHTML = '<i class="fas fa-thumbs-up mr-1"></i> Liked';
+        });
+      });
+    });
+
+    function showTooltip(e) {
+      const tooltipText = this.getAttribute('data-tooltip');
+      const tooltip = document.createElement('div');
+      tooltip.className = 'absolute z-50 bg-gray-800 text-white text-xs px-2 py-1 rounded whitespace-nowrap';
+      tooltip.textContent = tooltipText;
+      
+      const rect = this.getBoundingClientRect();
+      tooltip.style.top = `${rect.top - 30}px`;
+      tooltip.style.left = `${rect.left + rect.width/2}px`;
+      tooltip.style.transform = 'translateX(-50%)';
+      
+      this.appendChild(tooltip);
+    }
+
+    function hideTooltip() {
+      const tooltip = this.querySelector('div');
+      if (tooltip) tooltip.remove();
+    }
+  </script>
+</body>
+</html>

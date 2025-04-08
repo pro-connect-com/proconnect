@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProConnect Kenya | Career Insights & Salary Data</title>
+  <meta name="description" content="Kenya's #1 career platform. Salary insights for 100+ jobs, CV templates, interview tips for casual workers to professionals in Kenya & East Africa.">
+  
+  <!-- SEO Meta -->
+  <meta name="keywords" content="kenya salaries, nairobi jobs, casual work kenya, professional careers kenya, mpesa jobs, uganda salaries, tanzania jobs">
+  <meta name="author" content="ProConnect Kenya">
+  
+  <!-- PWA Config -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ProConnect Jobs">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link rel="manifest" href="manifest.json">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['League Spartan', 'sans-serif'],
+          },
+          colors: {
+            'brand-green': '#16a34a',
+            'brand-blue': '#2563eb',
+            'brand-dark': '#0f172a',
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  
+  <style>
+    /* Skeleton Loading */
+    .skeleton { animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.3; }
+    }
+    
+    /* Modal Scroll */
+    .modal-content { max-height: 90vh; overflow-y: auto; }
+    
+    /* Disable Text Selection */
+    body { -webkit-user-select: none; user-select: none; }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #16a34a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #15803d;
+    }
+    
+    /* Input Focus Styles */
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      ring: 2px;
+      ring-color: #16a34a;
+      border-color: #16a34a;
+    }
+    
+    /* Scroll Animations */
+    .scroll-section {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .scroll-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans" x-data="app()" x-init="init()">
+  
+  <!-- Skeleton Loader -->
+  <div id="loader" class="fixed inset-0 bg-white z-50 flex items-center justify-center">
+    <div class="text-center">
+      <div class="w-16 h-16 mx-auto skeleton rounded-full mb-4"></div>
+      <div class="skeleton h-6 w-48 mx-auto mb-2 rounded"></div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="/" class="flex items-center">
+        <img src="logo.png" alt="ProConnect" class="h-8 mr-3">
+        <span class="text-xl font-extrabold">ProConnect</span>
+      </a>
+      <div class="hidden md:flex space-x-6 items-center">
+        <a href="#salary-tool" class="hover:text-brand-green transition-colors">Salary Data</a>
+        <a href="#cv-templates" class="hover:text-brand-green transition-colors">CV Templates</a>
+        <a href="#career-guides" class="font-medium text-brand-green border-b-2 border-brand-green">Career Guides</a>
+        <a href="#ea-insights" class="hover:text-brand-green transition-colors">East Africa</a>
+        <a href="/login" class="bg-brand-green text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">Sign In</a>
+      </div>
+      <button @click="openModal('mobile-menu')" class="md:hidden text-gray-700">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="py-20 bg-gradient-to-r from-brand-dark to-gray-800 text-white scroll-section" id="hero">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Kenyan Career Insights</h1>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">Salary data, CV templates & job strategies for casual workers to professionals</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#salary-tool" class="bg-brand-green hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors">Explore Salaries</a>
+        <a href="#cv-templates" class="bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-lg font-bold transition-colors">Download CVs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Salary Calculator Tool -->
+  <section id="salary-tool" class="py-16 bg-white scroll-section">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Kenyan Salary Calculator</h2>
+      
+      <div class="max-w-2xl mx-auto bg-gray-50 p-6 rounded-xl shadow-sm">
+        <div class="mb-6 relative">
+          <label class="block text-gray-700 mb-2">Job Title</label>
+          <input 
+            x-model="salaryForm.jobTitle" 
+            @input="searchJobs()"
+            class="w-full p-3 border border-gray-300 rounded-lg focus:border-brand-green focus:ring-2 focus:ring-brand-green/50" 
+            placeholder="e.g. Nurse, Driver, Accountant"
+          >
+          <div x-show="jobSuggestions.length > 0" class="mt-2 bg-white border border-gray-200 rounded-lg shadow-lg absolute z-10 w-full max-w-md max-h-60 overflow-y-auto">
+            <template x-for="job in jobSuggestions">
+              <div @click="selectJob(job)" class="p-3 hover:bg-gray-100 cursor-pointer transition-colors" x-text="job.title"></div>
+            </template>
+          </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-gray-700 mb-2">Experience</label>
+            <select x-model="salaryForm.experience" class="w-full p-3 border border-gray-300 rounded-lg focus:border-brand-green focus:ring-2 focus:ring-brand-green/50">
+              <option value="entry">Entry Level (0-2 yrs)</option>
+              <option value="mid">Mid-Level (3-5 yrs)</option>
+              <option value="senior">Senior (6+ yrs)</option>
+            </select>
+          </div>
+          
+          <div>
+            <label class="block text-gray-700 mb-2">Location</label>
+            <select x-model="salaryForm.location" class="w-full p-3 border border-gray-300 rounded-lg focus:border-brand-green focus:ring-2 focus:ring-brand-green/50">
+              <option value="nairobi">Nairobi</option>
+              <option value="mombasa">Mombasa</option>
+              <option value="kisumu">Kisumu</option>
+              <option value="remote">Remote</option>
+            </select>
+          </div>
+        </div>
+        
+        <button 
+          @click="calculateSalary()"
+          :disabled="isCalculating"
+          class="mt-8 w-full bg-brand-green hover:bg-green-700 text-white py-3 rounded-lg font-bold transition-colors flex items-center justify-center"
+        >
+          <span x-show="!isCalculating">Calculate Salary</span>
+          <span x-show="isCalculating" class="flex items-center">
+            <svg class="animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            Calculating...
+          </span>
+        </button>
+      </div>
+      
+      <!-- Salary Data Table -->
+      <div class="mt-16 overflow-x-auto">
+        <h3 class="text-xl font-bold mb-6">Popular Kenyan Salaries</h3>
+        <table class="w-full bg-white rounded-lg overflow-hidden shadow-sm">
+          <thead class="bg-gray-100">
+            <tr>
+              <th class="p-3 text-left">Job Title</th>
+              <th class="p-3 text-left">Entry Level</th>
+              <th class="p-3 text-left">Mid-Level</th>
+              <th class="p-3 text-left">Senior</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="p-3 font-medium">House Maid</td>
+              <td class="p-3">KES 8K-15K</td>
+              <td class="p-3">KES 15K-25K</td>
+              <td class="p-3">KES 25K-40K</td>
+            </tr>
+            <tr class="bg-gray-50 hover:bg-gray-100 transition-colors">
+              <td class="p-3 font-medium">Driver</td>
+              <td class="p-3">KES 15K-25K</td>
+              <td class="p-3">KES 25K-40K</td>
+              <td class="p-3">KES 40K-60K</td>
+            </tr>
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="p-3 font-medium">Nurse</td>
+              <td class="p-3">KES 35K-50K</td>
+              <td class="p-3">KES 50K-80K</td>
+              <td class="p-3">KES 80K-150K</td>
+            </tr>
+            <tr class="bg-gray-50 hover:bg-gray-100 transition-colors">
+              <td class="p-3 font-medium">Software Developer</td>
+              <td class="p-3">KES 70K-120K</td>
+              <td class="p-3">KES 120K-250K</td>
+              <td class="p-3">KES 250K-500K</td>
+            </tr>
+          </tbody>
+        </table>
+        <button @click="openModal('full-salary-table')" class="mt-4 text-brand-green font-medium hover:underline transition-colors">
+          View 100+ Salary Data →
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CV Templates Section -->
+  <section id="cv-templates" class="py-16 bg-gray-50 scroll-section">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Free CV Templates</h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Template 1 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+          <div class="h-48 bg-blue-50 flex items-center justify-center">
+            <span class="text-blue-600 font-bold">Basic CV Format</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-3">Casual Worker CV</h3>
+            <p class="text-gray-600 mb-4">For house helps, drivers, cleaners</p>
+            <div class="flex space-x-3">
+              <a href="#" @click.prevent="downloadCV('casual', 'docx')" class="flex-1 bg-brand-green text-white py-2 rounded-lg text-center font-bold hover:bg-green-700 transition-colors">Download DOCX</a>
+              <a href="#" @click.prevent="downloadCV('casual', 'pdf')" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg text-center font-bold hover:bg-gray-300 transition-colors">Download PDF</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Template 2 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+          <div class="h-48 bg-green-50 flex items-center justify-center">
+            <span class="text-green-600 font-bold">Professional CV</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-3">Kenyan Professional CV</h3>
+            <p class="text-gray-600 mb-4">For nurses, accountants, engineers</p>
+            <div class="flex space-x-3">
+              <a href="#" @click.prevent="downloadCV('professional', 'docx')" class="flex-1 bg-brand-green text-white py-2 rounded-lg text-center font-bold hover:bg-green-700 transition-colors">Download DOCX</a>
+              <a href="#" @click.prevent="downloadCV('professional', 'pdf')" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg text-center font-bold hover:bg-gray-300 transition-colors">Download PDF</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Template 3 -->
+        <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1">
+          <div class="h-48 bg-purple-50 flex items-center justify-center">
+            <span class="text-purple-600 font-bold">Modern CV</span>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold mb-3">Tech & Creative CV</h3>
+            <p class="text-gray-600 mb-4">For developers, designers, marketers</p>
+            <div class="flex space-x-3">
+              <a href="#" @click.prevent="downloadCV('tech', 'docx')" class="flex-1 bg-brand-green text-white py-2 rounded-lg text-center font-bold hover:bg-green-700 transition-colors">Download DOCX</a>
+              <a href="#" @click.prevent="downloadCV('tech', 'pdf')" class="flex-1 bg-gray-200 text-gray-800 py-2 rounded-lg text-center font-bold hover:bg-gray-300 transition-colors">Download PDF</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Career Guides Section -->
+  <section id="career-guides" class="py-16 bg-white scroll-section">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">Career Growth Guides</h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Guide 1 -->
+        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-all cursor-pointer" @click="openModal('casual-work-guide')">
+          <div class="flex items-center mb-4">
+            <div class="bg-yellow-100 p-3 rounded-full mr-4">
+              <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold">Casual Work Guide</h3>
+          </div>
+          <p class="text-gray-600">How to find better paying casual jobs in Kenya</p>
+          <div class="mt-4 text-brand-green font-medium flex items-center">
+            Read Guide →
+          </div>
+        </div>
+        
+        <!-- Guide 2 -->
+        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-all cursor-pointer" @click="openModal('interview-guide')">
+          <div class="flex items-center mb-4">
+            <div class="bg-blue-100 p-3 rounded-full mr-4">
+              <svg class="w-6 h-6 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold">Interview Success</h3>
+          </div>
+          <p class="text-gray-600">Kenyan interview questions & best answers</p>
+          <div class="mt-4 text-brand-blue font-medium flex items-center">
+            Read Guide →
+          </div>
+        </div>
+        
+        <!-- Guide 3 -->
+        <div class="bg-gray-50 rounded-xl p-6 hover:shadow-md transition-all cursor-pointer" @click="openModal('salary-negotiation')">
+          <div class="flex items-center mb-4">
+            <div class="bg-green-100 p-3 rounded-full mr-4">
+              <svg class="w-6 h-6 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold">Salary Negotiation</h3>
+          </div>
+          <p class="text-gray-600">How to get paid what you're worth in Kenya</p>
+          <div class="mt-4 text-brand-green font-medium flex items-center">
+            Read Guide →
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- East Africa Insights -->
+  <section id="ea-insights" class="py-16 bg-gray-50 scroll-section">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-12">East Africa Career Insights</h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Kenya -->
+        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer" @click="openModal('kenya-insights')">
+          <div class="flex items-center mb-4">
+            <img src="https://flagcdn.com/w20/ke.png" alt="Kenya" class="w-8 h-8 mr-3">
+            <h3 class="text-xl font-bold">Kenya</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex justify-between">
+              <span>Minimum Wage:</span>
+              <span class="font-medium">KES 15K-30K</span>
+            </li>
+            <li class="flex justify-between">
+              <span>Top Jobs:</span>
+              <span class="font-medium">Drivers, Nurses, IT</span>
+            </li>
+          </ul>
+          <div class="mt-4 text-brand-green font-medium flex items-center">
+            Full Kenya Report →
+          </div>
+        </div>
+        
+        <!-- Uganda -->
+        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer" @click="openModal('uganda-insights')">
+          <div class="flex items-center mb-4">
+            <img src="https://flagcdn.com/w20/ug.png" alt="Uganda" class="w-8 h-8 mr-3">
+            <h3 class="text-xl font-bold">Uganda</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex justify-between">
+              <span>Minimum Wage:</span>
+              <span class="font-medium">UGX 130K-250K</span>
+            </li>
+            <li class="flex justify-between">
+              <span>Top Jobs:</span>
+              <span class="font-medium">Agriculture, Teaching</span>
+            </li>
+          </ul>
+          <div class="mt-4 text-brand-green font-medium flex items-center">
+            Full Uganda Report →
+          </div>
+        </div>
+        
+        <!-- Tanzania -->
+        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all cursor-pointer" @click="openModal('tanzania-insights')">
+          <div class="flex items-center mb-4">
+            <img src="https://flagcdn.com/w20/tz.png" alt="Tanzania" class="w-8 h-8 mr-3">
+            <h3 class="text-xl font-bold">Tanzania</h3>
+          </div>
+          <ul class="space-y-3">
+            <li class="flex justify-between">
+              <span>Minimum Wage:</span>
+              <span class="font-medium">TZS 300K-500K</span>
+            </li>
+            <li class="flex justify-between">
+              <span>Top Jobs:</span>
+              <span class="font-medium">Mining, Tourism</span>
+            </li>
+          </ul>
+          <div class="mt-4 text-brand-green font-medium flex items-center">
+            Full Tanzania Report →
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal System -->
+  
+  <!-- Mobile Menu -->
+  <div x-show="activeModal === 'mobile-menu'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-sm">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <img src="logo.png" alt="ProConnect" class="h-8">
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        <nav class="space-y-4">
+          <a href="#salary-tool" @click="closeModal()" class="block text-lg font-medium hover:text-brand-green transition-colors">Salary Data</a>
+          <a href="#cv-templates" @click="closeModal()" class="block text-lg font-medium hover:text-brand-green transition-colors">CV Templates</a>
+          <a href="#career-guides" @click="closeModal()" class="block text-lg font-medium text-brand-green">Career Guides</a>
+          <a href="#ea-insights" @click="closeModal()" class="block text-lg font-medium hover:text-brand-green transition-colors">East Africa</a>
+          <a href="/login" class="block mt-8 bg-brand-green text-white text-center py-3 rounded-lg font-bold hover:bg-green-700 transition-colors">Sign In</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Salary Results Modal -->
+  <div x-show="activeModal === 'salary-result'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-md">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold" x-text="salaryResult.job + ' Salary'"></h3>
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div class="space-y-4">
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-medium">Experience Level:</span>
+              <span x-text="salaryResult.experience" class="font-bold"></span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="font-medium">Location:</span>
+              <span x-text="salaryResult.location" class="font-bold"></span>
+            </div>
+          </div>
+          
+          <div class="bg-green-50 p-4 rounded-lg border-l-4 border-brand-green">
+            <p class="text-sm text-gray-600 mb-1">Estimated Monthly Salary</p>
+            <p class="text-2xl font-extrabold text-brand-green" x-text="salaryResult.range"></p>
+          </div>
+          
+          <div x-show="salaryResult.notes" class="bg-yellow-50 p-4 rounded-lg text-sm">
+            <p x-text="salaryResult.notes"></p>
+          </div>
+        </div>
+        
+        <button @click="closeModal()" class="mt-6 w-full bg-brand-green text-white py-3 rounded-lg font-bold hover:bg-green-700 transition-colors">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full Salary Table Modal -->
+  <div x-show="activeModal === 'full-salary-table'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-4xl">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold">Kenyan Salary Data (100+ Jobs)</h3>
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="p-3 text-left">Job Title</th>
+                <th class="p-3 text-left">Entry Level</th>
+                <th class="p-3 text-left">Mid-Level</th>
+                <th class="p-3 text-left">Senior</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="p-3 font-medium">House Maid</td>
+                <td class="p-3">KES 8K-15K</td>
+                <td class="p-3">KES 15K-25K</td>
+                <td class="p-3">KES 25K-40K</td>
+              </tr>
+              <tr class="bg-gray-50 hover:bg-gray-100 transition-colors">
+                <td class="p-3 font-medium">Office Cleaner</td>
+                <td class="p-3">KES 10K-18K</td>
+                <td class="p-3">KES 18K-30K</td>
+                <td class="p-3">KES 30K-50K</td>
+              </tr>
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="p-3 font-medium">Driver</td>
+                <td class="p-3">KES 15K-25K</td>
+                <td class="p-3">KES 25K-40K</td>
+                <td class="p-3">KES 40K-60K</td>
+              </tr>
+              <tr class="bg-gray-50 hover:bg-gray-100 transition-colors">
+                <td class="p-3 font-medium">Nanny</td>
+                <td class="p-3">KES 12K-20K</td>
+                <td class="p-3">KES 20K-35K</td>
+                <td class="p-3">KES 35K-60K</td>
+              </tr>
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="p-3 font-medium">Security Guard</td>
+                <td class="p-3">KES 15K-20K</td>
+                <td class="p-3">KES 20K-30K</td>
+                <td class="p-3">KES 30K-45K</td>
+              </tr>
+              <tr class="bg-gray-50 hover:bg-gray-100 transition-colors">
+                <td class="p-3 font-medium">Nurse</td>
+                <td class="p-3">KES 35K-50K</td>
+                <td class="p-3">KES 50K-80K</td>
+                <td class="p-3">KES 80K-150K</td>
+              </tr>
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="p-3 font-medium">Teacher</td>
+                <td class="p-3">KES 25K-40K</td>
+                <td class="p-3">KES 40K-70K</td>
+                <td class="p-3">KES 70K-120K</td>
+              </tr>
+              <tr class="bg-gray-50 hover:bg-gray-100 transition-colors">
+                <td class="p-3 font-medium">Accountant</td>
+                <td class="p-3">KES 40K-60K</td>
+                <td class="p-3">KES 60K-120K</td>
+                <td class="p-3">KES 120K-250K</td>
+              </tr>
+              <tr class="hover:bg-gray-50 transition-colors">
+                <td class="p-3 font-medium">Software Developer</td>
+                <td class="p-3">KES 70K-120K</td>
+                <td class="p-3">KES 120K-250K</td>
+                <td class="p-3">KES 250K-500K</td>
+              </tr>
+              <tr class="bg-gray-50 hover:bg-gray-100 transition-colors">
+                <td class="p-3 font-medium">Marketing Manager</td>
+                <td class="p-3">KES 50K-80K</td>
+                <td class="p-3">KES 80K-150K</td>
+                <td class="p-3">KES 150K-300K</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Casual Work Guide Modal -->
+  <div x-show="activeModal === 'casual-work-guide'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-2xl">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold">Casual Work Guide</h3>
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div class="prose max-w-none">
+          <h4 class="text-lg font-bold mb-3">How to Earn More as a Casual Worker</h4>
+          <ol class="list-decimal pl-5 space-y-2 mb-6">
+            <li><strong>Specialize:</strong> Learn cleaning chemicals or laundry techniques to charge more</li>
+            <li><strong>Certifications:</strong> Get first aid training for KES 3K-5K to increase value</li>
+            <li><strong>Networking:</strong> Join Facebook groups like "Nairobi Domestic Workers"</li>
+            <li><strong>Reliability:</strong> Build reputation for punctuality and trustworthiness</li>
+            <li><strong>Language Skills:</strong> Basic English can increase earnings by 20-30%</li>
+          </ol>
+          
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <p class="font-bold">Top Paying Casual Jobs:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>Private Chef (KES 25K-50K)</li>
+              <li>Nanny with Driving (KES 30K-60K)</li>
+              <li>Elderly Caregiver (KES 20K-40K)</li>
+              <li>Special Needs Caregiver (KES 25K-45K)</li>
+              <li>House Manager (KES 35K-60K)</li>
+            </ul>
+          </div>
+          
+          <div class="mt-6 bg-green-50 p-4 rounded-lg">
+            <p class="font-bold">Where to Find Better Jobs:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>ProConnect Job Board (coming soon)</li>
+              <li>Facebook Groups (Nairobi Domestic Workers)</li>
+              <li>Church/Community Bulletin Boards</li>
+              <li>Word of Mouth (Ask current employers for referrals)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interview Guide Modal -->
+  <div x-show="activeModal === 'interview-guide'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-2xl">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold">Interview Success Guide</h3>
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div class="prose max-w-none">
+          <h4 class="text-lg font-bold mb-3">Common Kenyan Interview Questions</h4>
+          <div class="space-y-4 mb-6">
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">"Tell us about yourself"</p>
+              <p class="mt-1">Keep it professional - education, experience, skills relevant to the job in 2 minutes max.</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">"Why should we hire you?"</p>
+              <p class="mt-1">Highlight 2-3 key strengths with examples of how they've helped in previous roles.</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">"What's your expected salary?"</p>
+              <p class="mt-1">"Based on my research, the market rate for this position in Nairobi is KES X-Y. However, I'm open to discussion based on the full compensation package."</p>
+            </div>
+          </div>
+          
+          <h4 class="text-lg font-bold mb-3">Tips for Success</h4>
+          <ul class="list-disc pl-5 space-y-2 mb-6">
+            <li>Arrive 15 minutes early - Kenyan time is flexible but don't test it</li>
+            <li>Bring 3 copies of your CV - Many Kenyan interviews are panel-based</li>
+            <li>Dress one level above the job's dress code</li>
+            <li>Prepare 2-3 questions about the company to ask at the end</li>
+            <li>Follow up with a thank you email within 24 hours</li>
+          </ul>
+          
+          <div class="bg-green-50 p-4 rounded-lg">
+            <p class="font-bold">Body Language Tips:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>Firm handshake (not too strong)</li>
+              <li>Maintain eye contact but don't stare</li>
+              <li>Nod occasionally to show understanding</li>
+              <li>Keep hands visible (no pockets)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Salary Negotiation Modal -->
+  <div x-show="activeModal === 'salary-negotiation'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-2xl">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h3 class="text-2xl font-bold">Salary Negotiation Guide</h3>
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div class="prose max-w-none">
+          <h4 class="text-lg font-bold mb-3">Kenyan Salary Negotiation Strategies</h4>
+          <ol class="list-decimal pl-5 space-y-2 mb-6">
+            <li><strong>Research First:</strong> Use our salary tool to know market rates before negotiating</li>
+            <li><strong>Don't Go First:</strong> Let the employer name a number first when possible</li>
+            <li><strong>Consider Benefits:</strong> Housing, transport, bonuses can be 20-40% of total comp</li>
+            <li><strong>Timing Matters:</strong> Best time is after they've decided to hire you but before signing</li>
+            <li><strong>Practice Scripts:</strong> "Given my X years experience and Y skills, I was expecting Z range"</li>
+          </ol>
+          
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <p class="font-bold">Common Kenyan Benefits to Negotiate:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>Housing allowance (15-30% of salary)</li>
+              <li>Transport allowance (KES 5K-15K)</li>
+              <li>Airtime allowance (KES 1K-5K)</li>
+              <li>NHIF & NSSF contributions</li>
+              <li>Annual bonus (1-2 months salary)</li>
+            </ul>
+          </div>
+          
+          <div class="mt-6 bg-yellow-50 p-4 rounded-lg">
+            <p class="font-bold">What to Avoid:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>Making ultimatums unless you're willing to walk away</li>
+              <li>Comparing to colleagues' salaries</li>
+              <li>Focusing only on basic salary - consider the full package</li>
+              <li>Accepting immediately - "Can I have a day to consider this offer?"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kenya Insights Modal -->
+  <div x-show="activeModal === 'kenya-insights'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-2xl">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center">
+            <img src="https://flagcdn.com/w40/ke.png" alt="Kenya" class="w-8 h-8 mr-3">
+            <h3 class="text-2xl font-bold">Kenya Employment Insights</h3>
+          </div>
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div class="prose max-w-none">
+          <h4 class="text-lg font-bold mb-3">2024 Kenyan Job Market Trends</h4>
+          <div class="space-y-4 mb-6">
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">Fastest Growing Sectors:</p>
+              <p class="mt-1">Fintech, Healthcare, Renewable Energy, E-commerce, Outsourced Services</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">Most In-Demand Skills:</p>
+              <p class="mt-1">Digital Marketing, Software Development, Nursing, Accounting, Solar Installation</p>
+            </div>
+          </div>
+          
+          <h4 class="text-lg font-bold mb-3">Regional Salary Variations</h4>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="p-3 text-left">Job</th>
+                  <th class="p-3 text-left">Nairobi</th>
+                  <th class="p-3 text-left">Mombasa</th>
+                  <th class="p-3 text-left">Kisumu</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="p-3">Accountant</td>
+                  <td class="p-3">KES 60K-120K</td>
+                  <td class="p-3">KES 50K-100K</td>
+                  <td class="p-3">KES 45K-90K</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="p-3">Driver</td>
+                  <td class="p-3">KES 25K-40K</td>
+                  <td class="p-3">KES 22K-35K</td>
+                  <td class="p-3">KES 20K-30K</td>
+                </tr>
+                <tr>
+                  <td class="p-3">Nurse</td>
+                  <td class="p-3">KES 50K-80K</td>
+                  <td class="p-3">KES 45K-70K</td>
+                  <td class="p-3">KES 40K-65K</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="bg-green-50 p-4 rounded-lg">
+            <p class="font-bold">Key Takeaways:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>Nairobi salaries are 15-25% higher than other regions</li>
+              <li>Mombasa offers higher pay for tourism/logistics roles</li>
+              <li>Kisumu has growing opportunities in agriculture and healthcare</li>
+              <li>Remote work is reducing some regional pay gaps</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Uganda Insights Modal -->
+  <div x-show="activeModal === 'uganda-insights'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-2xl">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center">
+            <img src="https://flagcdn.com/w40/ug.png" alt="Uganda" class="w-8 h-8 mr-3">
+            <h3 class="text-2xl font-bold">Uganda Employment Insights</h3>
+          </div>
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div class="prose max-w-none">
+          <h4 class="text-lg font-bold mb-3">2024 Ugandan Job Market Trends</h4>
+          <div class="space-y-4 mb-6">
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">Growing Industries:</p>
+              <p class="mt-1">Agriculture, Education, Healthcare, Construction, Fintech</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">In-Demand Skills:</p>
+              <p class="mt-1">Teaching, Nursing, Agricultural Engineering, Accounting, Mobile Money Services</p>
+            </div>
+          </div>
+          
+          <h4 class="text-lg font-bold mb-3">Salary Benchmarks (Kampala)</h4>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="p-3 text-left">Job</th>
+                  <th class="p-3 text-left">Entry Level</th>
+                  <th class="p-3 text-left">Experienced</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="p-3">Primary Teacher</td>
+                  <td class="p-3">UGX 400K-600K</td>
+                  <td class="p-3">UGX 800K-1.2M</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="p-3">Nurse</td>
+                  <td class="p-3">UGX 500K-800K</td>
+                  <td class="p-3">UGX 1M-1.8M</td>
+                </tr>
+                <tr>
+                  <td class="p-3">Accountant</td>
+                  <td class="p-3">UGX 600K-900K</td>
+                  <td class="p-3">UGX 1.2M-2.5M</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="bg-green-50 p-4 rounded-lg">
+            <p class="font-bold">Key Takeaways:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>Salaries in Kampala are 30-50% higher than other regions</li>
+              <li>International NGOs pay significantly more than local employers</li>
+              <li>Agriculture sector employs over 70% of workforce</li>
+              <li>Fluency in English is required for professional roles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tanzania Insights Modal -->
+  <div x-show="activeModal === 'tanzania-insights'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-2xl">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center">
+            <img src="https://flagcdn.com/w40/tz.png" alt="Tanzania" class="w-8 h-8 mr-3">
+            <h3 class="text-2xl font-bold">Tanzania Employment Insights</h3>
+          </div>
+          <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <div class="prose max-w-none">
+          <h4 class="text-lg font-bold mb-3">2024 Tanzanian Job Market Trends</h4>
+          <div class="space-y-4 mb-6">
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">Growing Sectors:</p>
+              <p class="mt-1">Mining, Tourism, Construction, Agriculture, Telecommunications</p>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-lg">
+              <p class="font-bold">In-Demand Skills:</p>
+              <p class="mt-1">Mining Engineering, Hospitality Management, Swahili-English Translation, Accounting, Driving</p>
+            </div>
+          </div>
+          
+          <h4 class="text-lg font-bold mb-3">Salary Benchmarks (Dar es Salaam)</h4>
+          <div class="overflow-x-auto mb-6">
+            <table class="w-full">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="p-3 text-left">Job</th>
+                  <th class="p-3 text-left">Entry Level</th>
+                  <th class="p-3 text-left">Experienced</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200">
+                <tr>
+                  <td class="p-3">Hotel Receptionist</td>
+                  <td class="p-3">TZS 400K-600K</td>
+                  <td class="p-3">TZS 800K-1.2M</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="p-3">Mining Technician</td>
+                  <td class="p-3">TZS 600K-900K</td>
+                  <td class="p-3">TZS 1.5M-2.5M</td>
+                </tr>
+                <tr>
+                  <td class="p-3">Accountant</td>
+                  <td class="p-3">TZS 700K-1M</td>
+                  <td class="p-3">TZS 1.5M-3M</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="bg-green-50 p-4 rounded-lg">
+            <p class="font-bold">Key Takeaways:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1">
+              <li>Dar es Salaam salaries are 25-40% higher than other cities</li>
+              <li>Mining sector offers highest wages but requires certifications</li>
+              <li>Tourism jobs pay more in high season (June-October)</li>
+              <li>Fluency in Swahili is essential for most customer-facing roles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Protection Modal -->
+  <div x-show="activeModal === 'protection-modal'" x-transition class="modal fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4">
+    <div class="modal-content bg-white rounded-lg w-full max-w-md">
+      <div class="p-6 text-center">
+        <svg class="w-16 h-16 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+        </svg>
+        <h3 class="text-xl font-bold mb-2">Content Protected</h3>
+        <p class="text-gray-700 mb-6">Please use our official sharing tools to distribute ProConnect content.</p>
+        <button @click="closeModal()" class="w-full bg-brand-green text-white py-3 rounded-lg font-bold hover:bg-green-700 transition-colors">
+          I Understand
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-brand-dark text-white py-12 scroll-section">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center mb-4">
+            <img src="logo-white.png" alt="ProConnect" class="h-8 mr-3">
+            <span class="text-xl font-extrabold">ProConnect</span>
+          </div>
+          <p class="text-gray-400">Kenya's trusted career platform since 2022.</p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Resources</h3>
+          <ul class="space-y-2">
+            <li><a href="#salary-tool" class="text-gray-400 hover:text-white transition-colors">Salary Data</a></li>
+            <li><a href="#cv-templates" class="text-gray-400 hover:text-white transition-colors">CV Templates</a></li>
+            <li><a href="#career-guides" class="text-gray-400 hover:text-white transition-colors">Career Guides</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Company</h3>
+          <ul class="space-y-2">
+            <li><a href="about.html" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+            <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+            <li><a mailto:maingiantony54@gmail.com class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-bold mb-4">Connect</h3>
+          <div class="flex space-x-4">
+            <a href="https://facebook.com/proconnectke" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path></svg>
+            </a>
+            <a href="https://twitter.com/proconnectke" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+            </a>
+            <a href="https://wa.me/254700000000" class="text-gray-400 hover:text-white transition-colors">
+              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335 .157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path></svg>
+            </a>
+          </div>
+          <p class="mt-4 text-gray-400">Call: 0700 000 000</p>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+        <p>© 2024 ProConnect Kenya. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App Script -->
+  <script>
+    function app() {
+      return {
+        activeModal: null,
+        isCalculating: false,
+        salaryForm: {
+          jobTitle: '',
+          experience: 'entry',
+          location: 'nairobi'
+        },
+        salaryResult: null,
+        jobSuggestions: [],
+        jobDatabase: [
+          { title: "House Maid", type: "casual", entry: "KES 8K-15K", mid: "KES 15K-25K", senior: "KES 25K-40K" },
+          { title: "Office Cleaner", type: "casual", entry: "KES 10K-18K", mid: "KES 18K-30K", senior: "KES 30K-50K" },
+          { title: "Driver", type: "casual", entry: "KES 15K-25K", mid: "KES 25K-40K", senior: "KES 40K-60K" },
+          { title: "Nanny", type: "casual", entry: "KES 12K-20K", mid: "KES 20K-35K", senior: "KES 35K-60K" },
+          { title: "Security Guard", type: "casual", entry: "KES 15K-20K", mid: "KES 20K-30K", senior: "KES 30K-45K" },
+          { title: "Nurse", type: "professional", entry: "KES 35K-50K", mid: "KES 50K-80K", senior: "KES 80K-150K" },
+          { title: "Teacher", type: "professional", entry: "KES 25K-40K", mid: "KES 40K-70K", senior: "KES 70K-120K" },
+          { title: "Accountant", type: "professional", entry: "KES 40K-60K", mid: "KES 60K-120K", senior: "KES 120K-250K" },
+          { title: "Software Developer", type: "professional", entry: "KES 70K-120K", mid: "KES 120K-250K", senior: "KES 250K-500K" },
+          { title: "Marketing Manager", type: "professional", entry: "KES 50K-80K", mid: "KES 80K-150K", senior: "KES 150K-300K" }
+        ],
+        
+        // Initialize
+        init() {
+          // Hide loader when page loads
+          window.addEventListener('load', () => {
+            document.getElementById('loader').style.display = 'none';
+            this.setupScrollAnimations();
+          });
+          
+          // Content protection
+          document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.openModal('protection-modal');
+          });
+          
+          // Close modal when clicking outside
+          document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+              this.closeModal();
+            }
+          });
+          
+          // Close modal with Escape key
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.activeModal) {
+              this.closeModal();
+            }
+          });
+          
+          // Initialize scroll animations
+          window.addEventListener('scroll', this.handleScroll.bind(this));
+          this.handleScroll(); // Run once on init
+        },
+        
+        // Setup scroll animations
+        setupScrollAnimations() {
+          // Add scroll-section class to all sections
+          document.querySelectorAll('section').forEach(section => {
+            section.classList.add('scroll-section');
+          });
+        },
+        
+        // Handle scroll events for animations
+        handleScroll() {
+          const sections = document.querySelectorAll('.scroll-section');
+          const windowHeight = window.innerHeight;
+          const scrollPosition = window.scrollY;
+          
+          sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            
+            // Check if section is in viewport
+            if (scrollPosition + windowHeight * 0.75 > sectionTop && 
+                scrollPosition < sectionTop + sectionHeight) {
+              section.classList.add('visible');
+            } else {
+              // Optional: Hide again when scrolling past
+              // section.classList.remove('visible');
+            }
+          });
+        },
+        
+        // Open modal
+        openModal(modal) {
+          this.activeModal = modal;
+          document.body.style.overflow = 'hidden';
+        },
+        
+        // Close modal
+        closeModal() {
+          this.activeModal = null;
+          document.body.style.overflow = 'auto';
+        },
+        
+        // Search jobs for autocomplete
+        searchJobs() {
+          if (this.salaryForm.jobTitle.length > 2) {
+            this.jobSuggestions = this.jobDatabase.filter(job =>
+              job.title.toLowerCase().includes(this.salaryForm.jobTitle.toLowerCase())
+            ).slice(0, 5); // Limit to 5 suggestions
+          } else {
+            this.jobSuggestions = [];
+          }
+        },
+        
+        // Select job from autocomplete
+        selectJob(job) {
+          this.salaryForm.jobTitle = job.title;
+          this.jobSuggestions = [];
+        },
+        
+        // Calculate salary
+        calculateSalary() {
+          if (!this.salaryForm.jobTitle) {
+            alert("Please enter a job title");
+            return;
+          }
+          
+          this.isCalculating = true;
+          
+          // Simulate API delay
+          setTimeout(() => {
+            // Find closest match in database
+            const matchedJob = this.jobDatabase.find(job => 
+              job.title.toLowerCase() === this.salaryForm.jobTitle.toLowerCase()
+            ) || this.jobDatabase[0]; // Fallback to first job
+            
+            // Location adjustment factors
+            const locationFactors = {
+              nairobi: 1.0,
+              mombasa: 0.9,
+              kisumu: 0.85,
+              remote: 0.7
+            };
+            
+            // Adjust salary based on location
+            const baseRange = matchedJob[this.salaryForm.experience];
+            const adjustedRange = this.adjustSalaryRange(baseRange, locationFactors[this.salaryForm.location]);
+            
+            // Generate salary result
+            this.salaryResult = {
+              job: matchedJob.title,
+              experience: this.salaryForm.experience === 'entry' ? 'Entry Level' : 
+                         this.salaryForm.experience === 'mid' ? 'Mid-Level' : 'Senior',
+              location: this.salaryForm.location === 'nairobi' ? 'Nairobi' :
+                       this.salaryForm.location === 'mombasa' ? 'Mombasa' :
+                       this.salaryForm.location === 'kisumu' ? 'Kisumu' : 'Remote',
+              range: adjustedRange,
+              notes: this.salaryForm.location === 'remote' ? 
+                     'Remote salaries are typically 20-30% lower than Nairobi rates' : null
+            };
+            
+            this.openModal('salary-result');
+            this.isCalculating = false;
+          }, 1000); // Simulate 1 second API delay
+        },
+        
+        // Adjust salary range based on location factor
+        adjustSalaryRange(range, factor) {
+          const [min, max] = range.replace('KES', '').split('-').map(x => parseInt(x.trim().replace('K', '')));
+          const adjustedMin = Math.round(min * factor);
+          const adjustedMax = Math.round(max * factor);
+          return `KES ${adjustedMin}K-${adjustedMax}K`;
+        },
+        
+        // Handle CV download
+        downloadCV(type, format) {
+          alert(`Downloading ${type} CV in ${format.toUpperCase()} format`);
+          // In production, this would trigger actual file download
+          this.closeModal();
+        }
+      }
+    }
+  </script>
+</body>
+</html>

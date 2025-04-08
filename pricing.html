@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing | ProConnect Kenya - Verified Professionals Network</title>
+  <meta name="description" content="Explore pricing plans for Kenya's most trusted professional network">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  
+  <!-- OpenGraph / Twitter Meta -->
+  <meta property="og:title" content="Pricing | ProConnect Kenya">
+  <meta property="og:description" content="Explore pricing plans for Kenya's most trusted professional network">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://proconnect.ke/images/pricing-og.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['League Spartan', 'sans-serif'],
+          },
+          colors: {
+            'brand-green': '#16a34a',
+            'brand-blue': '#2563eb',
+            'brand-orange': '#f97316',
+            'brand-red': '#dc2626'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* === PROTECTION === */
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    
+    img, .no-drag {
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+      pointer-events: none;
+    }
+
+    /* === MODALS === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+    }
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 8px;
+      overflow: hidden;
+      animation: modalFadeIn 0.3s;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === UTILITY === */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background: #16a34a;
+      transition: width 0.3s;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* Security warning flash */
+    @keyframes securityFlash {
+      0% { background-color: rgba(220, 38, 38, 0.1); }
+      50% { background-color: rgba(220, 38, 38, 0.3); }
+      100% { background-color: rgba(220, 38, 38, 0.1); }
+    }
+    .security-alert {
+      animation: securityFlash 2s infinite;
+    }
+
+    /* Pricing card hover effect */
+    .pricing-card {
+      transition: all 0.3s ease;
+    }
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Search input styling */
+    .search-container {
+      position: relative;
+    }
+    .search-container input {
+      padding-right: 2.5rem;
+    }
+    .search-container button {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Security Modal -->
+  <div id="securityModal" class="modal">
+    <div class="modal-content security-alert">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-brand-red">Security Alert</h3>
+          <button onclick="document.getElementById('securityModal').style.display='none'" class="text-gray-500 text-2xl">×</button>
+        </div>
+        <p class="text-gray-700 mb-4">
+          <strong>Unauthorized activity detected!</strong> This content is protected by ProConnect security systems.
+        </p>
+        <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+          <p class="text-red-700">Inspection tools are not allowed on this page.</p>
+        </div>
+        <button onclick="document.getElementById('securityModal').style.display='none'" class="w-full bg-brand-red text-white py-3 rounded-lg font-bold hover:bg-red-700">
+          I Understand
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing Plan Modals -->
+  <div id="basicModal" class="modal">
+    <div class="modal-content">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-2xl font-bold text-brand-blue">Basic Plan</h3>
+          <button onclick="document.getElementById('basicModal').style.display='none'" class="text-gray-500 text-2xl hover:text-gray-700">×</button>
+        </div>
+        <p class="text-gray-700 mb-4">KES 1,000 / month</p>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">What You Get</h4>
+        <ul class="text-gray-700 space-y-2 mb-4">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Profile creation to showcase your skills
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Access to job search tools
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Basic security features (encryption, secure login)
+          </li>
+        </ul>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">Why Choose Basic?</h4>
+        <p class="text-gray-700 mb-4">Perfect for individuals new to the platform, looking to explore opportunities with a secure, affordable entry point.</p>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">Payment Methods</h4>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <button class="bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-green-700" onclick="processPayment('Basic', 'M-Pesa')">Pay with M-Pesa</button>
+          <button class="bg-brand-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700" onclick="processPayment('Basic', 'PayPal')">Pay with PayPal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="professionalModal" class="modal">
+    <div class="modal-content">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-2xl font-bold text-brand-green">Professional Plan</h3>
+          <button onclick="document.getElementById('professionalModal').style.display='none'" class="text-gray-500 text-2xl hover:text-gray-700">×</button>
+        </div>
+        <p class="text-gray-700 mb-4">KES 2,500 / month</p>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">What You Get</h4>
+        <ul class="text-gray-700 space-y-2 mb-4">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Everything in Basic
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Advanced job matching with AI recommendations
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Enhanced security (MFA, real-time monitoring)
+          </li>
+        </ul>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">Why Choose Professional?</h4>
+        <p class="text-gray-700 mb-4">Ideal for active professionals seeking premium features and top-tier security to maximize their career opportunities.</p>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">Payment Methods</h4>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <button class="bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-green-700" onclick="processPayment('Professional', 'M-Pesa')">Pay with M-Pesa</button>
+          <button class="bg-brand-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700" onclick="processPayment('Professional', 'PayPal')">Pay with PayPal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="enterpriseModal" class="modal">
+    <div class="modal-content">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-2xl font-bold text-brand-orange">Enterprise Plan</h3>
+          <button onclick="document.getElementById('enterpriseModal').style.display='none'" class="text-gray-500 text-2xl hover:text-gray-700">×</button>
+        </div>
+        <p class="text-gray-700 mb-4">Custom Pricing</p>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">What You Get</h4>
+        <ul class="text-gray-700 space-y-2 mb-4">
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Everything in Professional
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Team management tools for collaboration
+          </li>
+          <li class="flex items-start">
+            <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Premium security & dedicated support
+          </li>
+        </ul>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">Why Choose Enterprise?</h4>
+        <p class="text-gray-700 mb-4">Designed for businesses needing scalable solutions, team features, and the highest level of security and support.</p>
+        <h4 class="text-xl font-semibold text-gray-800 mb-2">Payment Methods</h4>
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <button class="bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-green-700" onclick="processPayment('Enterprise', 'M-Pesa')">Pay with M-Pesa</button>
+          <button class="bg-brand-blue text-white py-2 rounded-lg font-medium hover:bg-blue-700" onclick="processPayment('Enterprise', 'PayPal')">Pay with PayPal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm py-3 sticky top-0 z-50">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="logo.png" alt="ProConnect Logo" class="h-8 mr-3 no-drag">
+        <span class="text-xl font-extrabold">ProConnect</span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center">
+        <a href="/" class="nav-link text-gray-700">Home</a>
+        <a href="/jobs" class="nav-link text-gray-700">Jobs</a>
+        <a href="/team" class="nav-link text-gray-700">Team</a>
+        <a href="/pricing" class="nav-link text-brand-green font-medium border-b-2 border-brand-green">Pricing</a>
+        <div class="search-container">
+          <input type="text" id="searchInput" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue" placeholder="Search plans...">
+          <button id="searchBtn">
+            <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button onclick="window.location.href='/signup'" class="bg-brand-green text-white px-6 py-2 rounded-md text-sm font-bold hover:bg-green-700">
+        Sign Up
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="container mx-auto px-4 py-20 text-center">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+      Pricing Plans for <span class="text-brand-green">ProConnect Kenya</span>
+    </h1>
+    <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+      Secure, affordable plans to connect with Kenya's top professionals
+    </p>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold mb-12 text-center">Choose Your Plan</h2>
+      
+      <div id="pricingCards" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Basic Plan -->
+        <div class="pricing-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-blue" data-plan="basic">
+          <div class="p-6 text-center">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Basic</h3>
+            <p class="text-gray-600 mb-4">For individuals starting out</p>
+            <div class="mb-6">
+              <span class="text-4xl font-extrabold text-gray-900">KES 1,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-3 mb-6">
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Profile creation
+              </li>
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Job search access
+              </li>
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Basic security features
+              </li>
+            </ul>
+            <button onclick="document.getElementById('basicModal').style.display='block'" class="w-full bg-brand-blue text-white py-3 rounded-lg font-medium hover:bg-blue-700">
+              Get Started
+            </button>
+          </div>
+        </div>
+
+        <!-- Professional Plan -->
+        <div class="pricing-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-green" data-plan="professional">
+          <div class="p-6 text-center">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+            <p class="text-gray-600 mb-4">For active professionals</p>
+            <div class="mb-6">
+              <span class="text-4xl font-extrabold text-gray-900">KES 2,500</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-3 mb-6">
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Everything in Basic
+              </li>
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Advanced job matching
+              </li>
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Enhanced security suite
+              </li>
+            </ul>
+            <button onclick="document.getElementById('professionalModal').style.display='block'" class="w-full bg-brand-green text-white py-3 rounded-lg font-medium hover:bg-green-700">
+              Get Started
+            </button>
+          </div>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div class="pricing-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-orange" data-plan="enterprise">
+          <div class="p-6 text-center">
+            <h3 class="text-2xl font-bold text-gray-900 mb-2">Enterprise</h3>
+            <p class="text-gray-600 mb-4">For businesses & teams</p>
+            <div class="mb-6">
+              <span class="text-4xl font-extrabold text-gray-900">Custom</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-3 mb-6">
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Everything in Professional
+              </li>
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Team management tools
+              </li>
+              <li class="flex items-center justify-center">
+                <svg class="w-5 h-5 text-brand-green mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                Premium security & support
+              </li>
+            </ul>
+            <button onclick="document.getElementById('enterpriseModal').style.display='block'" class="w-full bg-brand-orange text-white py-3 rounded-lg font-medium hover:bg-orange-700">
+              Get Started
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Security Features Section -->
+  <section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-extrabold mb-12 text-center">Unmatched Security</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <svg class="w-12 h-12 mx-auto mb-4 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-2.76-2.24-5-5-5S2 8.24 2 11m20 0c0-2.76-2.24-5-5-5s-5 2.24-5 5m-5 4v6m10-6v6"></path>
+          </svg>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Data Encryption</h3>
+          <p class="text-gray-600">All data is encrypted with industry-leading standards.</p>
+        </div>
+        <div class="text-center">
+          <svg class="w-12 h-12 mx-auto mb-4 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+          </svg>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Secure Access</h3>
+          <p class="text-gray-600">Multi-factor authentication for all accounts.</p>
+        </div>
+        <div class="text-center">
+          <svg class="w-12 h-12 mx-auto mb-4 text-brand-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Real-Time Monitoring</h3>
+          <p class="text-gray-600">24/7 protection against unauthorized access.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-brand-green text-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-3xl font-extrabold mb procrastination-6">Ready to Join?</h2>
+      <p class="text-xl mb-10 max-w-2xl mx-auto">
+        Secure your spot in Kenya's premier professional network
+      </p>
+      <button onclick="window.location.href='/signup'" class="bg-white text-brand-green px-8 py-3 rounded-md text-lg font-bold hover:bg-gray-100">
+        Get Started Now
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center mb-6">
+            <img src="logo.png" alt="ProConnect Logo" class="h-10 mr-3 no-drag">
+            <span class="text-2xl font-extrabold">ProConnect</span>
+          </div>
+          <p class="text-gray-400 mb-4">Kenya's premier professional network.</p>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="/" class="text-gray-400 hover:text-white">Home</a></li>
+            <li><a href="/team" class="text-gray-400 hover:text-white">Team</a></li>
+            <li><a href="/jobs" class="text-gray-400 hover:text-white">Jobs</a></li>
+            <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">Contact</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span>Westlands, Nairobi, Kenya</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>© 2023 ProConnect Kenya. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <script>
+    // Fallback for jQuery if CDN fails
+    if (typeof jQuery === 'undefined') {
+      console.warn('jQuery failed to load from CDN. Add a local fallback if needed.');
+    }
+
+    // Initialize security protections and interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Block right-click
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        document.getElementById('securityModal').style.display = 'block';
+      });
+      
+      // Block keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+            (e.ctrlKey && e.key === 'U')) {
+          e.preventDefault();
+          document.getElementById('securityModal').style.display = 'block';
+        }
+      });
+
+      // Real search functionality
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const pricingCards = document.querySelectorAll('.pricing-card');
+
+      function filterCards(query) {
+        query = query.toLowerCase();
+        pricingCards.forEach(card => {
+          const planName = card.querySelector('h3').textContent.toLowerCase();
+          const planDesc = card.querySelector('p').textContent.toLowerCase();
+          if (planName.includes(query) || planDesc.includes(query)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      searchBtn.addEventListener('click', function() {
+        const query = searchInput.value.trim();
+        filterCards(query);
+      });
+
+      searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          filterCards(searchInput.value.trim());
+        }
+      });
+
+      // Reset search when input is cleared
+      searchInput.addEventListener('input', function() {
+        if (!this.value.trim()) {
+          pricingCards.forEach(card => card.style.display = 'block');
+        }
+      });
+    });
+
+    // Payment processing simulation
+    function processPayment(plan, method) {
+      console.log(`Processing payment for ${plan} plan via ${method}`);
+      // Simulate payment processing (replace with real API calls)
+      setTimeout(() => {
+        const modalId = `${plan.toLowerCase()}Modal`;
+        document.getElementById(modalId).style.display = 'none';
+        const confirmation = document.createElement('div');
+        confirmation.className = 'modal';
+        confirmation.innerHTML = `
+          <div class="modal-content">
+            <div class="p-6 text-center">
+              <h3 class="text-2xl font-bold text-brand-green mb-4">Payment Successful!</h3>
+              <p class="text-gray-700 mb-4">Thank you for choosing the ${plan} plan with ${method}.</p>
+              <button onclick="this.parentElement.parentElement.parentElement.remove()" class="bg-brand-green text-white py-2 px-6 rounded-lg font-medium hover:bg-green-700">Close</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(confirmation);
+        confirmation.style.display = 'block';
+      }, 1000); // Simulated delay
+    }
+
+    // Close modals when clicking outside
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('modal')) {
+        if (typeof $ !== 'undefined') {
+          $('.modal').fadeOut();
+        } else {
+          e.target.style.display = 'none';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

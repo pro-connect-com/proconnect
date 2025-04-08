@@ -1,0 +1,25 @@
+{
+  "jobs": [
+    {
+      "id": 1,
+      "title": "Frontend Developer",
+      "company": "Safaricom",
+      "location": "Nairobi",
+      "salary": "KSh 150K-200K",
+      "description": "React, TypeScript, 2+ years experience"
+    },
+    {
+      "id": 2,
+      "title": "UX Designer",
+      "company": "Twiga Foods",
+      "location": "Remote",
+      "salary": "KSh 120K-180K",
+      "description": "Figma, user research, 3+ years experience"
+    }
+  ],
+  "user": {
+    "name": "John Mwangi",
+    "role": "Software Developer",
+    "location": "Nairobi, Kenya"
+  }
+}

@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salary Reports | ProConnect Kenya - East African Insights</title>
+  <meta name="description" content="Comprehensive salary insights for formal and casual workers in Kenya and East Africa">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  
+  <!-- OpenGraph / Twitter Meta -->
+  <meta property="og:title" content="Salary Reports | ProConnect Kenya">
+  <meta property="og:description" content="Comprehensive salary insights for formal and casual workers in Kenya and East Africa">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://proconnect.ke/images/salary-og.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['League Spartan', 'sans-serif'],
+          },
+          colors: {
+            'brand-green': '#16a34a',
+            'brand-blue': '#2563eb',
+            'brand-orange': '#f97316',
+            'brand-red': '#dc2626'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* === PROTECTION === */
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    /* Allow hover on interactive elements */
+    .report-card, .nav-link, button, input {
+      -webkit-user-select: initial;
+      -moz-user-select: initial;
+      -ms-user-select: initial;
+      user-select: initial;
+    }
+    
+    img, .no-drag {
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+      pointer-events: none;
+    }
+
+    /* === MODALS === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+    }
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      width: 90%;
+      max-width: 600px;
+      border-radius: 8px;
+      overflow: hidden;
+      animation: modalFadeIn 0.3s;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === UTILITY === */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background: #16a34a;
+      transition: width 0.3s;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* Security warning flash */
+    @keyframes securityFlash {
+      0% { background-color: rgba(220, 38, 38, 0.1); }
+      50% { background-color: rgba(220, 38, 38, 0.3); }
+      100% { background-color: rgba(220, 38, 38, 0.1); }
+    }
+    .security-alert {
+      animation: securityFlash 2s infinite;
+    }
+
+    /* Report card hover effect */
+    .report-card {
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .report-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Tooltip styling */
+    .tooltip {
+      position: relative;
+    }
+    .tooltip::after {
+      content: 'Coming Soon';
+      position: absolute;
+      top: -2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #16a34a;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+      z-index: 10;
+      white-space: nowrap;
+    }
+    .tooltip:hover::after {
+      opacity: 1;
+      visibility: visible;
+    }
+    .tooltip::before {
+      content: '';
+      position: absolute;
+      top: -0.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0.5rem 0.5rem 0 0.5rem;
+      border-style: solid;
+      border-color: #16a34a transparent transparent transparent;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease;
+      z-index: 10;
+    }
+    .tooltip:hover::before {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Search input styling */
+    .search-container {
+      position: relative;
+      width: 100%;
+    }
+    .search-container input {
+      padding-right: 2.5rem;
+      width: 100%;
+    }
+    .search-container button {
+      position: absolute;
+      right: 0.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      .nav-link {
+        font-size: 0.9rem;
+      }
+      .search-container input {
+        font-size: 0.875rem;
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+      }
+      .search-container button svg {
+        width: 1rem;
+        height: 1rem;
+      }
+      .report-card h3 {
+        font-size: 1.125rem;
+      }
+      .report-card .text-2xl {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Security Modal -->
+  <div id="securityModal" class="modal">
+    <div class="modal-content security-alert">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-brand-red">Security Alert</h3>
+          <button onclick="document.getElementById('securityModal').style.display='none'" class="text-gray-500 text-2xl">×</button>
+        </div>
+        <p class="text-gray-700 mb-4">
+          <strong>Unauthorized activity detected!</strong> This content is protected by ProConnect security systems.
+        </p>
+        <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+          <p class="text-red-700">Inspection tools are not allowed on this page.</p>
+        </div>
+        <button onclick="document.getElementById('securityModal').style.display='none'" class="w-full bg-brand-red text-white py-3 rounded-lg font-bold hover:bg-red-700">
+          I Understand
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm py-3 sticky top-0 z-50">
+    <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <div class="flex items-center justify-between w-full md:w-auto">
+        <div class="flex items-center">
+          <img src="logo.png" alt="ProConnect Logo" class="h-8 mr-3 no-drag">
+          <span class="text-xl font-extrabold">ProConnect</span>
+        </div>
+        <button class="md:hidden text-gray-700" onclick="document.getElementById('navMenu').classList.toggle('hidden')">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+      </div>
+      <div id="navMenu" class="hidden md:flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-8 items-center w-full md:w-auto mt-4 md:mt-0">
+        <a href="/" class="nav-link text-gray-700">Home</a>
+        <a href="/jobs" class="nav-link text-gray-700">Jobs</a>
+        <a href="/team" class="nav-link text-gray-700">Team</a>
+        <a href="/pricing" class="nav-link text-gray-700">Pricing</a>
+        <a href="/salary-reports" class="nav-link text-brand-green font-medium border-b-2 border-brand-green">Salary Reports</a>
+        <div class="search-container">
+          <input type="text" id="searchInput" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-blue w-full" placeholder="Search reports...">
+          <button id="searchBtn">
+            <svg class="w-5 h-5 text-brand-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <button onclick="window.location.href='/signup'" class="bg-brand-green text-white px-4 py-2 md:px-6 md:py-2 rounded-md text-sm font-bold hover:bg-green-700 mt-4 md:mt-0">
+        Sign Up
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="container mx-auto px-4 py-12 md:py-20 text-center">
+    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+      Salary Reports for <span class="text-brand-green">Kenya & East Africa</span>
+    </h1>
+    <p class="text-base md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+      Comprehensive compensation insights for formal and casual workers across industries and regions
+    </p>
+  </section>
+
+  <!-- Salary Reports Section -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-extrabold mb-12 text-center">Salary Insights by Role & Region</h2>
+      
+      <div id="reportCards" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- House Help - Kenya -->
+        <div class="report-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-blue" data-role="house help" data-region="kenya" data-industry="casual">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">House Help</h3>
+            <p class="text-gray-600 mb-4">Kenya - Casual</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 8,000 - 15,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Part-Time: KES 8,000</li>
+              <li>Full-Time (Live-Out): KES 12,000</li>
+              <li>Full-Time (Live-In): KES 15,000</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Driver - Kenya -->
+        <div class="report-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-green" data-role="driver" data-region="kenya" data-industry="casual">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Driver</h3>
+            <p class="text-gray-600 mb-4">Kenya - Casual</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 15,000 - 30,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Personal Driver: KES 15,000</li>
+              <li>Commercial (Matatu/Boda): KES 20,000</li>
+              <li>Experienced (Truck): KES 30,000</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Security Guard - Kenya -->
+        <div class="report-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-orange" data-role="security guard" data-region="kenya" data-industry="casual">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Security Guard</h3>
+            <p class="text-gray-600 mb-4">Kenya - Casual</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 10,000 - 20,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Day Shift: KES 10,000</li>
+              <li>Night Shift: KES 15,000</li>
+              <li>Armed Guard: KES 20,000</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Software Developer - Kenya -->
+        <div class="report-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-blue" data-role="software developer" data-region="kenya" data-industry="technology">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Software Developer</h3>
+            <p class="text-gray-600 mb-4">Kenya - Technology</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 80,000 - 150,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: KES 80,000</li>
+              <li>Mid-Level: KES 120,000</li>
+              <li>Senior-Level: KES 150,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Project Manager - East Africa -->
+        <div class="report-card tooltip bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-green" data-role="project manager" data-region="east africa" data-industry="management">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Project Manager</h3>
+            <p class="text-gray-600 mb-4">East Africa - Management</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 100,000 - 200,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: KES 100,000</li>
+              <li>Mid-Level: KES 150,000</li>
+              <li>Senior-Level: KES 200,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Data Analyst - Kenya -->
+        <div class="report-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-orange" data-role="data analyst" data-region="kenya" data-industry="technology">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Data Analyst</h3>
+            <p class="text-gray-600 mb-4">Kenya - Technology</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 70,000 - 130,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: KES 70,000</li>
+              <li>Mid-Level: KES 100,000</li>
+              <li>Senior-Level: KES 130,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- House Help - Uganda -->
+        <div class="report-card tooltip bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-blue" data-role="house help" data-region="uganda" data-industry="casual">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">House Help</h3>
+            <p class="text-gray-600 mb-4">Uganda - Casual</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">UGX 200,000 - 400,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Part-Time: UGX 200,000</li>
+              <li>Full-Time (Live-Out): UGX 300,000</li>
+              <li>Full-Time (Live-In): UGX 400,000</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Nurse - Uganda -->
+        <div class="report-card tooltip bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-green" data-role="nurse" data-region="uganda" data-industry="healthcare">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Nurse</h3>
+            <p class="text-gray-600 mb-4">Uganda - Healthcare</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">UGX 1,500,000 - 3,000,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: UGX 1,500,000</li>
+              <li>Mid-Level: UGX 2,200,000</li>
+              <li>Senior-Level: UGX 3,000,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Marketing Manager - Tanzania -->
+        <div class="report-card tooltip bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-orange" data-role="marketing manager" data-region="tanzania" data-industry="marketing">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Marketing Manager</h3>
+            <p class="text-gray-600 mb-4">Tanzania - Marketing</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">TZS 2,000,000 - 4,500,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: TZS 2,000,000</li>
+              <li>Mid-Level: TZS 3,200,000</li>
+              <li>Senior-Level: TZS 4,500,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Civil Engineer - Kenya -->
+        <div class="report-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-blue" data-role="civil engineer" data-region="kenya" data-industry="engineering">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Civil Engineer</h3>
+            <p class="text-gray-600 mb-4">Kenya - Engineering</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 90,000 - 180,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: KES 90,000</li>
+              <li>Mid-Level: KES 140,000</li>
+              <li>Senior-Level: KES 180,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Teacher - Rwanda -->
+        <div class="report-card tooltip bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-green" data-role="teacher" data-region="rwanda" data-industry="education">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Teacher</h3>
+            <p class="text-gray-600 mb-4">Rwanda - Education</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">RWF 250,000 - 500,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: RWF 250,000</li>
+              <li>Mid-Level: RWF 375,000</li>
+              <li>Senior-Level: RWF 500,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Accountant - Kenya -->
+        <div class="report-card bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-orange" data-role="accountant" data-region="kenya" data-industry="finance">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Accountant</h3>
+            <p class="text-gray-600 mb-4">Kenya - Finance</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 60,000 - 120,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: KES 60,000</li>
+              <li>Mid-Level: KES 90,000</li>
+              <li>Senior-Level: KES 120,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Sales Representative - East Africa -->
+        <div class="report-card tooltip bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-blue" data-role="sales representative" data-region="east africa" data-industry="sales">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Sales Representative</h3>
+            <p class="text-gray-600 mb-4">East Africa - Sales</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">KES 50,000 - 100,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Entry-Level: KES 50,000</li>
+              <li>Mid-Level: KES 75,000</li>
+              <li>Senior-Level: KES 100,000+</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Farm Worker - Tanzania -->
+        <div class="report-card tooltip bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-green" data-role="farm worker" data-region="tanzania" data-industry="casual">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Farm Worker</h3>
+            <p class="text-gray-600 mb-4">Tanzania - Casual</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">TZS 150,000 - 300,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Seasonal: TZS 150,000</li>
+              <li>Full-Time: TZS 225,000</li>
+              <li>Skilled (e.g., Tractor): TZS 300,000</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Cleaner - Rwanda -->
+        <div class="report-card tooltip bg-white rounded-lg shadow-md overflow-hidden border-t-4 border-brand-orange" data-role="cleaner" data-region="rwanda" data-industry="casual">
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">Cleaner</h3>
+            <p class="text-gray-600 mb-4">Rwanda - Casual</p>
+            <div class="mb-4">
+              <span class="text-2xl font-extrabold text-gray-900">RWF 80,000 - 150,000</span>
+              <span class="text-gray-600">/month</span>
+            </div>
+            <ul class="text-gray-700 space-y-2">
+              <li>Part-Time: RWF 80,000</li>
+              <li>Full-Time (Office): RWF 120,000</li>
+              <li>Specialized (e.g., Hotel): RWF 150,000</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Industry Trends Section -->
+  <section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <h2 class="text-2xl md:text-3xl font-extrabold mb-12 text-center">Industry Trends</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Casual Work</h3>
+          <p class="text-gray-600">High demand for house helps and drivers in urban Kenya; wages rising 5-10% yearly.</p>
+        </div>
+        <div class="text-center">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Technology</h3>
+          <p class="text-gray-600">Fastest-growing sector in Kenya, with a 15% salary increase in 2024.</p>
+        </div>
+        <div class="text-center">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Healthcare</h3>
+          <p class="text-gray-600">Stable demand across East Africa, especially for nurses in Uganda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Data Source Info -->
+  <section class="py-12 bg-white">
+    <div class="container mx-auto px-4 text-center">
+      <h2 class="text-2xl md:text-3xl font-extrabold mb-6">Data Source</h2>
+      <p class="text-gray-600 mb-4">Aggregated from employer submissions, job seeker reports, and market surveys across Kenya, Uganda, Tanzania, and Rwanda. Includes formal and casual sectors. Last updated: April 07, 2025.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-12 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center mb-6">
+            <img src="logo.png" alt="ProConnect Logo" class="h-10 mr-3 no-drag">
+            <span class="text-xl md:text-2xl font-extrabold">ProConnect</span>
+          </div>
+          <p class="text-gray-400 mb-4">Kenya's premier professional network.</p>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="/" class="text-gray-400 hover:text-white">Home</a></li>
+            <li><a href="/team" class="text-gray-400 hover:text-white">Team</a></li>
+            <li><a href="/jobs" class="text-gray-400 hover:text-white">Jobs</a></li>
+            <li><a href="/pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+            <li><a href="/salary-reports" class="text-gray-400 hover:text-white">Salary Reports</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">Contact</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span>Westlands, Nairobi, Kenya</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>© 2023 ProConnect Kenya. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <script>
+    // Fallback for jQuery if CDN fails
+    if (typeof jQuery === 'undefined') {
+      console.warn('jQuery failed to load from CDN. Add a local fallback if needed.');
+    }
+
+    // Comprehensive salary data including casual workers
+    const salaryData = {
+      reports: [
+        { role: "House Help", region: "Kenya", industry: "Casual", salaryRange: { min: 8000, max: 15000 }, levels: { partTime: 8000, fullTimeOut: 12000, fullTimeIn: 15000 } },
+        { role: "Driver", region: "Kenya", industry: "Casual", salaryRange: { min: 15000, max: 30000 }, levels: { personal: 15000, commercial: 20000, experienced: 30000 } },
+        { role: "Security Guard", region: "Kenya", industry: "Casual", salaryRange: { min: 10000, max: 20000 }, levels: { day: 10000, night: 15000, armed: 20000 } },
+        { role: "Software Developer", region: "Kenya", industry: "Technology", salaryRange: { min: 80000, max: 150000 }, levels: { entry: 80000, mid: 120000, senior: 150000 } },
+        { role: "Project Manager", region: "East Africa", industry: "Management", salaryRange: { min: 100000, max: 200000 }, levels: { entry: 100000, mid: 150000, senior: 200000 } },
+        { role: "Data Analyst", region: "Kenya", industry: "Technology", salaryRange: { min: 70000, max: 130000 }, levels: { entry: 70000, mid: 100000, senior: 130000 } },
+        { role: "House Help", region: "Uganda", industry: "Casual", salaryRange: { min: 200000, max: 400000, currency: "UGX" }, levels: { partTime: 200000, fullTimeOut: 300000, fullTimeIn: 400000 } },
+        { role: "Nurse", region: "Uganda", industry: "Healthcare", salaryRange: { min: 1500000, max: 3000000, currency: "UGX" }, levels: { entry: 1500000, mid: 2200000, senior: 3000000 } },
+        { role: "Marketing Manager", region: "Tanzania", industry: "Marketing", salaryRange: { min: 2000000, max: 4500000, currency: "TZS" }, levels: { entry: 2000000, mid: 3200000, senior: 4500000 } },
+        { role: "Civil Engineer", region: "Kenya", industry: "Engineering", salaryRange: { min: 90000, max: 180000 }, levels: { entry: 90000, mid: 140000, senior: 180000 } },
+        { role: "Teacher", region: "Rwanda", industry: "Education", salaryRange: { min: 250000, max: 500000, currency: "RWF" }, levels: { entry: 250000, mid: 375000, senior: 500000 } },
+        { role: "Accountant", region: "Kenya", industry: "Finance", salaryRange: { min: 60000, max: 120000 }, levels: { entry: 60000, mid: 90000, senior: 120000 } },
+        { role: "Sales Representative", region: "East Africa", industry: "Sales", salaryRange: { min: 50000, max: 100000 }, levels: { entry: 50000, mid: 75000, senior: 100000 } },
+        { role: "Farm Worker", region: "Tanzania", industry: "Casual", salaryRange: { min: 150000, max: 300000, currency: "TZS" }, levels: { seasonal: 150000, fullTime: 225000, skilled: 300000 } },
+        { role: "Cleaner", region: "Rwanda", industry: "Casual", salaryRange: { min: 80000, max: 150000, currency: "RWF" }, levels: { partTime: 80000, fullTime: 120000, specialized: 150000 } }
+      ],
+      trends: {
+        casual: "High demand for house helps and drivers in urban Kenya; wages rising 5-10% yearly.",
+        technology: "Fastest-growing sector in Kenya, with a 15% salary increase in 2024.",
+        healthcare: "Stable demand across East Africa, especially for nurses in Uganda."
+      },
+      lastUpdated: "April 07, 2025",
+      source: "Aggregated from employer submissions, job seeker reports, and market surveys across Kenya, Uganda, Tanzania, and Rwanda. Includes formal and casual sectors."
+    };
+
+    // Initialize security and interactive elements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Block right-click
+      document.addEventListener('contextmenu', function(e) {
+        if (!e.target.closest('.report-card, button, input')) {
+          e.preventDefault();
+          document.getElementById('securityModal').style.display = 'block';
+        }
+      });
+      
+      // Block keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+            (e.ctrlKey && e.key === 'U')) {
+          e.preventDefault();
+          document.getElementById('securityModal').style.display = 'block';
+        }
+      });
+
+      // Enhanced search functionality
+      const searchInput = document.getElementById('searchInput');
+      const searchBtn = document.getElementById('searchBtn');
+      const reportCards = document.querySelectorAll('.report-card');
+
+      function filterReports(query) {
+        query = query.toLowerCase();
+        reportCards.forEach(card => {
+          const role = card.getAttribute('data-role').toLowerCase();
+          const region = card.getAttribute('data-region').toLowerCase();
+          const industry = card.getAttribute('data-industry').toLowerCase();
+          if (role.includes(query) || region.includes(query) || industry.includes(query)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      searchBtn.addEventListener('click', function() {
+        filterReports(searchInput.value.trim());
+      });
+
+      searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          filterReports(searchInput.value.trim());
+        }
+      });
+
+      searchInput.addEventListener('input', function() {
+        if (!this.value.trim()) {
+          reportCards.forEach(card => card.style.display = 'block');
+        }
+      });
+    });
+
+    // Expose data for AJAX fetching by dashboard
+    window.getSalaryData = function() {
+      return new Promise((resolve) => {
+        // Simulate API response (replace with real endpoint in production)
+        setTimeout(() => {
+          resolve(salaryData);
+        }, 500);
+      });
+    };
+
+    // Close modals when clicking outside
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('modal')) {
+        if (typeof $ !== 'undefined') {
+          $('.modal').fadeOut();
+        } else {
+          e.target.style.display = 'none';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

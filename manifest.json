@@ -1,0 +1,62 @@
+{
+  "name": "ProConnect Kenya — Salaries, Insights & Career Tips",
+  "short_name": "ProConnect",
+  "description": "Discover accurate Kenyan salary data, get expert career tips, and unlock deep employment insights with ProConnect.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#004643",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "lang": "en-KE",
+  "scope": "/",
+  "categories": [
+    "careers",
+    "salary",
+    "employment",
+    "kenya",
+    "insights",
+    "job-search",
+    "professional-development"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/salaries.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "/screenshots/career-tips.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "/screenshots/insights.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
+  ]
+}

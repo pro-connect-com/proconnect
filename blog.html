@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | ProConnect Kenya - Professional Insights & News</title>
+  <meta name="description" content="Latest insights, news and professional advice from Kenya's leading professional network">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  
+  <!-- Cache Control -->
+  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="expires" content="0">
+
+  <!-- OpenGraph / Twitter Meta -->
+  <meta property="og:title" content="Blog | ProConnect Kenya">
+  <meta property="og:description" content="Latest insights, news and professional advice from Kenya's leading professional network">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://proconnect.ke/images/blog-og.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="favicon.png">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['League Spartan', 'sans-serif'],
+          },
+          colors: {
+            'brand-green': '#16a34a',
+            'brand-blue': '#2563eb',
+            'brand-orange': '#f97316',
+            'brand-red': '#dc2626'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* === PROTECTION === */
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
+    }
+    
+    img, .no-drag {
+      -webkit-user-drag: none;
+      -khtml-user-drag: none;
+      -moz-user-drag: none;
+      -o-user-drag: none;
+      user-drag: none;
+      pointer-events: none;
+    }
+
+    /* === MODALS === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      overflow-y: auto;
+    }
+    .modal-content {
+      background: white;
+      margin: 5% auto;
+      width: 90%;
+      max-width: 900px;
+      border-radius: 8px;
+      overflow: hidden;
+      animation: modalFadeIn 0.3s;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* === UTILITY === */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background: #16a34a;
+      transition: width 0.3s;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    /* Security warning flash */
+    @keyframes securityFlash {
+      0% { background-color: rgba(220, 38, 38, 0.1); }
+      50% { background-color: rgba(220, 38, 38, 0.3); }
+      100% { background-color: rgba(220, 38, 38, 0.1); }
+    }
+    .security-alert {
+      animation: securityFlash 2s infinite;
+    }
+
+    /* Blog card hover effect */
+    .blog-card {
+      transition: all 0.3s ease;
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    /* Featured post styling */
+    .featured-post {
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-post::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+      z-index: 1;
+    }
+    
+    /* Modal scrollable content */
+    .modal-body {
+      max-height: 70vh;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+    /* Custom scrollbar for modal */
+    .modal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .modal-body::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .modal-body::-webkit-scrollbar-thumb {
+      background: #16a34a;
+      border-radius: 3px;
+    }
+    
+    /* Loading spinner */
+    .loader {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #16a34a;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Security Modal -->
+  <div id="securityModal" class="modal">
+    <div class="modal-content security-alert">
+      <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-brand-red">Security Alert</h3>
+          <button onclick="closeModal()" class="text-gray-500 text-2xl">×</button>
+        </div>
+        <p class="text-gray-700 mb-4">
+          <strong>Unauthorized activity detected!</strong> This content is protected by ProConnect security systems.
+        </p>
+        <div class="bg-red-50 border-l-4 border-red-400 p-4 mb-4">
+          <p class="text-red-700">Inspection tools are not allowed on this page.</p>
+        </div>
+        <button onclick="closeModal()" class="w-full bg-brand-red text-white py-3 rounded-lg font-bold hover:bg-red-700">
+          I Understand
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blog Post Modal -->
+  <div id="blogModal" class="modal">
+    <div class="modal-content">
+      <div class="p-8">
+        <button onclick="closeModal()" class="text-gray-500 text-2xl hover:text-gray-700 float-right">×</button>
+        
+        <div class="clear-both mb-8">
+          <span id="modalCategory" class="inline-block bg-brand-green text-white text-sm font-semibold px-3 py-1 rounded-full mb-4"></span>
+          <h1 id="modalPostTitle" class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4"></h1>
+          <div class="flex items-center mb-8">
+            <img id="modalAuthorImage" src="" alt="" class="w-10 h-10 rounded-full mr-3">
+            <div>
+              <p id="modalAuthorName" class="font-medium text-gray-900"></p>
+              <p id="modalPostDate" class="text-sm text-gray-500"></p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-body">
+          <img id="modalPostImage" src="" alt="" class="w-full h-64 md:h-96 object-cover rounded-lg mb-8">
+          <div id="modalPostContent" class="text-gray-700 leading-relaxed">
+            <!-- Content will be inserted here -->
+          </div>
+          
+          <div class="mt-12 pt-8 border-t border-gray-200">
+            <h3 class="text-xl font-semibold mb-6">About the Author</h3>
+            <div class="flex items-start">
+              <img id="modalAuthorBioImage" src="" alt="" class="w-16 h-16 rounded-full mr-4">
+              <div>
+                <h4 id="modalAuthorBioName" class="text-lg font-bold"></h4>
+                <p id="modalAuthorBioRole" class="text-gray-600 mb-2"></p>
+                <p id="modalAuthorBio" class="text-gray-700"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-sm py-3 sticky top-0 z-50">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="logo.png" alt="ProConnect Logo" class="h-8 mr-3 no-drag">
+        <span class="text-xl font-extrabold">ProConnect</span>
+      </div>
+      <div class="hidden md:flex space-x-8">
+        <a href="/" class="nav-link text-gray-700">Home</a>
+        <a href="/jobs" class="nav-link text-gray-700">Jobs</a>
+        <a href="/team" class="nav-link text-gray-700">Team</a>
+        <a href="/blog" class="nav-link text-brand-green font-medium border-b-2 border-brand-green">Blog</a>
+      </div>
+      <button onclick="alert('Coming Soon')" 
+              class="bg-gray-400 text-white px-6 py-2 rounded-md text-sm font-bold cursor-not-allowed"
+              disabled>
+        Coming Soon
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="container mx-auto px-4 py-20 text-center">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
+      ProConnect <span class="text-brand-green">Insights</span>
+    </h1>
+    <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
+      Professional advice, industry trends and career development resources
+    </p>
+  </section>
+
+  <!-- Featured Post -->
+  <section class="container mx-auto px-4 mb-16">
+    <div class="featured-post rounded-xl overflow-hidden shadow-lg h-96 md:h-[32rem] relative">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+           alt="Featured post" 
+           class="w-full h-full object-cover">
+      <div class="absolute bottom-0 left-0 p-8 md:p-12 text-white z-10 w-full">
+        <span class="inline-block bg-brand-green text-white text-sm font-semibold px-3 py-1 rounded-full mb-4">Career Growth</span>
+        <h2 class="text-2xl md:text-4xl font-extrabold mb-4">The Future of Work in Kenya: 2023 Trends</h2>
+        <p class="text-lg md:text-xl mb-6 max-w-2xl">How digital transformation is reshaping professional opportunities across industries</p>
+        <button class="read-post bg-white text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-gray-100"
+                data-title="The Future of Work in Kenya: 2023 Trends"
+                data-category="Career Growth"
+                data-date="June 15, 2023"
+                data-image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                data-author="James Mwangi"
+                data-author-image="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
+                data-author-role="Founder & CEO"
+                data-author-bio="James founded ProConnect Kenya in 2020 with a vision to transform how professionals connect in Kenya's digital economy. With 15 years experience in HR technology, he leads our strategic direction."
+                data-content="<p>The Kenyan professional landscape is undergoing rapid transformation as digital technologies reshape traditional work models. Our latest research reveals five key trends that every professional should understand:</p>
+                <h3>1. Hybrid Work is Here to Stay</h3>
+                <p>Over 65% of Kenyan companies now offer some form of hybrid work arrangement, up from just 12% pre-pandemic. This shift is creating new opportunities for professionals outside Nairobi while challenging traditional office-centric models.</p>
+                <h3>2. Digital Skills Premium</h3>
+                <p>Professionals with certified digital skills command 30-50% higher salaries than their peers. Cloud computing, data analysis and digital marketing skills are particularly in demand across all sectors.</p>
+                <h3>3. The Rise of Micro-Credentials</h3>
+                <p>Employers are increasingly valuing short, focused certifications over traditional degrees for mid-career roles. Platforms like ProConnect Academy are making these accessible to Kenyan professionals at scale.</p>
+                <h3>4. Regional Expansion</h3>
+                <p>With improved digital infrastructure, companies are actively recruiting talent from secondary cities and towns, creating new career pathways outside traditional urban centers.</p>
+                <h3>5. The Contract Economy</h3>
+                <p>Project-based work now accounts for 28% of professional employment in Kenya, up from 15% in 2019. Professionals need to adapt their skills and networking strategies accordingly.</p>
+                <p>To thrive in this evolving landscape, Kenyan professionals should focus on continuous skill development, building strong digital profiles, and cultivating diverse professional networks.</p>">
+          Read Article
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Posts -->
+  <section class="container mx-auto px-4 py-12">
+    <div class="flex justify-between items-center mb-12">
+      <h2 class="text-3xl font-extrabold">Latest Articles</h2>
+      <div class="relative">
+        <select id="categoryFilter" class="appearance-none bg-white border border-gray-300 rounded-md pl-4 pr-8 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-brand-green">
+          <option value="all">All Categories</option>
+          <option value="career">Career Growth</option>
+          <option value="trends">Industry Trends</option>
+          <option value="skills">Professional Skills</option>
+          <option value="jobsearch">Job Search</option>
+        </select>
+        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+    
+    <div id="articlesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Blog Post 1 -->
+      <div class="blog-card bg-white rounded-lg shadow-md overflow-hidden" data-category="skills">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+             alt="Negotiation strategies" 
+             class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="inline-block bg-brand-blue text-white text-xs font-semibold px-2 py-1 rounded-full mb-3">Professional Skills</span>
+          <h3 class="text-xl font-bold mb-3">Mastering Salary Negotiations in Kenya</h3>
+          <p class="text-gray-600 mb-4">Essential strategies to confidently negotiate your worth in today's competitive market</p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+                   alt="Wanjiru Kamau" 
+                   class="w-8 h-8 rounded-full mr-2">
+              <span class="text-sm text-gray-700">Wanjiru Kamau</span>
+            </div>
+            <span class="text-sm text-gray-500">May 28, 2023</span>
+          </div>
+          <button class="read-post w-full mt-4 bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-green-700"
+                  data-title="Mastering Salary Negotiations in Kenya"
+                  data-category="Professional Skills"
+                  data-date="May 28, 2023"
+                  data-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  data-author="Wanjiru Kamau"
+                  data-author-image="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
+                  data-author-role="Chief Technology Officer"
+                  data-author-bio="Wanjiru leads our technology strategy with 12 years of experience in software architecture. She oversees all product development and engineering teams."
+                  data-content="<p>Salary negotiations can be intimidating, but with the right approach, Kenyan professionals can secure compensation that reflects their true value. Here are key strategies we've identified from successful negotiations:</p>
+                  <h3>1. Research Market Rates</h3>
+                  <p>Before any negotiation, research salary benchmarks for your role, experience level, and industry in Kenya. ProConnect's salary data shows variations of up to 40% between companies for similar roles.</p>
+                  <h3>2. Quantify Your Value</h3>
+                  <p>Prepare concrete examples of your contributions - projects completed, revenue generated, costs saved. Kenyan employers respond best to specific, measurable achievements.</p>
+                  <h3>3. Consider the Full Package</h3>
+                  <p>In Kenya's evolving job market, benefits like flexible hours, training budgets, and stock options can be as valuable as base salary. Know what matters most to you.</p>
+                  <h3>4. Practice Your Pitch</h3>
+                  <p>Rehearse your negotiation points with a mentor. Kenyan professionals who practice negotiations achieve 22% better outcomes according to our data.</p>
+                  <h3>5. Time It Right</h3>
+                  <p>The best moments are after a successful project completion, during performance reviews, or when taking on new responsibilities.</p>
+                  <p>Remember that negotiation is expected in professional roles. Our data shows that 68% of Kenyan employers actually respect candidates who negotiate professionally.</p>">
+            Read More
+          </button>
+        </div>
+      </div>
+      
+      <!-- Blog Post 2 -->
+      <div class="blog-card bg-white rounded-lg shadow-md overflow-hidden" data-category="trends">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+             alt="Digital marketing" 
+             class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="inline-block bg-brand-orange text-white text-xs font-semibold px-2 py-1 rounded-full mb-3">Industry Trends</span>
+          <h3 class="text-xl font-bold mb-3">Digital Marketing Trends in Kenya 2023</h3>
+          <p class="text-gray-600 mb-4">How brands are adapting to changing consumer behaviors and new technologies</p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+                   alt="David Ochieng" 
+                   class="w-8 h-8 rounded-full mr-2">
+              <span class="text-sm text-gray-700">David Ochieng</span>
+            </div>
+            <span class="text-sm text-gray-500">May 15, 2023</span>
+          </div>
+          <button class="read-post w-full mt-4 bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-green-700"
+                  data-title="Digital Marketing Trends in Kenya 2023"
+                  data-category="Industry Trends"
+                  data-date="May 15, 2023"
+                  data-image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  data-author="David Ochieng"
+                  data-author-image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
+                  data-author-role="Head of Operations"
+                  data-author-bio="David manages our day-to-day operations with a focus on scaling our services across Kenya. With experience at major African tech companies, he ensures seamless service delivery."
+                  data-content="<p>Kenya's digital marketing landscape continues to evolve rapidly, with several key trends shaping how brands connect with consumers in 2023:</p>
+                  <h3>1. Conversational Marketing Goes Mainstream</h3>
+                  <p>With 78% of Kenyan internet users now on WhatsApp, brands are building entire customer journeys through chat platforms. Expect more AI-powered chatbots handling inquiries and sales.</p>
+                  <h3>2. Hyper-Local Content</h3>
+                  <p>Consumers are responding to content that reflects local culture, languages and contexts. Successful campaigns now incorporate Sheng, local references and community voices.</p>
+                  <h3>3. Video Dominance</h3>
+                  <p>Short-form video now accounts for 62% of digital ad spend in Kenya. TikTok and Instagram Reels are driving engagement, especially with younger demographics.</p>
+                  <h3>4. Influencer Partnerships</h3>
+                  <p>Micro-influencers (10k-100k followers) are delivering the highest ROI in Kenya, with engagement rates 3x higher than mega-influencers.</p>
+                  <h3>5. Performance Marketing Matures</h3>
+                  <p>Brands are moving beyond vanity metrics to focus on measurable business outcomes from digital campaigns, with better attribution models.</p>
+                  <p>For marketing professionals, these trends highlight the need for versatile skills in data analysis, content creation, and platform-specific strategies.</p>">
+            Read More
+          </button>
+        </div>
+      </div>
+      
+      <!-- Blog Post 3 -->
+      <div class="blog-card bg-white rounded-lg shadow-md overflow-hidden" data-category="career">
+        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+             alt="Remote work" 
+             class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="inline-block bg-brand-blue text-white text-xs font-semibold px-2 py-1 rounded-full mb-3">Career Growth</span>
+          <h3 class="text-xl font-bold mb-3">Building a Strong Remote Work Profile</h3>
+          <p class="text-gray-600 mb-4">How to stand out when applying for remote jobs as a Kenyan professional</p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+                   alt="Dr. Amina Mohamed" 
+                   class="w-8 h-8 rounded-full mr-2">
+              <span class="text-sm text-gray-700">Dr. Amina Mohamed</span>
+            </div>
+            <span class="text-sm text-gray-500">April 30, 2023</span>
+          </div>
+          <button class="read-post w-full mt-4 bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-green-700"
+                  data-title="Building a Strong Remote Work Profile"
+                  data-category="Career Growth"
+                  data-date="April 30, 2023"
+                  data-image="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  data-author="Dr. Amina Mohamed"
+                  data-author-image="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
+                  data-author-role="Technology Advisor"
+                  data-author-bio="Former Cabinet Secretary for ICT with extensive experience in digital transformation across Africa. Provides strategic guidance on technology policy and regional expansion."
+                  data-content="<p>Kenyan professionals are increasingly competing for remote roles with international companies. Here's how to make your profile stand out:</p>
+                  <h3>1. Highlight Remote-Ready Skills</h3>
+                  <p>Showcase experience with collaboration tools (Slack, Trello, Zoom), asynchronous communication, and self-management. These are now fundamental requirements.</p>
+                  <h3>2. Demonstrate Time Zone Flexibility</h3>
+                  <p>Many employers worry about African time zones. Highlight any experience working across time zones or flexible hours.</p>
+                  <h3>3. Build a Digital Portfolio</h3>
+                  <p>For technical and creative roles, a portfolio website with work samples is essential. Include case studies showing measurable impact.</p>
+                  <h3>4. Get International References</h3>
+                  <p>If you've worked with international clients or on global projects, secure recommendations on LinkedIn or via video testimonials.</p>
+                  <h3>5. Showcase Cultural Adaptability</h3>
+                  <p>Remote teams are often diverse. Highlight experiences working across cultures or languages.</p>
+                  <p>Our data shows Kenyan professionals with complete, optimized remote profiles receive 3x more interview requests than those with traditional CVs alone.</p>">
+            Read More
+          </button>
+        </div>
+      </div>
+      
+      <!-- Blog Post 4 (Job Search) -->
+      <div class="blog-card bg-white rounded-lg shadow-md overflow-hidden" data-category="jobsearch">
+        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" 
+             alt="Job search" 
+             class="w-full h-48 object-cover">
+        <div class="p-6">
+          <span class="inline-block bg-brand-red text-white text-xs font-semibold px-2 py-1 rounded-full mb-3">Job Search</span>
+          <h3 class="text-xl font-bold mb-3">Optimizing Your LinkedIn Profile for Kenyan Employers</h3>
+          <p class="text-gray-600 mb-4">Key strategies to make your profile stand out to recruiters in Kenya</p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+                   alt="John Kipchumba" 
+                   class="w-8 h-8 rounded-full mr-2">
+              <span class="text-sm text-gray-700">John Kipchumba</span>
+            </div>
+            <span class="text-sm text-gray-500">April 22, 2023</span>
+          </div>
+          <button class="read-post w-full mt-4 bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-green-700"
+                  data-title="Optimizing Your LinkedIn Profile for Kenyan Employers"
+                  data-category="Job Search"
+                  data-date="April 22, 2023"
+                  data-image="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+                  data-author="John Kipchumba"
+                  data-author-image="https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80"
+                  data-author-role="Financial Advisor"
+                  data-author-bio="Seasoned investment banker with expertise in fintech and startup financing. Guides our financial strategy and investor relations."
+                  data-content="<p>With over 85% of Kenyan recruiters using LinkedIn to find candidates, your profile is often your first impression. Here's how to optimize it:</p>
+                  <h3>1. Professional Headline Matters</h3>
+                  <p>Don't just list your job title. Include your specialty and value proposition (e.g., 'Digital Marketing Specialist | Helping Kenyan Brands Grow Online').</p>
+                  <h3>2. Localize Your Profile</h3>
+                  <p>Kenyan recruiters look for local experience. Highlight projects, clients, and achievements specific to the Kenyan market.</p>
+                  <h3>3. Skills Endorsements</h3>
+                  <p>Profiles with 5+ endorsed skills receive 3x more views. Focus on skills most relevant to your Kenyan target roles.</p>
+                  <h3>4. Recommendations from Kenyan Colleagues</h3>
+                  <p>Recommendations from local professionals carry more weight with Kenyan employers.</p>
+                  <h3>5. Engage with Kenyan Content</h3>
+                  <p>Comment on and share posts from Kenyan companies and thought leaders to increase your visibility.</p>
+                  <p>Our data shows that Kenyan professionals with optimized LinkedIn profiles receive 40% more interview requests than those with incomplete profiles.</p>">
+            Read More
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-12 text-center">
+      <button id="loadMoreBtn" class="bg-white border border-brand-green text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-brand-green hover:text-white">
+        <span id="loadMoreText">Load More Articles</span>
+        <span id="loadMoreSpinner" class="loader hidden"></span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="py-16 bg-gray-100">
+    <div class="container mx-auto px-4 text-center max-w-3xl">
+      <h2 class="text-3xl font-extrabold mb-6">Stay Updated with ProConnect</h2>
+      <p class="text-lg text-gray-600 mb-8">
+        Get the latest career advice, industry insights and job opportunities delivered to your inbox
+      </p>
+      <form id="newsletterForm" class="flex flex-col sm:flex-row gap-4 justify-center">
+        <input type="email" id="newsletterEmail" placeholder="Your email address" required
+               class="px-4 py-3 rounded-lg border border-gray-300 flex-grow max-w-md focus:outline-none focus:ring-2 focus:ring-brand-green">
+        <button type="submit" class="bg-brand-green text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 whitespace-nowrap">
+          <span id="subscribeText">Subscribe</span>
+          <span id="subscribeSpinner" class="loader hidden"></span>
+        </button>
+      </form>
+      <p id="newsletterMessage" class="text-sm mt-4 hidden"></p>
+      <p class="text-sm text-gray-500 mt-2">We respect your privacy. Unsubscribe at any time.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white pt-16 pb-8">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+        <div>
+          <div class="flex items-center mb-6">
+            <img src="logo.png" alt="ProConnect Logo" class="h-10 mr-3 no-drag">
+            <span class="text-2xl font-extrabold">ProConnect</span>
+          </div>
+          <p class="text-gray-400 mb-4">Kenya's premier professional network.</p>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="/" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+            <li><a href="/blog" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+            <li><a href="/jobs" class="text-gray-400 hover:text-white transition-colors">Jobs</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">Blog Categories</h4>
+          <ul class="space-y-2">
+            <li><a href="/blog?category=career" class="text-gray-400 hover:text-white transition-colors">Career Growth</a></li>
+            <li><a href="/blog?category=trends" class="text-gray-400 hover:text-white transition-colors">Industry Trends</a></li>
+            <li><a href="/blog?category=skills" class="text-gray-400 hover:text-white transition-colors">Professional Skills</a></li>
+            <li><a href="/blog?category=jobsearch" class="text-gray-400 hover:text-white transition-colors">Job Search</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-lg font-bold mb-4">Contact</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+              <span>Westlands, Nairobi, Kenya</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+        <p>© 2023 ProConnect Kenya. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <script>
+    // Fallback for jQuery if CDN fails
+    if (typeof jQuery === 'undefined') {
+      document.write('<script src="/path/to/local/jquery-3.6.0.min.js"><\/script>');
+    }
+
+    // Article data - in a real app this would come from an API
+    const articlesData = [
+      {
+        id: 1,
+        title: "Mastering Salary Negotiations in Kenya",
+        category: "skills",
+        date: "May 28, 2023",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        author: "Wanjiru Kamau",
+        authorImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        authorRole: "Chief Technology Officer",
+        authorBio: "Wanjiru leads our technology strategy with 12 years of experience in software architecture. She oversees all product development and engineering teams.",
+        excerpt: "Essential strategies to confidently negotiate your worth in today's competitive market",
+        content: "<p>Salary negotiations can be intimidating, but with the right approach, Kenyan professionals can secure compensation that reflects their true value. Here are key strategies we've identified from successful negotiations:</p><h3>1. Research Market Rates</h3><p>Before any negotiation, research salary benchmarks for your role, experience level, and industry in Kenya. ProConnect's salary data shows variations of up to 40% between companies for similar roles.</p><h3>2. Quantify Your Value</h3><p>Prepare concrete examples of your contributions - projects completed, revenue generated, costs saved. Kenyan employers respond best to specific, measurable achievements.</p><h3>3. Consider the Full Package</h3><p>In Kenya's evolving job market, benefits like flexible hours, training budgets, and stock options can be as valuable as base salary. Know what matters most to you.</p><h3>4. Practice Your Pitch</h3><p>Rehearse your negotiation points with a mentor. Kenyan professionals who practice negotiations achieve 22% better outcomes according to our data.</p><h3>5. Time It Right</h3><p>The best moments are after a successful project completion, during performance reviews, or when taking on new responsibilities.</p><p>Remember that negotiation is expected in professional roles. Our data shows that 68% of Kenyan employers actually respect candidates who negotiate professionally.</p>"
+      },
+      {
+        id: 2,
+        title: "Digital Marketing Trends in Kenya 2023",
+        category: "trends",
+        date: "May 15, 2023",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        author: "David Ochieng",
+        authorImage: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        authorRole: "Head of Operations",
+        authorBio: "David manages our day-to-day operations with a focus on scaling our services across Kenya. With experience at major African tech companies, he ensures seamless service delivery.",
+        excerpt: "How brands are adapting to changing consumer behaviors and new technologies",
+        content: "<p>Kenya's digital marketing landscape continues to evolve rapidly, with several key trends shaping how brands connect with consumers in 2023:</p><h3>1. Conversational Marketing Goes Mainstream</h3><p>With 78% of Kenyan internet users now on WhatsApp, brands are building entire customer journeys through chat platforms. Expect more AI-powered chatbots handling inquiries and sales.</p><h3>2. Hyper-Local Content</h3><p>Consumers are responding to content that reflects local culture, languages and contexts. Successful campaigns now incorporate Sheng, local references and community voices.</p><h3>3. Video Dominance</h3><p>Short-form video now accounts for 62% of digital ad spend in Kenya. TikTok and Instagram Reels are driving engagement, especially with younger demographics.</p><h3>4. Influencer Partnerships</h3><p>Micro-influencers (10k-100k followers) are delivering the highest ROI in Kenya, with engagement rates 3x higher than mega-influencers.</p><h3>5. Performance Marketing Matures</h3><p>Brands are moving beyond vanity metrics to focus on measurable business outcomes from digital campaigns, with better attribution models.</p><p>For marketing professionals, these trends highlight the need for versatile skills in data analysis, content creation, and platform-specific strategies.</p>"
+      },
+      {
+        id: 3,
+        title: "Building a Strong Remote Work Profile",
+        category: "career",
+        date: "April 30, 2023",
+        image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        author: "Dr. Amina Mohamed",
+        authorImage: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        authorRole: "Technology Advisor",
+        authorBio: "Former Cabinet Secretary for ICT with extensive experience in digital transformation across Africa. Provides strategic guidance on technology policy and regional expansion.",
+        excerpt: "How to stand out when applying for remote jobs as a Kenyan professional",
+        content: "<p>Kenyan professionals are increasingly competing for remote roles with international companies. Here's how to make your profile stand out:</p><h3>1. Highlight Remote-Ready Skills</h3><p>Showcase experience with collaboration tools (Slack, Trello, Zoom), asynchronous communication, and self-management. These are now fundamental requirements.</p><h3>2. Demonstrate Time Zone Flexibility</h3><p>Many employers worry about African time zones. Highlight any experience working across time zones or flexible hours.</p><h3>3. Build a Digital Portfolio</h3><p>For technical and creative roles, a portfolio website with work samples is essential. Include case studies showing measurable impact.</p><h3>4. Get International References</h3><p>If you've worked with international clients or on global projects, secure recommendations on LinkedIn or via video testimonials.</p><h3>5. Showcase Cultural Adaptability</h3><p>Remote teams are often diverse. Highlight experiences working across cultures or languages.</p><p>Our data shows Kenyan professionals with complete, optimized remote profiles receive 3x more interview requests than those with traditional CVs alone.</p>"
+      },
+      {
+        id: 4,
+        title: "Optimizing Your LinkedIn Profile for Kenyan Employers",
+        category: "jobsearch",
+        date: "April 22, 2023",
+        image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        author: "John Kipchumba",
+        authorImage: "https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        authorRole: "Financial Advisor",
+        authorBio: "Seasoned investment banker with expertise in fintech and startup financing. Guides our financial strategy and investor relations.",
+        excerpt: "Key strategies to make your profile stand out to recruiters in Kenya",
+        content: "<p>With over 85% of Kenyan recruiters using LinkedIn to find candidates, your profile is often your first impression. Here's how to optimize it:</p><h3>1. Professional Headline Matters</h3><p>Don't just list your job title. Include your specialty and value proposition (e.g., 'Digital Marketing Specialist | Helping Kenyan Brands Grow Online').</p><h3>2. Localize Your Profile</h3><p>Kenyan recruiters look for local experience. Highlight projects, clients, and achievements specific to the Kenyan market.</p><h3>3. Skills Endorsements</h3><p>Profiles with 5+ endorsed skills receive 3x more views. Focus on skills most relevant to your Kenyan target roles.</p><h3>4. Recommendations from Kenyan Colleagues</h3><p>Recommendations from local professionals carry more weight with Kenyan employers.</p><h3>5. Engage with Kenyan Content</h3><p>Comment on and share posts from Kenyan companies and thought leaders to increase your visibility.</p><p>Our data shows that Kenyan professionals with optimized LinkedIn profiles receive 40% more interview requests than those with incomplete profiles.</p>"
+      },
+      {
+        id: 5,
+        title: "Effective Networking Strategies for Kenyan Professionals",
+        category: "career",
+        date: "April 10, 2023",
+        image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        author: "Grace Muthoni",
+        authorImage: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        authorRole: "HR Advisor",
+        authorBio: "Leading HR consultant specializing in the future of work. Advises on talent strategy and professional development programs.",
+        excerpt: "Building meaningful professional connections in Kenya's competitive market",
+        content: "<p>Networking remains the most powerful tool for career advancement in Kenya. Our research shows 85% of professionals find jobs through their networks.</p><h3>1. Attend Industry Events</h3><p>Targeted events like the Nairobi Tech Week provide concentrated networking opportunities with relevant professionals.</p><h3>2. Leverage Alumni Networks</h3><p>Kenyan universities have strong alumni networks that can open doors to opportunities.</p><h3>3. Join Professional Associations</h3><p>Organizations like ICPAK (for accountants) offer structured networking platforms.</p><h3>4. Volunteer for High-Visibility Projects</h3><p>Contributing to industry initiatives increases your visibility to potential employers.</p><h3>5. Follow Up Strategically</h3><p>Kenyan professionals who follow up within 48 hours of meeting are 3x more likely to form lasting connections.</p>"
+      },
+      {
+        id: 6,
+        title: "Essential Soft Skills for Kenyan Tech Professionals",
+        category: "skills",
+        date: "March 28, 2023",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        author: "Wanjiru Kamau",
+        authorImage: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        authorRole: "Chief Technology Officer",
+        authorBio: "Wanjiru leads our technology strategy with 12 years of experience in software architecture.",
+        excerpt: "Technical skills get you hired, but soft skills get you promoted",
+        content: "<p>Our survey of 100 Kenyan tech companies revealed the most valued soft skills:</p><h3>1. Communication</h3><p>Ability to explain technical concepts to non-technical stakeholders is crucial.</p><h3>2. Adaptability</h3><p>With Kenya's fast-changing tech landscape, professionals must embrace continuous learning.</p><h3>3. Emotional Intelligence</h3><p>Understanding team dynamics is particularly valued in Kenya's collaborative work culture.</p><h3>4. Problem-Solving</h3><p>Companies prioritize candidates who can navigate Kenya's unique infrastructure challenges.</p><h3>5. Leadership</h3><p>Even junior roles benefit from demonstrating leadership potential in the Kenyan context.</p>"
+      },
+      {
+        id: 7,
+        title: "Kenya's Growing Fintech Job Market",
+        category: "trends",
+        date: "March 15, 2023",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        author: "John Kipchumba",
+        authorImage: "https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        authorRole: "Financial Advisor",
+        authorBio: "Seasoned investment banker with expertise in fintech and startup financing.",
+        excerpt: "Opportunities in Kenya's booming financial technology sector",
+        content: "<p>Kenya's fintech sector has grown 87% in the past 3 years, creating new career paths:</p><h3>1. Digital Payments</h3><p>With M-Pesa's continued dominance, payment solutions remain the largest employer.</p><h3>2. Regulatory Technology</h3><p>As CBK tightens oversight, compliance specialists are in high demand.</p><h3>3. Credit Scoring</h3><p>Alternative credit scoring models are creating roles for data scientists.</p><h3>4. InsurTech</h3><p>Digital insurance platforms are expanding rapidly across Kenya.</p><h3>5. Blockchain</h3><p>While still emerging, blockchain applications are gaining traction in Kenya's financial sector.</p>"
+      },
+      {
+        id: 8,
+        title: "Writing Winning CVs for the Kenyan Market",
+        category: "jobsearch",
+        date: "March 5, 2023",
+        image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+        author: "Grace Muthoni",
+        authorImage: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80",
+        authorRole: "HR Advisor",
+        authorBio: "Leading HR consultant specializing in the future of work.",
+        excerpt: "What Kenyan recruiters look for in your application",
+        content: "<p>After reviewing thousands of CVs, Kenyan recruiters share what makes applications stand out:</p><h3>1. Concise Format</h3><p>Keep to 2 pages maximum - Kenyan recruiters spend just 30 seconds per CV on average.</p><h3>2. Local Context</h3><p>Highlight experience with Kenyan companies and understanding of local business practices.</p><h3>3. Measurable Achievements</h3><p>Use numbers to quantify impact (e.g., 'Increased sales by 35% in Western Kenya region').</p><h3>4. Relevant Certifications</h3><p>Include Kenyan professional certifications where applicable.</p><h3>5. Clean Design</h3><p>Avoid flashy templates - simple, professional layouts perform best in Kenya.</p>"
+      }
+    ];
+
+    // Initialize security protections and functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Block right-click
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        document.getElementById('securityModal').style.display = 'block';
+      });
+      
+      // Block keyboard shortcuts
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+            (e.ctrlKey && e.key === 'U')) {
+          e.preventDefault();
+          document.getElementById('securityModal').style.display = 'block';
+        }
+      });
+      
+      // Setup blog post modals
+      $('.read-post').click(function() {
+        const button = $(this);
+        showBlogPostModal(
+          button.data('title'),
+          button.data('category'),
+          button.data('date'),
+          button.data('image'),
+          button.data('author'),
+          button.data('author-image'),
+          button.data('author-role'),
+          button.data('author-bio'),
+          button.data('content')
+        );
+      });
+      
+      // Category filter functionality
+      $('#categoryFilter').change(function() {
+        const category = $(this).val();
+        filterArticles(category);
+      });
+      
+      // Load more articles functionality
+      $('#loadMoreBtn').click(function() {
+        loadMoreArticles();
+      });
+      
+      // Newsletter form submission
+      $('#newsletterForm').submit(function(e) {
+        e.preventDefault();
+        const email = $('#newsletterEmail').val().trim();
+        
+        if (!isValidEmail(email)) {
+          showNewsletterMessage('Please enter a valid email address', 'error');
+          return;
+        }
+        
+        // Show loading state
+        $('#subscribeText').addClass('hidden');
+        $('#subscribeSpinner').removeClass('hidden');
+        
+        // Simulate API call
+        setTimeout(() => {
+          showNewsletterMessage('Thank you for subscribing! You will receive our next newsletter.', 'success');
+          $('#newsletterEmail').val('');
+          $('#subscribeText').removeClass('hidden');
+          $('#subscribeSpinner').addClass('hidden');
+        }, 1500);
+      });
+      
+      // Check URL for category parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryParam = urlParams.get('category');
+      if (categoryParam) {
+        $('#categoryFilter').val(categoryParam);
+        filterArticles(categoryParam);
+      }
+    });
+    
+    function showBlogPostModal(title, category, date, image, author, authorImage, authorRole, authorBio, content) {
+      $('#modalPostTitle').text(title);
+      $('#modalCategory').text(category);
+      $('#modalPostDate').text(date);
+      $('#modalPostImage').attr('src', image);
+      $('#modalPostImage').attr('alt', title);
+      $('#modalAuthorName').text(author);
+      $('#modalAuthorImage').attr('src', authorImage);
+      $('#modalAuthorImage').attr('alt', author);
+      $('#modalAuthorBioName').text(author);
+      $('#modalAuthorBioImage').attr('src', authorImage);
+      $('#modalAuthorBioImage').attr('alt', author);
+      $('#modalAuthorBioRole').text(authorRole);
+      $('#modalAuthorBio').text(authorBio);
+      $('#modalPostContent').html(content);
+      
+      $('#blogModal').fadeIn();
+      $('body').css('overflow', 'hidden');
+    }
+    
+    function closeModal() {
+      $('.modal').fadeOut();
+      $('body').css('overflow', 'auto');
+    }
+    
+    function filterArticles(category) {
+      if (category === 'all') {
+        $('.blog-card').show();
+      } else {
+        $('.blog-card').each(function() {
+          const articleCategory = $(this).data('category');
+          if (articleCategory === category) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        });
+      }
+    }
+    
+    let loadedArticles = 4; // Initial count of loaded articles
+    const articlesPerLoad = 4; // Number of articles to load each time
+    
+    function loadMoreArticles() {
+      // Show loading state
+      $('#loadMoreText').addClass('hidden');
+      $('#loadMoreSpinner').removeClass('hidden');
+      $('#loadMoreBtn').prop('disabled', true);
+      
+      // Simulate API delay
+      setTimeout(() => {
+        // Calculate next set of articles to load
+        const nextArticles = articlesData.slice(loadedArticles, loadedArticles + articlesPerLoad);
+        
+        if (nextArticles.length > 0) {
+          renderNewArticles(nextArticles);
+          loadedArticles += nextArticles.length;
+        }
+        
+        // Hide button if no more articles
+        if (loadedArticles >= articlesData.length) {
+          $('#loadMoreBtn').hide();
+        }
+        
+        // Reset button state
+        $('#loadMoreText').removeClass('hidden');
+        $('#loadMoreSpinner').addClass('hidden');
+        $('#loadMoreBtn').prop('disabled', false);
+      }, 800);
+    }
+    
+    function renderNewArticles(articles) {
+      const $articlesContainer = $('#articlesContainer');
+      
+      articles.forEach(article => {
+        const articleHtml = `
+          <div class="blog-card bg-white rounded-lg shadow-md overflow-hidden" data-category="${article.category}">
+            <img src="${article.image}" 
+                 alt="${article.title}" 
+                 class="w-full h-48 object-cover">
+            <div class="p-6">
+              <span class="inline-block ${getCategoryClass(article.category)} text-white text-xs font-semibold px-2 py-1 rounded-full mb-3">${getCategoryName(article.category)}</span>
+              <h3 class="text-xl font-bold mb-3">${article.title}</h3>
+              <p class="text-gray-600 mb-4">${article.excerpt}</p>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <img src="${article.authorImage}" 
+                       alt="${article.author}" 
+                       class="w-8 h-8 rounded-full mr-2">
+                  <span class="text-sm text-gray-700">${article.author}</span>
+                </div>
+                <span class="text-sm text-gray-500">${article.date}</span>
+              </div>
+              <button class="read-post w-full mt-4 bg-brand-green text-white py-2 rounded-lg font-medium hover:bg-green-700"
+                      data-title="${article.title}"
+                      data-category="${getCategoryName(article.category)}"
+                      data-date="${article.date}"
+                      data-image="${article.image}"
+                      data-author="${article.author}"
+                      data-author-image="${article.authorImage}"
+                      data-author-role="${article.authorRole}"
+                      data-author-bio="${article.authorBio}"
+                      data-content="${article.content.replace(/"/g, '&quot;')}">
+                Read More
+              </button>
+            </div>
+          </div>
+        `;
+        
+        $articlesContainer.append(articleHtml);
+      });
+      
+      // Rebind click events for new articles
+      $('.read-post').off('click').click(function() {
+        const button = $(this);
+        showBlogPostModal(
+          button.data('title'),
+          button.data('category'),
+          button.data('date'),
+          button.data('image'),
+          button.data('author'),
+          button.data('author-image'),
+          button.data('author-role'),
+          button.data('author-bio'),
+          button.data('content')
+        );
+      });
+    }
+    
+    function getCategoryClass(category) {
+      const classes = {
+        'career': 'bg-brand-blue',
+        'trends': 'bg-brand-orange',
+        'skills': 'bg-brand-blue',
+        'jobsearch': 'bg-brand-red'
+      };
+      return classes[category] || 'bg-brand-green';
+    }
+    
+    function getCategoryName(category) {
+      const names = {
+        'career': 'Career Growth',
+        'trends': 'Industry Trends',
+        'skills': 'Professional Skills',
+        'jobsearch': 'Job Search'
+      };
+      return names[category] || 'General';
+    }
+    
+    function isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+    
+    function showNewsletterMessage(message, type) {
+      const $message = $('#newsletterMessage');
+      $message.text(message).removeClass('hidden');
+      
+      if (type === 'success') {
+        $message.removeClass('text-red-500').addClass('text-green-500');
+      } else {
+        $message.removeClass('text-green-500').addClass('text-red-500');
+      }
+      
+      setTimeout(() => {
+        $message.addClass('hidden');
+      }, 5000);
+    }
+    
+    // Close modals when clicking outside or escape key
+    $(document).click(function(e) {
+      if ($(e.target).hasClass('modal')) {
+        closeModal();
+      }
+    });
+    
+    $(document).keyup(function(e) {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+{
+  "posts": [
+    {
+      "id": "post1",
+      "author": {
+        "name": "Jane Muthoni",
+        "avatar": "../assets/user1.jpg",
+        "title": "Senior Developer at Safaricom"
+      },
+      "content": "Looking for a talented React developer in Nairobi. Must have 3+ years experience with TypeScript. Salary range: KES 180,000 - 250,000. DM me if interested! #TechJobsKE",
+      "timestamp": "2023-06-15T10:30:00",
+      "likes": 24,
+      "comments": 8,
+      "shares": 3,
+      "isLiked": false
+    },
+    {
+      "id": "post2",
+      "author": {
+        "name": "David Omondi",
+        "avatar": "../assets/user2.jpg",
+        "title": "CTO at TechSavvy Kenya"
+      },
+      "content": "Excited to announce our new remote work policy! Kenyan tech professionals can now work from anywhere in the country. We're hiring across multiple departments. Check our careers page! #RemoteWorkKE",
+      "timestamp": "2023-06-14T15:45:00",
+      "likes": 56,
+      "comments": 12,
+      "shares": 7,
+      "isLiked": true
+    },
+    {
+      "id": "post3",
+      "author": {
+        "name": "Sarah Kamau",
+        "avatar": "../assets/user3.jpg",
+        "title": "Product Manager at M-Pesa"
+      },
+      "content": "Just completed an amazing fintech project with our team! Kenyan developers are truly world-class. Shoutout to everyone who made this possible. #KoTechCommunity #FintechKE",
+      "timestamp": "2023-06-13T09:15:00",
+      "likes": 89,
+      "comments": 15,
+      "shares": 4,
+      "isLiked": false
+    }
+  ],
+  "jobs": [
+    {
+      "title": "Senior Frontend Developer",
+      "company": "Jumia Kenya",
+      "location": "Nairobi",
+      "salary": "KES 250,000 - 350,000",
+      "posted": "2 days ago"
+    },
+    {
+      "title": "DevOps Engineer",
+      "company": "Andela",
+      "location": "Remote",
+      "salary": "KES 300,000 - 400,000",
+      "posted": "1 week ago"
+    },
+    {
+      "title": "UX Designer",
+      "company": "Copia Kenya",
+      "location": "Nairobi",
+      "salary": "KES 180,000 - 250,000",
+      "posted": "3 days ago"
+    }
+  ],
+  "people": [
+    {
+      "name": "Sarah Kamau",
+      "avatar": "../assets/user3.jpg",
+      "title": "Product Manager at M-Pesa",
+      "mutual": 5
+    },
+    {
+      "name": "Michael Otieno",
+      "avatar": "../assets/user4.jpg",
+      "title": "UX Designer at Craft Silicon",
+      "mutual": 2
+    },
+    {
+      "name": "Grace Wanjiku",
+      "avatar": "../assets/user5.jpg",
+      "title": "Backend Developer at Twiga Foods",
+      "mutual": 3
+    }
+  ]
+}
