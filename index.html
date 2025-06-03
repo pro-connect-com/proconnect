@@ -47,7 +47,21 @@
   // Then use the global variable
   window.speedInsights?.init();
 </script>
-  
+  <script>
+    // In your Next.js page or layout file (e.g., app/layout.jsx or app/page.jsx)
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
+export default function Layout({ children }) {
+  return (
+    <html>
+      <body>
+        {children}
+        <SpeedInsights />
+      </body>
+    </html>
+  );
+}
+  </script>
   <script>
     tailwind.config = {
       theme: {
