@@ -22,10 +22,9 @@
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700;900&display=swap" rel="stylesheet">
 
 <!-- Preconnect to External Resources (before fetching) -->
-<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;700;900&display=swap" rel="stylesheet">
 <!-- DNS Prefetch (helps on repeat visits) -->
 <link rel="dns-prefetch" href="//fonts.googleapis.com">
 <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -42,14 +41,17 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <SpeedInsights>import { SpeedInsights } from "@vercel/speed-insights/next"</SpeedInsights>
   <script src="firebase.js"></script>
-   <script type="module">
-  import { SpeedInsights } from "@vercel/speed-insights/next"
-</script>
-<script src="https://unpkg.com/@vercel/speed-insights@latest"></script>
-<script>
-  // Then use the global variable
-  window.speedInsights?.init();
-</script>
+  <script>
+import { League_Spartan } from 'next/font/google';
+
+const leagueSpartan = League_Spartan({
+  subsets: ['latin'],
+  weight: ['400', '500', '700', '900']
+});
+
+// Then use in your component
+<html className={leagueSpartan.className}>
+  </script>
   <script>
     // In your Next.js page or layout file (e.g., app/layout.jsx or app/page.jsx)
 import { SpeedInsights } from "@vercel/speed-insights/next";
