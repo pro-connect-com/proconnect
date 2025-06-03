@@ -39,7 +39,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <SpeedInsights>import { SpeedInsights } from "@vercel/speed-insights/next"</SpeedInsights>
   <script src="firebase.js"></script>
-   <script>import { SpeedInsights } from "@vercel/speed-insights/next"</script>
+   <script type="module">
+  import { SpeedInsights } from "@vercel/speed-insights/next"
+</script>
+<script src="https://unpkg.com/@vercel/speed-insights@latest"></script>
+<script>
+  // Then use the global variable
+  window.speedInsights?.init();
+</script>
+  
   <script>
     tailwind.config = {
       theme: {
