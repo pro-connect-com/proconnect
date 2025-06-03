@@ -39,7 +39,7 @@
   <!-- End Google Tag Manager -->
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <SpeedInsights>import { SpeedInsights } from "@vercel/speed-insights/next"</SpeedInsights>
+  
   <script src="firebase.js"></script>
   <script>
 import { League_Spartan } from 'next/font/google';
@@ -52,21 +52,7 @@ const leagueSpartan = League_Spartan({
 // Then use in your component
 <html className={leagueSpartan.className}>
   </script>
-  <script>
-    // In your Next.js page or layout file (e.g., app/layout.jsx or app/page.jsx)
-import { SpeedInsights } from "@vercel/speed-insights/next";
-
-export default function Layout({ children }) {
-  return (
-    <html>
-      <body>
-        {children}
-        <SpeedInsights />
-      </body>
-    </html>
-  );
-}
-  </script>
+  <script src="https://unpkg.com/@vercel/speed-insights@latest/script.js"></script>
   <script>
     tailwind.config = {
       theme: {
