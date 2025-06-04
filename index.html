@@ -88,7 +88,7 @@
 
     /* Define the font family */
 /* League Spartan - All Weights */
-/* ExtraLight (200) */
+/* League Spartan - All Weights Explicitly Defined */
 @font-face {
   font-family: 'League Spartan';
   src: url('LeagueSpartan-ExtraLight.woff2') format('woff2'),
@@ -97,7 +97,6 @@
   font-display: swap;
 }
 
-/* Light (300) */
 @font-face {
   font-family: 'League Spartan';
   src: url('LeagueSpartan-Light.woff2') format('woff2'),
@@ -106,7 +105,6 @@
   font-display: swap;
 }
 
-/* Regular (400) */
 @font-face {
   font-family: 'League Spartan';
   src: url('LeagueSpartan-Regular.woff2') format('woff2'),
@@ -115,7 +113,6 @@
   font-display: swap;
 }
 
-/* Medium (500) */
 @font-face {
   font-family: 'League Spartan';
   src: url('LeagueSpartan-Medium.woff2') format('woff2'),
@@ -124,7 +121,6 @@
   font-display: swap;
 }
 
-/* SemiBold (600) */
 @font-face {
   font-family: 'League Spartan';
   src: url('LeagueSpartan-SemiBold.woff2') format('woff2'),
@@ -133,7 +129,6 @@
   font-display: swap;
 }
 
-/* Bold (700) */
 @font-face {
   font-family: 'League Spartan';
   src: url('LeagueSpartan-Bold.woff2') format('woff2'),
@@ -142,7 +137,6 @@
   font-display: swap;
 }
 
-/* ExtraBold (800) */
 @font-face {
   font-family: 'League Spartan';
   src: url('LeagueSpartan-ExtraBold.woff2') format('woff2'),
@@ -151,7 +145,6 @@
   font-display: swap;
 }
 
-/* Black (900) */
 @font-face {
   font-family: 'League Spartan';
   src: url('LeagueSpartan-Black.woff2') format('woff2'),
@@ -160,20 +153,20 @@
   font-display: swap;
 }
 
-/* Apply the font globally */
+/* Default styling */
 body {
   font-family: 'League Spartan', sans-serif;
-  font-weight: 400; /* Default to Regular */
+  font-weight: 400; /* Regular as default */
 }
 
-/* Example weight classes (optional) */
-.extra-light { font-weight: 200; }
-.light       { font-weight: 300; }
-.medium      { font-weight: 500; }
-.semi-bold   { font-weight: 600; }
-.bold        { font-weight: 700; }
-.extra-bold  { font-weight: 800; }
-.black       { font-weight: 900; }
+/* Optional weight classes */
+.thin-text    { font-weight: 200; }
+.light-text   { font-weight: 300; }
+.medium-text  { font-weight: 500; }
+.semibold-text{ font-weight: 600; }
+.bold-text    { font-weight: 700; }
+.extrabold-text{ font-weight: 800; }
+.black-text   { font-weight: 900; }
     
     .btn-hover {
       transition: all 0.3s ease;
