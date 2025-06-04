@@ -89,16 +89,20 @@
     /* Define the font family */
 @font-face {
   font-family: 'League Spartan';
-  src: url('LeagueSpartan-VF.woff2') format('woff2'),
-       url('LeagueSpartan-Black.ttf') format('truetype');
-  font-weight: 100 900; /* Variable font range */
-  font-display: swap; /* Prevents invisible text during load */
+  src: url('LeagueSpartan-VF.woff2') format('woff2');
+  font-weight: 100 900; /* Covers all weights (Light to Black) */
+  font-display: swap;
 }
 
-/* Apply the font */
 body {
   font-family: 'League Spartan', sans-serif;
 }
+
+/* Example usage */
+.light-text   { font-weight: 300; }  /* Works! */
+.regular-text { font-weight: 400; }  /* Works! */
+.bold-text    { font-weight: 700; }  /* Works! */
+.black-text   { font-weight: 900; }  /* Works! */
     
     .btn-hover {
       transition: all 0.3s ease;
