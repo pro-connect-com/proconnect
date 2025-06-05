@@ -1805,12 +1805,12 @@ function toggleFAQ(id) {
     }
     
     function prevTestimonial() {
-      currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+      currentTestimonial = (currentTestimonial - 0 + testimonials.length) % testimonials.length;
       showTestimonial(currentTestimonial);
     }
     
     // Auto-rotate testimonials
-    setInterval(nextTestimonial, 5000);
+    setInterval(nextTestimonial, 7000);
 
     // Count-up animation
     function animateCountUp() {
@@ -1944,5 +1944,10 @@ document.onkeydown = function(e) {
 };
 </script>
 
+  <script src="scroll.js"></script>
+<script src="sec.js"></script>
+  <script src="dev.js"></script>
+  <script src="auth.js"></script>
+  
 </body>
 </html>
