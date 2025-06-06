@@ -1,35 +1,30 @@
-// Create and inject the security modal HTML
+// Create and inject the security modal HTML with Ionicons
 const securityModalHTML = `
 <div id="securityModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70 p-4" style="display: none; font-family: 'League Spartan', sans-serif;">
   <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 border-4 border-[#FF6F00]">
     <div class="text-center">
-      <!-- Security Shield SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-[#16a34a]" viewBox="0 0 24 24" fill="currentColor">
-        <path fill-rule="evenodd" d="M12.516 2.17a.75.75 0 00-1.032 0 11.209 11.209 0 01-7.877 3.08.75.75 0 00-.722.515A12.74 12.74 0 002.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 00.374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 00-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08zm3.094 8.016a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-      </svg>
+      <!-- Welcome Face Icon (Ionicons) -->
+      <ion-icon name="happy-outline" class="text-5xl mx-auto text-[#FF6F00]"></ion-icon>
       
-      <h2 class="text-2xl font-[700] text-[#0f172a] mt-4">Access Restricted</h2>
-      <p class="mt-2 text-gray-600 text-sm">Developer tools are disabled for security reasons</p>
+      <h2 class="text-2xl font-[700] text-[#0f172a] mt-3">Welcome Back!</h2>
+      <p class="mt-1 text-gray-600 text-sm">We're securing your experience</p>
       
-      <!-- Time/Date Display -->
-      <div class="mt-4 flex justify-center space-x-4">
+      <!-- Time/Date Display with Ionicons -->
+      <div class="mt-4 flex justify-center space-x-6">
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#FF6F00]" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
-          </svg>
+          <ion-icon name="time-outline" class="text-[#FF6F00] text-lg"></ion-icon>
           <span id="currentTime" class="ml-1 text-sm font-[500] text-[#0f172a]">00:00:00 AM</span>
         </div>
         <div class="flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#FF6F00]" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
-          </svg>
+          <ion-icon name="calendar-outline" class="text-[#FF6F00] text-lg"></ion-icon>
           <span id="currentDate" class="ml-1 text-sm font-[500] text-[#0f172a]">Jan 1, 2023</span>
         </div>
       </div>
     </div>
-    <div class="mt-6 flex justify-center">
-      <button id="closeSecurityModal" class="px-4 py-2 bg-[#16a34a] text-white text-sm font-[600] rounded hover:bg-green-700 transition-colors">
-        Acknowledge
+    <div class="mt-5 flex justify-center">
+      <button id="closeSecurityModal" class="px-4 py-1.5 bg-[#16a34a] text-white text-sm font-[600] rounded hover:bg-green-700 transition-colors flex items-center">
+        <ion-icon name="lock-closed-outline" class="mr-1"></ion-icon>
+        Continue Securely
       </button>
     </div>
   </div>
@@ -39,13 +34,23 @@ const securityModalHTML = `
 // Inject the modal into the body
 document.body.insertAdjacentHTML('beforeend', securityModalHTML);
 
-// Load League Spartan font if not already loaded
-if (!document.querySelector('link[href*="League+Spartan"]')) {
-  const fontLink = document.createElement('link');
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&display=swap';
-  fontLink.rel = 'stylesheet';
-  document.head.appendChild(fontLink);
-}
+// Load required fonts and icons
+const loadDependencies = () => {
+  // Load League Spartan font if not already loaded
+  if (!document.querySelector('link[href*="League+Spartan"]')) {
+    const fontLink = document.createElement('link');
+    fontLink.href = 'https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&display=swap';
+    fontLink.rel = 'stylesheet';
+    document.head.appendChild(fontLink);
+  }
+  
+  // Load Ionicons if not already loaded
+  if (!document.querySelector('script[src*="ionicons"]')) {
+    const ioniconsScript = document.createElement('script');
+    ioniconsScript.src = 'https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js';
+    document.head.appendChild(ioniconsScript);
+  }
+};
 
 // Security functions with real-time clock
 const SecurityManager = {
@@ -75,18 +80,29 @@ const SecurityManager = {
     const now = new Date();
     
     // Format time (HH:MM:SS AM/PM)
-    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+    const timeOptions = { 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit', 
+      hour12: true 
+    };
     this.timeElement.textContent = now.toLocaleTimeString('en-US', timeOptions);
     
     // Format date (MMM DD, YYYY)
-    const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+    const dateOptions = { 
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric' 
+    };
     this.dateElement.textContent = now.toLocaleDateString('en-US', dateOptions);
   },
 
   showModal() {
+    if (!this.modal) return;
+    
     this.modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    this.updateClock(); // Update immediately when shown
+    this.updateClock();
     
     // Auto-close after 6 seconds
     this.modalTimeout = setTimeout(() => {
@@ -97,6 +113,8 @@ const SecurityManager = {
   },
 
   closeModal() {
+    if (!this.modal) return;
+    
     this.modal.style.display = 'none';
     document.body.style.overflow = '';
     clearTimeout(this.modalTimeout);
@@ -127,7 +145,7 @@ const SecurityManager = {
     let windowWidth = window.innerWidth;
     let windowHeight = window.innerHeight;
     
-    setInterval(() => {
+    this.resizeInterval = setInterval(() => {
       if (Math.abs(window.innerWidth - windowWidth) > 100 || 
           Math.abs(window.innerHeight - windowHeight) > 100) {
         windowWidth = window.innerWidth;
@@ -149,16 +167,36 @@ const SecurityManager = {
 
   cleanup() {
     clearInterval(this.clockInterval);
+    clearInterval(this.resizeInterval);
     clearTimeout(this.modalTimeout);
   }
 };
 
-// Initialize when DOM is loaded
+// Initialize when dependencies are loaded
+const initApp = () => {
+  loadDependencies();
+  
+  // Wait briefly for Ionicons to load if needed
+  if (typeof ionicons === 'undefined') {
+    const checkIonicons = setInterval(() => {
+      if (typeof ionicons !== 'undefined') {
+        clearInterval(checkIonicons);
+        SecurityManager.init();
+      }
+    }, 100);
+  } else {
+    SecurityManager.init();
+  }
+};
+
+// Start initialization
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => SecurityManager.init());
+  document.addEventListener('DOMContentLoaded', initApp);
 } else {
-  SecurityManager.init();
+  initApp();
 }
 
-// Cleanup if needed (for single-page apps)
-window.addEventListener('beforeunload', () => SecurityManager.cleanup());
+// Cleanup for single-page apps
+window.addEventListener('beforeunload', () => {
+  SecurityManager.cleanup();
+});
