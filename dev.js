@@ -1,17 +1,30 @@
-// Create and inject the security modal HTML
+// Create and inject the welcoming security modal HTML
 const securityModalHTML = `
 <div id="securityModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70 p-4" style="display: none; font-family: 'League Spartan', sans-serif;">
   <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 border-4 border-[#FF6F00]">
     <div class="text-center">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-[#FF6F00]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+      <!-- Welcoming Face SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-[#FF6F00]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <circle cx="12" cy="12" r="10" stroke-width="2"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14s1.5 2 4 2 4-2 4-2"/>
+        <circle cx="9" cy="10" r="1" fill="currentColor"/>
+        <circle cx="15" cy="10" r="1" fill="currentColor"/>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h6v1H9z"/>
       </svg>
-      <h2 class="text-2xl font-[900] text-[#0f172a] mt-4">Security Alert</h2>
-      <p class="mt-2 text-gray-600 font-[400]">Developer tools access is restricted in this application.</p>
+      
+      <h2 class="text-3xl font-[900] text-[#0f172a] mt-4">Welcome Back!</h2>
+      <p class="mt-2 text-gray-600 font-[400]">We're glad to see you again. Developer tools are restricted for security.</p>
+      
+      <!-- Real-time Clock -->
+      <div class="mt-4 p-3 bg-[#0f172a] rounded-lg">
+        <div id="realTimeClock" class="text-white font-[700] text-xl">
+          Loading time...
+        </div>
+      </div>
     </div>
     <div class="mt-6 flex justify-center">
       <button id="closeSecurityModal" class="px-6 py-2 bg-[#16a34a] text-white font-[700] rounded-lg hover:bg-green-700 transition-colors">
-        I Understand
+        Continue Securely
       </button>
     </div>
   </div>
@@ -29,10 +42,11 @@ if (!document.querySelector('link[href*="League+Spartan"]')) {
   document.head.appendChild(fontLink);
 }
 
-// Security functions
+// Security functions with real-time clock
 const SecurityManager = {
   init() {
     this.setupModal();
+    this.setupClock();
     this.setupProtections();
     this.initialCheck();
   },
@@ -40,47 +54,73 @@ const SecurityManager = {
   setupModal() {
     this.modal = document.getElementById('securityModal');
     this.closeBtn = document.getElementById('closeSecurityModal');
+    this.clockElement = document.getElementById('realTimeClock');
     
     this.closeBtn.addEventListener('click', () => this.closeModal());
+  },
+
+  setupClock() {
+    this.updateClock();
+    // Update clock every second
+    this.clockInterval = setInterval(() => this.updateClock(), 1000);
+  },
+
+  updateClock() {
+    const now = new Date();
+    const options = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    };
+    this.clockElement.textContent = now.toLocaleDateString('en-US', options);
   },
 
   showModal() {
     this.modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    this.updateClock(); // Update immediately when shown
     
-    // Auto-close after 5 seconds
-    setTimeout(() => {
+    // Auto-close after 8 seconds
+    this.modalTimeout = setTimeout(() => {
       if (this.modal.style.display === 'flex') {
         this.closeModal();
       }
-    }, 5000);
+    }, 8000);
   },
 
   closeModal() {
     this.modal.style.display = 'none';
     document.body.style.overflow = '';
+    clearTimeout(this.modalTimeout);
   },
 
   setupProtections() {
-    // 1. Keyboard shortcuts prevention
+    // Keyboard shortcuts prevention
     document.addEventListener('keydown', (e) => {
       if (e.key === 'F12' || 
           (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-          (e.ctrlKey && e.key === 'u')) {
+          (e.ctrlKey && e.key === 'u') ||
+          (e.key === 'F5') ||
+          (e.ctrlKey && e.key === 'r')) {
         e.preventDefault();
         this.showModal();
         return false;
       }
     });
 
-    // 2. Right-click prevention
+    // Right-click prevention
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
       this.showModal();
       return false;
     });
 
-    // 3. Detect DevTools opening via window resize
+    // Detect DevTools opening via window resize
     let windowWidth = window.innerWidth;
     let windowHeight = window.innerHeight;
     
@@ -92,22 +132,42 @@ const SecurityManager = {
         this.showModal();
       }
     }, 500);
+
+    // Prevent F5 and Ctrl+R
+    window.addEventListener('beforeunload', (e) => {
+      if (this.modal.style.display === 'flex') {
+        e.preventDefault();
+        return e.returnValue = 'Are you sure you want to leave?';
+      }
+    });
   },
 
   initialCheck() {
     // Check if DevTools is already open
     setTimeout(() => {
-      if (window.outerWidth - window.innerWidth > 100 || 
-          window.outerHeight - window.innerHeight > 100) {
+      const widthThreshold = 100;
+      const heightThreshold = 100;
+      
+      if ((window.outerWidth - window.innerWidth > widthThreshold) || 
+          (window.outerHeight - window.innerHeight > heightThreshold) ||
+          (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized)) {
         this.showModal();
       }
     }, 1000);
+  },
+
+  cleanup() {
+    clearInterval(this.clockInterval);
+    clearTimeout(this.modalTimeout);
   }
 };
 
-// Initialize the security manager when DOM is loaded
+// Initialize when DOM is loaded
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => SecurityManager.init());
 } else {
   SecurityManager.init();
 }
+
+// Cleanup if needed (for single-page apps)
+window.addEventListener('beforeunload', () => SecurityManager.cleanup());
