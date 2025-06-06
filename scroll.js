@@ -1,128 +1,116 @@
 // ==UserScript==
-// @name         Universal Scroll Enforcer
+// @name         ProConnect Scroll Fix
 // @namespace    http://tampermonkey.net/
-// @version      2.0
-// @description  Forces consistent scroll behavior on all elements across all websites
+// @version      1.1
+// @description  Fixes scroll behavior specifically for proconnect-zeta.vercel.app
 // @author       You
-// @match        *://*/*
-// @grant        GM_addStyle
-// @run-at       document-start
+// @match        https://proconnect-zeta.vercel.app/*
+// @grant        none
+// @run-at       document-end
 // ==/UserScript==
 
 (function() {
     'use strict';
-    
-    // 1. Inject global smooth scroll CSS with !important
-    GM_addStyle(`
-        html, body, [style*="overflow"], [style*="scroll"] {
-            scroll-behavior: smooth !important;
+
+    // 1. First disable any existing scroll behavior overrides
+    document.documentElement.style.scrollBehavior = '';
+    document.body.style.scrollBehavior = '';
+
+    // 2. Apply smooth scrolling only to specific elements
+    function enableSmoothScroll(el) {
+        try {
+            // Skip elements that are part of modals or have specific classes
+            if (el.closest('.modal, .ReactModal__Overlay')) {
+                return;
+            }
+            el.style.scrollBehavior = 'smooth';
+        } catch(e) {
+            console.debug('Scroll modification skipped for', el);
         }
-        * {
-            scroll-behavior: smooth !important;
-            scroll-snap-type: none !important;
-        }
-    `);
-    
-    // 2. Override all scrolling methods
-    const originalFunctions = {
-        scroll: window.scroll,
-        scrollTo: window.scrollTo,
-        scrollBy: window.scrollBy,
-        elementScroll: Element.prototype.scroll,
-        elementScrollTo: Element.prototype.scrollTo,
-        elementScrollBy: Element.prototype.scrollBy
-    };
-    
-    function smoothScrollOverride(args) {
-        if (typeof args === 'object' && !args.behavior) {
-            args.behavior = 'smooth';
-        }
-        return args;
     }
-    
-    window.scroll = function() {
-        return originalFunctions.scroll.apply(this, smoothScrollOverride(arguments));
-    };
-    
-    window.scrollTo = function() {
-        return originalFunctions.scrollTo.apply(this, smoothScrollOverride(arguments));
-    };
-    
-    window.scrollBy = function() {
-        return originalFunctions.scrollBy.apply(this, smoothScrollOverride(arguments));
-    };
-    
-    Element.prototype.scroll = function() {
-        return originalFunctions.elementScroll.apply(this, smoothScrollOverride(arguments));
-    };
-    
-    Element.prototype.scrollTo = function() {
-        return originalFunctions.elementScrollTo.apply(this, smoothScrollOverride(arguments));
-    };
-    
-    Element.prototype.scrollBy = function() {
-        return originalFunctions.elementScrollBy.apply(this, smoothScrollOverride(arguments));
-    };
-    
-    // 3. Handle dynamically generated content
+
+    // 3. Apply to main document and all scrollable elements
+    function applySmoothScroll() {
+        // Main document scrolling
+        document.documentElement.style.scrollBehavior = 'smooth';
+        document.body.style.scrollBehavior = 'smooth';
+
+        // All scrollable elements except those in modals
+        document.querySelectorAll('*').forEach(el => {
+            const style = getComputedStyle(el);
+            if ((style.overflowY === 'auto' || style.overflowY === 'scroll') && 
+                !el.closest('.modal, .ReactModal__Overlay')) {
+                enableSmoothScroll(el);
+            }
+        });
+    }
+
+    // 4. Special handling for modal scroll containers
+    function fixModalScrolling() {
+        document.querySelectorAll('.modal, .ReactModal__Overlay').forEach(modal => {
+            // Disable smooth scroll inside modals
+            modal.style.scrollBehavior = 'auto';
+            
+            // Find scrollable elements inside modals
+            modal.querySelectorAll('*').forEach(el => {
+                const style = getComputedStyle(el);
+                if (style.overflowY === 'auto' || style.overflowY === 'scroll') {
+                    el.style.scrollBehavior = 'auto';
+                }
+            });
+        });
+    }
+
+    // 5. Initial application
+    applySmoothScroll();
+    fixModalScrolling();
+
+    // 6. Watch for dynamically added content (like modals)
     const observer = new MutationObserver(function(mutations) {
+        let needsUpdate = false;
         mutations.forEach(function(mutation) {
             mutation.addedNodes.forEach(function(node) {
                 if (node.nodeType === 1) {
-                    forceScrollBehavior(node);
-                    if (node.querySelectorAll) {
-                        node.querySelectorAll('*').forEach(forceScrollBehavior);
+                    if (node.classList.contains('modal') || node.classList.contains('ReactModal__Overlay')) {
+                        needsUpdate = true;
                     }
                 }
             });
         });
-    });
-    
-    function forceScrollBehavior(el) {
-        try {
-            if (getComputedStyle(el).overflow.match(/auto|scroll/)) {
-                el.style.setProperty('scroll-behavior', 'smooth', 'important');
-            }
-        } catch(e) {
-            console.debug('Scroll enforcer: Could not modify element', el);
+        
+        if (needsUpdate) {
+            setTimeout(() => {
+                fixModalScrolling();
+                applySmoothScroll();
+            }, 100);
         }
-    }
-    
-    observer.observe(document, {
+    });
+
+    observer.observe(document.body, {
         childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: ['style']
+        subtree: true
     });
-    
-    // 4. Periodically check for scrollable elements (for SPAs)
-    setInterval(function() {
-        document.querySelectorAll('*').forEach(forceScrollBehavior);
-    }, 3000);
-    
-    // 5. Handle iframes
-    function processIframe(iframe) {
-        try {
-            iframe.contentDocument.querySelectorAll('*').forEach(forceScrollBehavior);
-            GM_addStyle(`
-                * {
-                    scroll-behavior: smooth !important;
-                }
-            `, iframe.contentDocument);
-        } catch(e) {
-            console.debug('Scroll enforcer: Could not access iframe', iframe);
-        }
-    }
-    
-    document.querySelectorAll('iframe').forEach(processIframe);
-    
-    new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            mutation.addedNodes.forEach(function(node) {
-                if (node.tagName === 'IFRAME') {
-                    processIframe(node);
-                }
-            });
+
+    // 7. Special case for React modal scrolling (if needed)
+    function handleReactModal() {
+        const modalOverlays = document.querySelectorAll('.ReactModal__Overlay');
+        modalOverlays.forEach(overlay => {
+            overlay.style.overscrollBehavior = 'contain';
+            const content = overlay.querySelector('.ReactModal__Content');
+            if (content) {
+                content.style.scrollBehavior = 'auto';
+                content.style.overscrollBehavior = 'contain';
+            }
         });
-    }).observe(document, { childList: true, subtree: true });
+    }
+
+    // Run periodically to catch React-rendered modals
+    const modalCheckInterval = setInterval(() => {
+        handleReactModal();
+    }, 1000);
+
+    // Clean up when leaving the page
+    window.addEventListener('beforeunload', () => {
+        clearInterval(modalCheckInterval);
+    });
 })();
