@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         ProConnect Modal Scroll Fix
+// @name         ProConnect Auth Modal Scroll Fix
 // @namespace    http://tampermonkey.net/
-// @version      1.2
-// @description  Fixes modal scrolling on proconnect-zeta.vercel.app
+// @version      1.3
+// @description  Fixes scrolling specifically for ProConnect auth modals
 // @author       You
 // @match        https://proconnect-zeta.vercel.app/*
 // @grant        none
@@ -12,95 +12,112 @@
 (function() {
     'use strict';
 
-    // Configuration - Adjust these based on your modal structure
-    const MODAL_SELECTORS = [
-        '[role="dialog"]', // Common ARIA modal pattern
-        '.ReactModal__Content', // React modals
-        '.modal-content', // Bootstrap modals
-        '.MuiDialog-container' // Material UI modals
-    ];
+    // Configuration for your specific modals
+    const MODAL_CONFIG = {
+        modalClass: 'modal',                      // Outer modal container
+        contentClass: 'modal-content',            // Scrollable content area
+        activeClass: 'modal-active',              // When modal is visible (if applicable)
+        bodyScrollLock: true                      // Prevent body scrolling when modal is open
+    };
 
-    // 1. Function to enable proper modal scrolling
+    // 1. Core fix function for a single modal
     function fixModalScroll(modal) {
-        if (!modal) return;
+        const content = modal.querySelector(`.${MODAL_CONFIG.contentClass}`);
+        
+        if (!content) {
+            console.warn('Modal content not found', modal);
+            return;
+        }
 
-        console.log('Fixing scrolling for modal:', modal);
+        console.log('Applying scroll fixes to modal:', modal.id);
 
-        // Make sure the modal is scrollable
-        modal.style.overflowY = 'auto';
-        modal.style.scrollBehavior = 'auto';
+        // Make content area properly scrollable
+        content.style.overflowY = 'auto';
+        content.style.maxHeight = '80vh';         // Ensure it doesn't exceed viewport
+        content.style.scrollBehavior = 'smooth';
+        content.style.WebkitOverflowScrolling = 'touch'; // iOS smooth scroll
 
-        // Find the scroll container if it's not the modal itself
-        const scrollContainer = modal.querySelector('.scrollable, [style*="overflow"], .modal-body') || modal;
+        // Find all scrollable sections within modal
+        const scrollSections = content.querySelectorAll('[style*="overflow"], .scrollable');
+        scrollSections.forEach(section => {
+            section.style.overflowY = 'auto';
+            section.style.maxHeight = '';          // Reset any fixed heights
+        });
 
-        // Apply scroll fixes
-        scrollContainer.style.overflowY = 'auto';
-        scrollContainer.style.scrollBehavior = 'auto';
-        scrollContainer.style.WebkitOverflowScrolling = 'touch'; // For iOS
-
-        // Prevent body from scrolling when modal is open
-        if (modal.classList.contains('open') {
-            document.body.style.overflow = 'hidden';
+        // Prevent body scroll when modal is open
+        if (MODAL_CONFIG.bodyScrollLock) {
+            if (modal.classList.contains(MODAL_CONFIG.activeClass) {
+                document.body.style.overflow = 'hidden';
+            }
         }
     }
 
-    // 2. Function to detect and fix all modals
-    function fixAllModals() {
-        MODAL_SELECTORS.forEach(selector => {
-            document.querySelectorAll(selector).forEach(modal => {
-                // Only fix if not already processed
-                if (!modal.dataset.scrollFixed) {
-                    modal.dataset.scrollFixed = 'true';
-                    fixModalScroll(modal);
-                }
-            });
+    // 2. Fix all auth modals
+    function fixAuthModals() {
+        const modals = document.querySelectorAll(`#signupModal, #loginModal`);
+        
+        modals.forEach(modal => {
+            // Only process if not already fixed
+            if (!modal.dataset.scrollFixed) {
+                modal.dataset.scrollFixed = 'true';
+                fixModalScroll(modal);
+            }
         });
     }
 
-    // 3. MutationObserver to catch dynamically loaded modals
-    const observer = new MutationObserver(mutations => {
-        mutations.forEach(mutation => {
-            mutation.addedNodes.forEach(node => {
-                if (node.nodeType === 1) { // Element node
-                    MODAL_SELECTORS.forEach(selector => {
-                        if (node.matches(selector)) {
-                            fixModalScroll(node);
+    // 3. Handle modal open/close events
+    function setupModalEvents() {
+        // Override the authModals.close function to handle body scroll
+        const originalClose = window.authModals?.close;
+        if (originalClose) {
+            window.authModals.close = function(type) {
+                originalClose.apply(this, arguments);
+                document.body.style.overflow = ''; // Restore body scroll
+            };
+        }
+
+        // Monitor for modal visibility changes
+        const observer = new MutationObserver(mutations => {
+            mutations.forEach(mutation => {
+                if (mutation.attributeName === 'class') {
+                    const modal = mutation.target;
+                    if (modal.classList.contains(MODAL_CONFIG.modalClass)) {
+                        if (modal.classList.contains(MODAL_CONFIG.activeClass)) {
+                            document.body.style.overflow = 'hidden';
+                            fixModalScroll(modal);
+                        } else {
+                            document.body.style.overflow = '';
                         }
-                        node.querySelectorAll(selector).forEach(fixModalScroll);
-                    });
+                    }
                 }
             });
         });
-    });
 
-    // 4. Start observing
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
-
-    // 5. Initial run
-    setTimeout(fixAllModals, 1000); // Wait for initial render
-
-    // 6. Periodic check (for modals that might appear later)
-    const checkInterval = setInterval(fixAllModals, 3000);
-
-    // 7. Clean up when leaving the page
-    window.addEventListener('beforeunload', () => {
-        clearInterval(checkInterval);
-    });
-
-    // 8. Special handling for touch devices
-    document.addEventListener('touchmove', function(e) {
-        MODAL_SELECTORS.forEach(selector => {
-            const modal = e.target.closest(selector);
-            if (modal) {
-                // If we're at the top or bottom of modal, prevent body scroll
-                if (modal.scrollTop <= 0 || 
-                    modal.scrollTop + modal.clientHeight >= modal.scrollHeight) {
-                    e.preventDefault();
-                }
-            }
+        document.querySelectorAll(`.${MODAL_CONFIG.modalClass}`).forEach(modal => {
+            observer.observe(modal, { attributes: true });
         });
-    }, { passive: false });
+    }
+
+    // 4. Initial setup
+    function initialize() {
+        // First run
+        fixAuthModals();
+        setupModalEvents();
+
+        // Periodic check (for modals that might load later)
+        const checkInterval = setInterval(fixAuthModals, 2000);
+        
+        // Clean up
+        window.addEventListener('beforeunload', () => {
+            clearInterval(checkInterval);
+            document.body.style.overflow = ''; // Ensure scroll is restored
+        });
+    }
+
+    // Wait for necessary elements to be available
+    if (document.readyState === 'complete') {
+        initialize();
+    } else {
+        window.addEventListener('load', initialize);
+    }
 })();
