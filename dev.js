@@ -1,30 +1,35 @@
-// Create and inject the welcoming security modal HTML
+// Create and inject the security modal HTML
 const securityModalHTML = `
 <div id="securityModal" class="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70 p-4" style="display: none; font-family: 'League Spartan', sans-serif;">
   <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6 border-4 border-[#FF6F00]">
     <div class="text-center">
-      <!-- Welcoming Face SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 mx-auto text-[#FF6F00]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <circle cx="12" cy="12" r="10" stroke-width="2"/>
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14s1.5 2 4 2 4-2 4-2"/>
-        <circle cx="9" cy="10" r="1" fill="currentColor"/>
-        <circle cx="15" cy="10" r="1" fill="currentColor"/>
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h6v1H9z"/>
+      <!-- Security Shield SVG -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-[#16a34a]" viewBox="0 0 24 24" fill="currentColor">
+        <path fill-rule="evenodd" d="M12.516 2.17a.75.75 0 00-1.032 0 11.209 11.209 0 01-7.877 3.08.75.75 0 00-.722.515A12.74 12.74 0 002.25 9.75c0 5.942 4.064 10.933 9.563 12.348a.749.749 0 00.374 0c5.499-1.415 9.563-6.406 9.563-12.348 0-1.39-.223-2.73-.635-3.985a.75.75 0 00-.722-.516l-.143.001c-2.996 0-5.717-1.17-7.734-3.08zm3.094 8.016a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
       </svg>
       
-      <h2 class="text-3xl font-[900] text-[#0f172a] mt-4">Welcome Back!</h2>
-      <p class="mt-2 text-gray-600 font-[400]">We're glad to see you again. Developer tools are restricted for security.</p>
+      <h2 class="text-2xl font-[700] text-[#0f172a] mt-4">Access Restricted</h2>
+      <p class="mt-2 text-gray-600 text-sm">Developer tools are disabled for security reasons</p>
       
-      <!-- Real-time Clock -->
-      <div class="mt-4 p-3 bg-[#0f172a] rounded-lg">
-        <div id="realTimeClock" class="text-white font-[700] text-xl">
-          Loading time...
+      <!-- Time/Date Display -->
+      <div class="mt-4 flex justify-center space-x-4">
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#FF6F00]" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+          </svg>
+          <span id="currentTime" class="ml-1 text-sm font-[500] text-[#0f172a]">00:00:00 AM</span>
+        </div>
+        <div class="flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#FF6F00]" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+          </svg>
+          <span id="currentDate" class="ml-1 text-sm font-[500] text-[#0f172a]">Jan 1, 2023</span>
         </div>
       </div>
     </div>
     <div class="mt-6 flex justify-center">
-      <button id="closeSecurityModal" class="px-6 py-2 bg-[#16a34a] text-white font-[700] rounded-lg hover:bg-green-700 transition-colors">
-        Continue Securely
+      <button id="closeSecurityModal" class="px-4 py-2 bg-[#16a34a] text-white text-sm font-[600] rounded hover:bg-green-700 transition-colors">
+        Acknowledge
       </button>
     </div>
   </div>
@@ -37,7 +42,7 @@ document.body.insertAdjacentHTML('beforeend', securityModalHTML);
 // Load League Spartan font if not already loaded
 if (!document.querySelector('link[href*="League+Spartan"]')) {
   const fontLink = document.createElement('link');
-  fontLink.href = 'https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700;900&display=swap';
+  fontLink.href = 'https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&display=swap';
   fontLink.rel = 'stylesheet';
   document.head.appendChild(fontLink);
 }
@@ -45,16 +50,17 @@ if (!document.querySelector('link[href*="League+Spartan"]')) {
 // Security functions with real-time clock
 const SecurityManager = {
   init() {
-    this.setupModal();
+    this.setupElements();
     this.setupClock();
     this.setupProtections();
     this.initialCheck();
   },
 
-  setupModal() {
+  setupElements() {
     this.modal = document.getElementById('securityModal');
     this.closeBtn = document.getElementById('closeSecurityModal');
-    this.clockElement = document.getElementById('realTimeClock');
+    this.timeElement = document.getElementById('currentTime');
+    this.dateElement = document.getElementById('currentDate');
     
     this.closeBtn.addEventListener('click', () => this.closeModal());
   },
@@ -67,17 +73,14 @@ const SecurityManager = {
 
   updateClock() {
     const now = new Date();
-    const options = { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true
-    };
-    this.clockElement.textContent = now.toLocaleDateString('en-US', options);
+    
+    // Format time (HH:MM:SS AM/PM)
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+    this.timeElement.textContent = now.toLocaleTimeString('en-US', timeOptions);
+    
+    // Format date (MMM DD, YYYY)
+    const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+    this.dateElement.textContent = now.toLocaleDateString('en-US', dateOptions);
   },
 
   showModal() {
@@ -85,12 +88,12 @@ const SecurityManager = {
     document.body.style.overflow = 'hidden';
     this.updateClock(); // Update immediately when shown
     
-    // Auto-close after 8 seconds
+    // Auto-close after 6 seconds
     this.modalTimeout = setTimeout(() => {
       if (this.modal.style.display === 'flex') {
         this.closeModal();
       }
-    }, 8000);
+    }, 6000);
   },
 
   closeModal() {
@@ -132,25 +135,13 @@ const SecurityManager = {
         this.showModal();
       }
     }, 500);
-
-    // Prevent F5 and Ctrl+R
-    window.addEventListener('beforeunload', (e) => {
-      if (this.modal.style.display === 'flex') {
-        e.preventDefault();
-        return e.returnValue = 'Are you sure you want to leave?';
-      }
-    });
   },
 
   initialCheck() {
     // Check if DevTools is already open
     setTimeout(() => {
-      const widthThreshold = 100;
-      const heightThreshold = 100;
-      
-      if ((window.outerWidth - window.innerWidth > widthThreshold) || 
-          (window.outerHeight - window.innerHeight > heightThreshold) ||
-          (window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized)) {
+      if ((window.outerWidth - window.innerWidth) > 100 || 
+          (window.outerHeight - window.innerHeight) > 100) {
         this.showModal();
       }
     }, 1000);
