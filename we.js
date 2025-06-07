@@ -167,7 +167,7 @@
             console.error('Initialization error:', e);
         }
     }
-
+showWelcomeModal();
     // Start when ready
     if (document.readyState === 'complete') {
         init();
@@ -175,3 +175,4 @@
         window.addEventListener('load', init);
     }
 })();
+showWelcomeModal();
