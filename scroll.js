@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         ProConnect Modal Scroll Fix - Guaranteed
+// @name         ProConnect Smart Scroll
 // @namespace    http://tampermonkey.net/
-// @version      2.0
-// @description  Absolutely fixes modal scrolling on proconnect-zeta.vercel.app
+// @version      2.1
+// @description  Perfect scroll handling for ProConnect
 // @author       You
 // @match        https://proconnect-zeta.vercel.app/*
 // @grant        none
@@ -12,43 +12,107 @@
 (function() {
     'use strict';
 
-    // 1. First, remove any existing scroll behavior overrides
-    document.documentElement.style.scrollBehavior = '';
-    document.body.style.scrollBehavior = '';
+    // 1. Enable smooth scrolling for main page
+    document.documentElement.style.scrollBehavior = 'smooth';
+    document.body.style.scrollBehavior = 'smooth';
 
-    // 2. Create a guaranteed scroll fix function
-    function forceModalScrollFix() {
-        // Target your specific modals
-        const modals = document.querySelectorAll('#signupModal, #loginModal');
-        
-        modals.forEach(modal => {
-            // Find the modal content area
-            const content = modal.querySelector('.modal-content');
-            
-            if (content) {
-                // Apply direct scroll fixes
-                content.style.overflowY = 'auto';
-                content.style.maxHeight = '80vh';
-                content.style.height = 'auto';
-                content.style.display = 'flex';
-                content.style.flexDirection = 'column';
-                
-                // Make sure the form is scrollable
-                const form = content.querySelector('form');
-                if (form) {
-                    form.style.overflowY = 'auto';
-                    form.style.maxHeight = '100%';
-                    form.style.flexGrow = '1';
-                }
-                
-                // Add iOS touch scrolling
-                content.style.WebkitOverflowScrolling = 'touch';
-                
-                // Mark as fixed to avoid duplicate processing
-                modal.dataset.scrollFixed = 'true';
-                console.log('Scroll fixes applied to:', modal.id);
+    // 2. Modal scroll configuration
+    const MODAL_SELECTORS = ['#signupModal', '#loginModal'];
+    const MODAL_CONTENT_CLASS = 'modal-content';
+    let activeModal = null;
+
+    // 3. Core scroll lock logic
+    function handleScrollLock(shouldLock) {
+        if (shouldLock) {
+            // Store current scroll position
+            document.body.dataset.previousScroll = window.scrollY;
+            // Lock body scroll
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+        } else {
+            // Restore body scroll
+            document.body.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.width = '';
+            // Return to previous scroll position
+            window.scrollTo(0, parseInt(document.body.dataset.previousScroll || '0'));
+        }
+    }
+
+    // 4. Modal scroll setup
+    function setupModalScroll(modal) {
+        const content = modal.querySelector(`.${MODAL_CONTENT_CLASS}`);
+        if (!content) return;
+
+        // Make modal content scrollable
+        content.style.overflowY = 'auto';
+        content.style.maxHeight = '80vh';
+        content.style.WebkitOverflowScrolling = 'touch';
+
+        // Track active modal
+        modal.addEventListener('click', () => activeModal = modal);
+        content.addEventListener('scroll', (e) => e.stopPropagation());
+    }
+
+    // 5. Check for modal open state
+    function checkModalState() {
+        const openModal = MODAL_SELECTORS.find(selector => {
+            const modal = document.querySelector(selector);
+            return modal && window.getComputedStyle(modal).display !== 'none';
+        });
+
+        if (openModal) {
+            if (!activeModal || activeModal.id !== openModal) {
+                activeModal = document.querySelector(openModal);
+                setupModalScroll(activeModal);
+                handleScrollLock(true);
+            }
+        } else if (activeModal) {
+            handleScrollLock(false);
+            activeModal = null;
+        }
+    }
+
+    // 6. Initialize with MutationObserver
+    const observer = new MutationObserver(() => {
+        checkModalState();
+        // Setup all modals on page
+        MODAL_SELECTORS.forEach(selector => {
+            const modal = document.querySelector(selector);
+            if (modal && !modal.dataset.scrollSetup) {
+                modal.dataset.scrollSetup = 'true';
+                setupModalScroll(modal);
             }
         });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['style', 'class']
+    });
+
+    // 7. Handle touch devices
+    document.addEventListener('touchmove', (e) => {
+        if (activeModal) {
+            const content = activeModal.querySelector(`.${MODAL_CONTENT_CLASS}`);
+            if (content && !content.contains(e.target)) {
+                e.preventDefault();
+            }
+        }
+    }, { passive: false });
+
+    // 8. Initial setup
+    setTimeout(checkModalState, 500);
+    setTimeout(checkModalState, 1000); // Double check for slow loading
+
+    // 9. Cleanup
+    window.addEventListener('beforeunload', () => {
+        handleScrollLock(false);
+    });
+})();
     }
 
     // 3. Lock body scroll when modals are open
