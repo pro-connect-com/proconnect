@@ -167,7 +167,6 @@
             console.error('Initialization error:', e);
         }
     }
-showWelcomeModal();
     // Start when ready
     if (document.readyState === 'complete') {
         init();
